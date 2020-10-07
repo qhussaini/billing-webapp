@@ -7,19 +7,33 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./order.component.scss']
 })
 export class OrderComponent implements OnInit {
-  dialogReturn = '';
-
+  tableValue = '';
+  itemValue = '';
+  inputType = '';
+  inputHint = '';
   constructor(private dialog:NgbModal) { }
 
   ngOnInit() {
   }
 
-  open(content) {
-    this.dialog.open(content, { size: 'sm' }).result.then((result) => {
-      this.dialogReturn = `Table: ${result}`;
-    }, (reason) => {
-      this.dialogReturn = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+  open(content, inputType , hintName) {
+    this.inputType = inputType;
+    if(inputType='Table'){
+      this.inputHint=hintName;
+      this.dialog.open(content).result.then((result) => {
+        this.tableValue = `Table: ${result}`;
+      }, (reason) => {
+        this.tableValue = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    }else if(inputType="Item"){
+      this.inputHint=hintName;
+      this.dialog.open(content).result.then((result) => {
+        this.itemValue = `${result}`;
+      }, (reason) => {
+        this.itemValue = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    }
+    
   }
 
   private getDismissReason(reason: any): string {

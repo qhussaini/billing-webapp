@@ -5,17 +5,17 @@
                 <div class="card saas-card">
                     <ul class="list-group list-group-flush">
                       <li class="list-group-item">Serving Table</li>
-                      <li class="list-group-item" *ngIf="[dialogReturn]!=''" ><button class="btn btn-primary btn-rounded" disabled>{{ dialogReturn }}</button></li>
+                      <li class="list-group-item" *ngIf="[tableValue]!=''" ><button class="btn btn-primary btn-rounded" disabled>{{ tableValue }}</button></li>
                       <li class="list-group-item">Table Order</li>
                     </ul>
                 </div>
             </div>
             <div class="col-md-3 text-right">
                 <div class="btn-group-vertical">
-                    <button type="button" class="btn btn-primary" (click)="open(content)">Add Table</button>
-                    <button type="button" class="btn btn-secondary">Add Item</button>    
+                    <button type="button" class="btn btn-primary" (click)="open(content, 'Totel', 'ex: 1')">Add Table</button>
+                    <button type="button" class="btn btn-secondary" (click)="open(content, 'Item', 'ex: egg')">Add Item</button>    
                     <button type="button" class="btn btn-warning">Change Table</button>    
-                    <button type="button" class="btn btn-success">Change Refresh</button>    
+                    <button type="button" class="btn btn-success">Refresh</button>    
                 </div>
             </div>
        </div> 
@@ -43,7 +43,7 @@
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">Add Menu</li>
-              <li class="list-group-item" *ngIf="[dialogReturn]!=''" ><button class="btn btn-primary btn-rounded" disabled>{{ dialogReturn }}</button></li>
+              <li class="list-group-item" *ngIf="[itemValue]!=''" ><button class="btn btn-primary btn-rounded" disabled>{{ itemValue }}</button></li>
               <li class="list-group-item">Table Order</li>
             </ul>
            </div>
@@ -55,7 +55,7 @@
             </div>
             <ul class="list-group list-group-flush">
               <li class="list-group-item">Serving Table</li>
-              <li class="list-group-item" *ngIf="[dialogReturn]!=''" ><button class="btn btn-primary btn-rounded" disabled>{{ dialogReturn }}</button></li>
+              <li class="list-group-item" *ngIf="[itemValue]!=''" ><button class="btn btn-primary btn-rounded" disabled>{{ itemValue }}</button></li>
               <li class="list-group-item">Table Order</li>
             </ul>
            </div>
@@ -164,11 +164,11 @@
     <div class="modal-body">
       <form>
         <div class="form-group">
-            <label for="table">Table No.</label>
-          <div class="input-group">
-           <input type="number" placeholder="Ex: 1" id="table" class="btn btn-light" required #data (keyup)="0">
-          </div>
+          <label for="table">{{ inputType }}</label>
+        <div class="input-group">
+         <input type="text" placeholder="{{ inputHint }}" id="table" class="btn btn-light saas-border" required #data (keyup)="0">
         </div>
+      </div>
       </form>
     </div>
     <div class="modal-footer">
@@ -180,4 +180,4 @@
   
   <hr>
   
-  <pre>{{ closeResult }}</pre>
+  <!-- <pre>{{ closeResult }}</pre> -->
