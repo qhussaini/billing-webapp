@@ -5,7 +5,7 @@
                 <div class="card saas-card">
                     <ul class="list-group list-group-flush">
                       <li class="list-group-item">Serving Table</li>
-                      <li class="list-group-item" *ngIf="[dialogReturn]!=''"><button  class="btn btn-primary btn-rounded">{{ dialogReturn }}</button></li>
+                      <li class="list-group-item" *ngIf="[dialogReturn]!=''" ><button class="btn btn-primary btn-rounded" disabled>{{ dialogReturn }}</button></li>
                       <li class="list-group-item">Table Order</li>
                     </ul>
                 </div>
@@ -38,12 +38,26 @@
        </div>
        <div class="saas-zleft">
            <div class="card">
-            Menu
+            <div class="card-header">
+              Menu
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Serving Table</li>
+              <li class="list-group-item" *ngIf="[dialogReturn]!=''" ><button class="btn btn-primary btn-rounded" disabled>{{ dialogReturn }}</button></li>
+              <li class="list-group-item">Table Order</li>
+            </ul>
            </div>
        </div>
        <div class="saas-zright">
            <div class="card" style="background-color: aqua;">
-            Sub Menu
+            <div class="card-header">
+              Sub Menu
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Serving Table</li>
+              <li class="list-group-item" *ngIf="[dialogReturn]!=''" ><button class="btn btn-primary btn-rounded" disabled>{{ dialogReturn }}</button></li>
+              <li class="list-group-item">Table Order</li>
+            </ul>
            </div>
        </div>
     </div>
@@ -152,7 +166,7 @@
         <div class="form-group">
             <label for="table">Table No.</label>
           <div class="input-group">
-           <input type="number" placeholder="Ex: 1" id="table" class="btn btn-light" #data (keyup)="0">
+           <input type="number" placeholder="Ex: 1" id="table" class="btn btn-light" required #data (keyup)="0">
           </div>
         </div>
       </form>
