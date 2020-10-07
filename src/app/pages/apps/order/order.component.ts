@@ -18,22 +18,27 @@ export class OrderComponent implements OnInit {
 
   open(content, inputType , hintName) {
     this.inputType = inputType;
-    if(inputType='Table'){
-      this.inputHint=hintName;
-      this.dialog.open(content).result.then((result) => {
-        this.tableValue = `Table: ${result}`;
-      }, (reason) => {
-        this.tableValue = `Dismissed ${this.getDismissReason(reason)}`;
-      });
-    }else if(inputType="Item"){
-      this.inputHint=hintName;
-      this.dialog.open(content).result.then((result) => {
-        this.itemValue = `${result}`;
-      }, (reason) => {
-        this.itemValue = `Dismissed ${this.getDismissReason(reason)}`;
-      });
+    this.inputHint =hintName;
+    if(this.inputType=='Table'){
+      this.tablePopup(content)
+    }else if(this.inputType=='Item'){
+     this.itemPopup(content)
     }
     
+  }
+  itemPopup(content){
+    this.dialog.open(content).result.then((result) => {
+      this.itemValue = `Item: ${result}`;
+    }, (reason) => {
+      this.itemValue = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+  tablePopup(content){
+    this.dialog.open(content).result.then((result) => {
+      this.tableValue = `Table: ${result}`;
+    }, (reason) => {
+      this.tableValue = `Dismissed ${this.getDismissReason(reason)}`;
+    });
   }
 
   private getDismissReason(reason: any): string {
