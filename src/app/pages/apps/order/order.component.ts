@@ -11,6 +11,7 @@ export class OrderComponent implements OnInit {
   itemValue = '';
   inputType = '';
   inputHint = '';
+  subItem = '';
   constructor(private dialog:NgbModal) { }
 
   ngOnInit() {
@@ -20,26 +21,34 @@ export class OrderComponent implements OnInit {
     this.inputType = inputType;
     this.inputHint =hintName;
     if(this.inputType=='Table'){
-      this.tablePopup(content)
+      this.dialog.open(content).result.then((result) => {
+        this.tableValue = `Table: ${result}`;
+      }, (reason) => {
+        this.tableValue = `Dismissed ${this.getDismissReason(reason)}`;
+      });
     }else if(this.inputType=='Item'){
-     this.itemPopup(content)
+      this.dialog.open(content).result.then((result) => {
+        this.itemValue = `Item: ${result}`;
+      }, (reason) => {
+        this.itemValue = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    }else if(this.inputType=='Menu'){
+        this.dialog.open(content).result.then((result) => {
+          this.subItem = `${result}`;
+        }, (reason) => {
+          this.subItem = `Dismissed ${this.getDismissReason(reason)}`;
+        });
     }
     
   }
-  itemPopup(content){
-    this.dialog.open(content).result.then((result) => {
-      this.itemValue = `Item: ${result}`;
-    }, (reason) => {
-      this.itemValue = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-  tablePopup(content){
-    this.dialog.open(content).result.then((result) => {
-      this.tableValue = `Table: ${result}`;
-    }, (reason) => {
-      this.tableValue = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
+  tableData= [
+    {itemType: 'Chicken', itema: '', itemb: '', itemc: '', itemd: '', iteme: ''}, 
+    {itemType: 'Fish',},
+    {itemType: 'beef',},
+    {itemType: 'Mutton',}, 
+    {itemType: 'Egg' }
+  ]
+  
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {

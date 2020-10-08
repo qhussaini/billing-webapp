@@ -5,7 +5,7 @@
                 <div class="card saas-card">
                     <ul class="list-group list-group-flush">
                       <li class="list-group-item">Serving Table</li>
-                      <li class="list-group-item" *ngIf="[tableValue]!=''" ><button class="btn btn-primary btn-rounded" disabled>{{ tableValue }}</button></li>
+                      <li class="list-group-item" *ngIf="[tableValue]!=''" ><button class="btn btn-primary btn-rounded">{{ tableValue }}</button></li>
                       <li class="list-group-item">Table Order</li>
                     </ul>
                 </div>
@@ -14,7 +14,7 @@
                 <div class="btn-group-vertical">
                     <button type="button" class="btn btn-primary" (click)="open(content, 'Table', 'ex: 1')">Add Table</button>
                     <button type="button" class="btn btn-secondary" (click)="open(content, 'Item', 'ex: egg')">Add Item</button>    
-                    <button type="button" class="btn btn-warning">Change Table</button>    
+                    <button type="button" class="btn btn-warning">Add Menu</button>    
                     <button type="button" class="btn btn-success">Refresh</button>    
                 </div>
             </div>
@@ -38,14 +38,38 @@
        </div>
        <div class="saas-zleft">
            <div class="card">
-            <div class="card-header">
+            <div class="card-header btn btn-light d-flex justify-content-between" (click)="open(content, 'Menu','ex: egg fry')">
               Menu
+              <i class='uil uil-file-plus-alt'></i>
             </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">Add Menu</li>
-              <li class="list-group-item" *ngIf="[itemValue]!=''" ><button class="btn btn-primary btn-rounded" disabled>{{ itemValue }}</button></li>
+            <div class="card-body saas-zpad">
+              <table class="table table-light table-striped table-bordered table-hover">
+                <thead class="thead back">
+                  <tr>
+                    <th scope="col-lg-3">Non-veg</th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let item of tableData">
+                  <tr><th><li (click)="open(content, 'Menu','ex: egg fry')">{{item.itemType}}</li></th></tr>
+                </tbody>
+                <thead class="thead back">
+                  <tr>
+                    <th scope="col-lg-3">veg</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><th>paneer</th></tr>
+                  <tr><th>Veg Mix</th></tr>
+                  <tr><th>Beef</th></tr>
+                  <tr><th>Mutton</th></tr>
+                  <tr><th>Egg</th></tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- <ul class="list-group list-group-flush">
+              <li class="list-group-item" *ngIf="[itemValue]!=''" (click)="open(content, 'Menu','ex: egg fry')">{{ itemValue }}</li>
               <li class="list-group-item">Table Order</li>
-            </ul>
+            </ul> -->
            </div>
        </div>
        <div class="saas-zright">
@@ -54,8 +78,7 @@
               Sub Menu
             </div>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">Serving Table</li>
-              <li class="list-group-item" *ngIf="[itemValue]!=''" ><button class="btn btn-primary btn-rounded" disabled>{{ itemValue }}</button></li>
+              <li class="list-group-item" *ngIf="[subItem]!=''" >{{ subItem }}</li>
               <li class="list-group-item">Table Order</li>
             </ul>
            </div>
