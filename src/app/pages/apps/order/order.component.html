@@ -77,13 +77,20 @@
             <div class="card-header">
               Sub Menu
             </div>
-            <ul class="list-group list-group-flush" *ngFor="let item of tableData">
-              <li class="list-group-item" >{{ item.itema }}</li>
-              <li class="list-group-item" >{{ item.itemb }}</li>
-              <li class="list-group-item" >{{ item.itemc }}</li>
-              <li class="list-group-item" >{{ item.itemd }}</li>
-              <li class="list-group-item" >{{ item.iteme }}</li>
-            </ul>
+            <table class="table table-light table-striped table-bordered table-hover">
+              <thead class="thead back">
+                <tr>
+                  <th scope="col-lg-3">Non-veg</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let item of tableData">
+                <tr><th><li>{{item.itema}}</li></th></tr>
+                <tr><th><li>{{item.itemb}}</li></th></tr>
+                <tr><th><li>{{item.itemc}}</li></th></tr>
+                <tr><th><li>{{item.iteme}}</li></th></tr>
+                <tr><th><li>{{item.itemd}}</li></th></tr>
+              </tbody>
+            </table>
            </div>
        </div>
     </div>

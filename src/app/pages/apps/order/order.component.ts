@@ -87,10 +87,10 @@ export class OrderComponent implements OnInit {
   }
   tableData= [
     {itemType: 'Chicken', itema: '1chicken', itemb: '2chicken', itemc: '3chicken', itemd: '4chicken', iteme: '5chicken'}, 
-    {itemType: 'Fish',},
-    {itemType: 'beef',},
-    {itemType: 'Mutton',}, 
-    {itemType: 'Egg' }
+    {itemType: 'Fish',  itema: '1Fish', itemb: '2Fish', itemc: '3Fish', itemd: '4Fish', iteme: '5Fish'},
+    {itemType: 'beef',  itema: '1Beef', itemb: '2Beef', itemc: '3Beef', itemd: '4Beef', iteme: '5Beef'},
+    {itemType: 'Mutton',  itema: '1mutton', itemb: '2mutton', itemc: '3mutton', itemd: '4mutton', iteme: '5mutton'}, 
+    {itemType: 'Egg' ,  itema: '1Egg', itemb: '2Egg', itemc: '3Egg', itemd: '4Egg', iteme: '5Egg'}
   ]
   
 
