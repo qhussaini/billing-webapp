@@ -4,8 +4,8 @@
             <div class="col-md-8">
                 <div class="card saas-card">
                     <ul class="list-group list-group-flush">
-                      <li class="list-group-item">Serving Table</li>
-                      <li class="list-group-item" *ngIf="[tableValue]!=''" ><button class="btn btn-primary btn-rounded">{{ tableValue }}</button></li>
+                      <li class="list-group-item"><input type="text" class="form-control" placeholder="Add Table No. " (keyup.enter)="addTable(table)" onkeypress="return event.charCode>=40  && event.charCode<=57" #table></li>
+                      <li class="list-group-item" ><button class="btn btn-primary btn-rounded" *ngFor="let table of tables.controls" (click)='deleteTable(table)'>Table: {{ table.value }}</button></li>
                       <li class="list-group-item">Table Order</li>
                     </ul>
                 </div>
@@ -77,9 +77,12 @@
             <div class="card-header">
               Sub Menu
             </div>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item" *ngIf="[subItem]!=''" >{{ subItem }}</li>
-              <li class="list-group-item">Table Order</li>
+            <ul class="list-group list-group-flush" *ngFor="let item of tableData">
+              <li class="list-group-item" >{{ item.itema }}</li>
+              <li class="list-group-item" >{{ item.itemb }}</li>
+              <li class="list-group-item" >{{ item.itemc }}</li>
+              <li class="list-group-item" >{{ item.itemd }}</li>
+              <li class="list-group-item" >{{ item.iteme }}</li>
             </ul>
            </div>
        </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
@@ -12,9 +13,52 @@ export class OrderComponent implements OnInit {
   inputType = '';
   inputHint = '';
   subItem = '';
-  constructor(private dialog:NgbModal) { }
+  subMenu: true;
+  form = new FormGroup ({
+    tables: new FormArray([])
+  });
+
+
+  constructor(private dialog:NgbModal, private toastr:ToastrService) { }
 
   ngOnInit() {
+  }
+  showError(){
+    this.toastr.error('Table Field is empty', 'Error', {
+      timeOut: 1800,
+      progressBar: true,
+      progressAnimation: 'decreasing',
+      tapToDismiss: true,
+      closeButton:true
+    });
+  }
+
+
+  showToastr(){
+    this.toastr.success('Table added successfully', 'Added', {
+      timeOut: 1500,
+      progressBar: true,
+      progressAnimation: 'decreasing',
+      tapToDismiss: true,
+      closeButton:true
+    });
+  }
+  addTable(table: HTMLInputElement){
+    if(!table.value){
+      this.showError()
+    }else{
+      this.tables.push(new FormControl(table.value));
+      table.value = '';
+      this.showToastr()
+    }
+  }
+ 
+  deleteTable(table: FormControl){
+    let index = this.tables.controls.indexOf(table);
+    this.tables.removeAt(index);
+  }
+  get tables(){
+    return this.form.get('tables') as FormArray;
   }
 
   open(content, inputType , hintName) {
@@ -42,7 +86,7 @@ export class OrderComponent implements OnInit {
     
   }
   tableData= [
-    {itemType: 'Chicken', itema: '', itemb: '', itemc: '', itemd: '', iteme: ''}, 
+    {itemType: 'Chicken', itema: '1chicken', itemb: '2chicken', itemc: '3chicken', itemd: '4chicken', iteme: '5chicken'}, 
     {itemType: 'Fish',},
     {itemType: 'beef',},
     {itemType: 'Mutton',}, 
