@@ -1,3 +1,6 @@
+.saas-color {
+    background-image: linear-gradient(#070335,white);
+}
 
 .saas-left {
     width: 60%;
@@ -25,14 +28,6 @@
 .saas-border{
     border: 1px solid black;
 }
-.saas-sinput{
-    border-radius:32px;
-    border:1px solid #ccc!important;
-    padding:8px;
-    // display:block;
-    border:none;
-    border-bottom:1px solid #ccc;
-}
 .saas-cpad{
     width: 90%;
     padding: 5px;
@@ -42,12 +37,13 @@ li {
     padding: 15px;
 }
 .saas-card {
-    box-shadow:   35px 35px 34px #c4c4c4,-15px -15px 34px #c4c4c4
+    box-shadow:   -10px -10px 34px #c4c4c4;
+    margin: .5%;
 }
-// .saas-bill-card {
-//     width: 100%;
-//     height: 100%;
-// }
+.saas-size{
+    max-height: 100px;
+    overflow: scroll;
+}
 .saas-input {
     width: 80px;
 }
@@ -55,7 +51,7 @@ label{
     float: left;
 }
 .back {
-    background-color: rgb(190, 190, 243);
+    background-color: burlywood;
     color: white;
 }
 .saas-pad{
@@ -76,7 +72,7 @@ label{
     padding-bottom: 0;
 }
 .saas-amargin {
-    margin: 1%;
+    margin: .5%;
 }
 @media screen and (min-width:992px){
     .saas-left, .saas-right {

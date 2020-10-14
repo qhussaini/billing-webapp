@@ -64,26 +64,18 @@ export class OrderComponent implements OnInit {
   open(content, inputType , hintName) {
     this.inputType = inputType;
     this.inputHint =hintName;
-    if(this.inputType=='Table'){
-      this.dialog.open(content).result.then((result) => {
-        this.tableValue = `Table: ${result}`;
-      }, (reason) => {
-        this.tableValue = `Dismissed ${this.getDismissReason(reason)}`;
-      });
-    }else if(this.inputType=='Item'){
-      this.dialog.open(content).result.then((result) => {
-        this.itemValue = `Item: ${result}`;
-      }, (reason) => {
-        this.itemValue = `Dismissed ${this.getDismissReason(reason)}`;
-      });
-    }else if(this.inputType=='Menu'){
-        this.dialog.open(content).result.then((result) => {
-          this.subItem = `${result}`;
-        }, (reason) => {
-          this.subItem = `Dismissed ${this.getDismissReason(reason)}`;
-        });
-    }
+    this.dialog.open(content, { size: 'xl' }).result.then((result) => {
+      this.tableValue = `Table: ${result}`;
+    }, (reason) => {
+      this.tableValue = `Dismissed ${this.getDismissReason(reason)}`;
+    });
     
+  }
+  selectTable(table: FormControl){
+    let index = this.tables.controls.indexOf(table);
+    this.toastr.info('order for table '+this.tables[index], 'order', {
+      timeOut: 1300,
+    });
   }
   tableData= [
     {itemType: 'Chicken', itema: '1chicken', itemb: '2chicken', itemc: '3chicken', itemd: '4chicken', iteme: '5chicken'}, 
