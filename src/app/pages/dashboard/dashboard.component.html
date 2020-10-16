@@ -37,16 +37,16 @@
   <!-- Widget  -->
   <div class="row">
     <div class="col-md-6 col-xl-3">
-      <app-statchart mainTitle="today revenue" value=2100 subValue="10.21%" chartColors="#5369f8"></app-statchart>
+      <app-statchart mainTitle="today's Sale" value=2100 subValue="10.21%" chartColors="#5369f8"></app-statchart>
     </div>
     <div class="col-md-6 col-xl-3">
-      <app-statchart mainTitle="product sold" value=1065 subValue='5.05%' chartColors="#f77e53"></app-statchart>
+      <app-statchart mainTitle="Total Sale" value=1065 subValue='6.15%' chartColors="#ffbe0b"></app-statchart>
     </div>
     <div class="col-md-6 col-xl-3">
-      <app-statchart mainTitle="New customers" value=11 subValue="25.16%" chartColors="#43d39e"></app-statchart>
+      <app-statchart mainTitle="Today Dine In" value=11 subValue="5.05%" chartColors="#f77e53"></app-statchart>
     </div>
     <div class="col-md-6 col-xl-3">
-      <app-statchart mainTitle="new visitors" value=750 subValue="5.05%" chartColors="#ffbe0b"></app-statchart>
+      <app-statchart mainTitle="Today Takeaway" value=750 subValue="25.05%" chartColors="#ffbe0b"></app-statchart>
     </div>
   </div>
   <!-- end widget -->
@@ -54,13 +54,13 @@
     <div class="col-xl-3">
       <div class="card">
         <div class="card-body p-0">
-          <h5 class="card-title header-title border-bottom p-3 mb-0">Overview</h5>
+          <h5 class="card-title header-title border-bottom p-3 mb-0">This Month Overview</h5>
           <!-- Overview data -->
-          <app-overview value='121,000' icon='users' title="Total Visitors" classNames="px-3 py-4">
+          <app-overview value='121,000' icon='archive' title="Total Takeaway" classNames="px-3 py-4">
           </app-overview>
-          <app-overview value='21,000' icon='image' title="Total Product Views" classNames="px-3 py-4">
+          <app-overview value='21,000' icon='coffee' title="Total Dine In" classNames="px-3 py-4">
           </app-overview>
-          <app-overview value='$21.5' icon='shopping-bag' title="Revenue Per Visitor" classNames="px-3 py-4"></app-overview>
+          <app-overview value='$2.4K' icon='book-open' title="Sale" classNames="px-3 py-4"></app-overview>
         </div>
       </div>
     </div>
@@ -84,7 +84,7 @@
               <a class="nav-link text-muted" href="javascript: void(0);">1y</a>
             </li>
           </ul>
-          <h5 class="card-title header-title mb-0">Revenue</h5>
+          <h5 class="card-title header-title mb-0">This Month sale</h5>
           <!-- Reenue Area Chart -->
           <div class="mt-3">
             <apx-chart [series]="revenueAreaChart.series" [chart]="revenueAreaChart.chart"

@@ -191,30 +191,39 @@
     </div>
     <div class="row">
     <div class="modal-body col-lg-4">
-      <input type="text" class="form-control" placeholder="Name">
-      <input type="text" class="form-control" placeholder="mobile">
-      <input type="text" class="form-control" placeholder="Email">
+      <input type="text" class="form-control" placeholder="Fast Name" #fName>
+      <input type="text" class="form-control" placeholder="Last Name" #lName>
+      <input type="text" class="form-control" placeholder="mobile" #mobile>
+      <input type="text" class="form-control" placeholder="Email" #email>
+      <div class="text-center">
+        <button class="btn btn-primary" (click)='addNew(fName,lName,mobile,email)'>Add</button>
+        <button class="btn btn-primary">Update</button>
+      </div>
     </div>
     <div class="col-lg-7">
       <table class="table table-light table-striped table-bordered table-hover">
         <thead class="thead thead-dark">
           <tr>
             <th scope="col-lg-3">Sr No.</th>
-            <th scope="col-lg-3">Name</th>
+            <th scope="col-lg-3">Fast Name</th>
+            <th scope="col-lg-3">Last Name</th>
             <th scope="col-lg-3">Mobile</th>
             <th scope="col-lg-3">Email</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <th>1</th>
-            <td>Anwar</td>
-            <td>984444444</td>
-            <td>data@test.com</td>
-          </tr>
+        <tbody *ngFor="let customer of customerData">
+          <tr><th>{{ customer.srno }}</th>
+          <th>{{ customer.fname }}</th>
+          <th>{{ customer.lname }}</th>
+          <th>{{ customer.mobile }}</th>
+          <th>{{ customer.email }}</th></tr>
         </tbody>
       </table>
     </div>
+    </div>
+    <div class="modal-footer"></div>
+    <div class="text-right saas-amargin">
+      <button type="button" class="btn btn-danger btn-rounded" aria-label="Close" (click)="modal.dismiss('Close')">close</button>
     </div>
   </ng-template>
   

@@ -154,8 +154,8 @@ const salesDonutChart: ChartType = {
             vertical: 3
         }
     },
-    series: [44, 55, 41, 17],
-    labels: ['Clothes 44k', 'Smartphons 55k', 'Electronics 41k', 'Other 17k'],
+    series: [34, 65, 45, 37],
+    labels: ['Veg', 'Non-Veg', 'Refreshments', 'Menu'],
     responsive: [{
         breakpoint: 480,
         options: {
@@ -167,7 +167,7 @@ const salesDonutChart: ChartType = {
     tooltip: {
         y: {
             formatter: (value) => {
-                return value + 'k';
+                return '$ ' + value +'0' ;
             }
         },
     }

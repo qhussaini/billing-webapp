@@ -17,6 +17,9 @@ export class OrderComponent implements OnInit {
   form = new FormGroup ({
     tables: new FormArray([])
   });
+  // customerForm = new FormGroup ({
+  //   customerData: new FormArray([])
+  // });
 
 
   constructor(private dialog:NgbModal, private toastr:ToastrService) { }
@@ -52,6 +55,18 @@ export class OrderComponent implements OnInit {
       this.showToastr()
     }
   }
+  addNew(fName: HTMLInputElement, lName: HTMLInputElement, mobile: HTMLInputElement, email: HTMLInputElement ){
+    if(!fName.value && !lName.value && !mobile.value && !email.value){
+      this.showError()
+    }else{
+      this.customerData.push({srno:'',fname:fName.value, lname:lName.value, mobile: mobile.value, email: email.value});
+      fName.value = '';
+      lName.value = '';
+      mobile.value = '';
+      email.value = '';
+      this.showToastr()
+    }
+  }
  
   deleteTable(table: FormControl){
     let index = this.tables.controls.indexOf(table);
@@ -83,6 +98,20 @@ export class OrderComponent implements OnInit {
     {itemType: 'beef',  itema: '1Beef', itemb: '2Beef', itemc: '3Beef', itemd: '4Beef', iteme: '5Beef'},
     {itemType: 'Mutton',  itema: '1mutton', itemb: '2mutton', itemc: '3mutton', itemd: '4mutton', iteme: '5mutton'}, 
     {itemType: 'Egg' ,  itema: '1Egg', itemb: '2Egg', itemc: '3Egg', itemd: '4Egg', iteme: '5Egg'}
+  ]
+  customerData = [
+    {srno:'1', fname: 'syed', lname: 'quyyum', mobile: '9822222222', email: 'quyyum@demo.com'},
+    {srno:'2', fname: 'anwaar', lname: 'hussaini', mobile: '9855555555', email: 'ans.data@demo.com'},
+    {srno:'3', fname: 'demo', lname: 'abrar', mobile: '9844444444', email: 'syed.da@demo.com'},
+    {srno:'4', fname: 'Syed', lname: 'furkhan', mobile: '9833333333', email: 'syedhus@demo.com'},
+    {srno:'5', fname: 'quyyum', lname: 'anwaar', mobile: '9878888888', email: 'anwaar@demo.com'},
+    {srno:'6', fname: 'saas', lname: 'malik', mobile: '9866666666', email: 'saas@demo.com'},
+    {srno:'7', fname: 'hussaini', lname: 'demo', mobile: '9877777777', email: 'saasemail@demo.com'},
+    {srno:'8', fname: 'Syed', lname: 'furkhan', mobile: '9833333333', email: 'syedhus@demo.com'},
+    {srno:'9', fname: 'saas', lname: 'malik', mobile: '9866666666', email: 'saas@demo.com'},
+    {srno:'10', fname: 'demo', lname: 'abrar', mobile: '9844444444', email: 'syed.da@demo.com'},
+    {srno:'11', fname: 'hussaini', lname: 'demo', mobile: '9877777777', email: 'saasemail@demo.com'},
+    {srno:'12', fname: 'anwaar', lname: 'hussaini', mobile: '9855555555', email: 'ans.data@demo.com'},
   ]
   
 
