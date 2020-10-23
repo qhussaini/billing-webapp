@@ -13,7 +13,20 @@ export class OrderComponent implements OnInit {
   inputType = '';
   inputHint = '';
   subItem = '';
+  fname = '';
+  lname = '';
+  cMobile = '';
+  cEmail='';
+  iCode='';
+  iName='';
+  gName='';
+  iVendor='';
+  pPrice='';
+  iUnit='';
+  sPrice='';
+  iShelf='';
   subMenu: true;
+  getUser= [];
   form = new FormGroup ({
     tables: new FormArray([])
   });
@@ -36,6 +49,9 @@ export class OrderComponent implements OnInit {
     });
   }
 
+  refreshPage(){
+    window.location.reload();
+  }
 
   showToastr(){
     this.toastr.success('Table added successfully', 'Added', {
@@ -55,6 +71,8 @@ export class OrderComponent implements OnInit {
       this.showToastr()
     }
   }
+
+
   addNew(fName: HTMLInputElement, lName: HTMLInputElement, mobile: HTMLInputElement, email: HTMLInputElement ){
     if(!fName.value && !lName.value && !mobile.value && !email.value){
       this.showError()
@@ -67,6 +85,35 @@ export class OrderComponent implements OnInit {
       this.showToastr()
     }
   }
+  getValue(customer){
+    this.fname = customer.fname;
+    this.lname = customer.lname;
+    this.cMobile = customer.mobile;
+    this.cEmail = customer.email;
+  }
+  // details= [
+  //   {no: '#', product:'', qty:'', price:'', code:''}
+  // ]
+  dproduct='';
+  dcode='';
+  dqty='';
+  dprice='';
+  getDetails(item){ 
+    this.dproduct = item.product;
+    this.dqty = item.qty;
+    this.dprice = item.price; 
+    this.dcode = item.code;
+  }
+
+  cancelBill(){
+  }
+  billing= [
+    {no: '1', product:'book', qty:'1', price:'2.5', code:'bk5'},
+    {no: '2', product:'7Up', qty:'2', price:'1.5', code:'7up'},
+    {no: '3', product:'peanut butter', qty:'1', price:'3.5', code:'ptb'},
+    {no: '4', product:'pen', qty:'1', price:'0.5', code:'ppn'},
+    {no: '5', product:'dates', qty:'1', price:'5', code:'dats7'}
+  ]
  
   deleteTable(table: FormControl){
     let index = this.tables.controls.indexOf(table);
@@ -76,16 +123,55 @@ export class OrderComponent implements OnInit {
     return this.form.get('tables') as FormArray;
   }
 
-  open(content, inputType , hintName) {
-    this.inputType = inputType;
-    this.inputHint =hintName;
-    this.dialog.open(content, { size: 'xl' }).result.then((result) => {
+  open(content) {
+    this.dialog.open(content, { size: 'lg' }).result.then((result) => {
       this.tableValue = `Table: ${result}`;
     }, (reason) => {
       this.tableValue = `Dismissed ${this.getDismissReason(reason)}`;
     });
     
   }
+  openItem(content) {
+    this.dialog.open(content, { size: 'xl' });
+  }
+
+  getItemD(product){
+    this.iCode = product.ICode;
+    this.iName = product.IName;
+    this.gName = product.GName;
+    this.iVendor = product.vendor;
+    this.pPrice = product.pPrice;
+    this.iUnit = product.IUnit;
+    this.sPrice = product.sPrice;
+    this.iShelf = product.shelf;
+  }
+
+  addItem(icode,iname,gname,vendor,pprice,unit,sprice,shelf){
+    if(!icode.value && !iname.value && !gname.value && !vendor.value && !pprice.value && !unit.value && !shelf.value){
+      this.showError();
+    }else{
+    this.products.push({
+      ICode:icode.value, 
+      IName:iname.value,
+      GName:gname.value,
+      vendor:vendor.value, 
+      pPrice:pprice.value,
+      IUnit:unit.value,
+      sPrice:sprice.value,
+      shelf:shelf.value
+    });
+    this.showToastr();
+  }
+  }
+
+  products= [
+    {ICode:'ptb', IName:'Skippy Peanut Butter',GName:'dairy',vendor:'Skippy', pPrice:'5',IUnit:'80',sPrice:'6.5', shelf:'1.1'},
+    {ICode:'nhs', IName:'Nutella Hazelnut Spread',GName:'Food',vendor:'Nutella', pPrice:'9',IUnit:'70',sPrice:'10.5', shelf:'1.2'},
+    {ICode:'mdf', IName:'Mixed Dry Fruit',GName:'nuts',vendor:'EAT Anytime', pPrice:'10',IUnit:'150',sPrice:'12', shelf:'1.3'},
+    {ICode:'smsd', IName:'sandisk Micro Sd 128g',GName:'mobile accessories',vendor:'sandisk', pPrice:'150',IUnit:'200',sPrice:'159', shelf:'2.1'},
+    {ICode:'beb', IName:'Sony WF-1000XM3',GName:'',vendor:'Sony', pPrice:'199',IUnit:'50',sPrice:'210', shelf:'2.2'},
+  ]
+
   selectTable(table: FormControl){
     let index = this.tables.controls.indexOf(table);
     this.toastr.info('order for table '+this.tables[index], 'order', {

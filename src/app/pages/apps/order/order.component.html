@@ -1,105 +1,41 @@
 <div class="container-fluid saas-amargin no-gutters">
-    <div class="saas-left">
-        <div class="row no-gutters">
-            <div class="col-md-12 text-lift">
-                <div class="card saas-card">
-                    <ul class="list-group list-group-flush ">
-                      <li class="list-group-item"><input type="text" class="form-control" placeholder="Add Table No. " (keyup.enter)="addTable(table)" onkeypress="return event.charCode>=40  && event.charCode<=57" #table></li>
-                      <li class="list-group-item saas-size" ><button class="btn btn-primary btn-rounded" *ngFor="let table of tables.controls" (click)='selectTable()'>Table: {{ table.value }}</button></li>
-                    </ul>
-                </div>
-            </div>
-       </div> 
+    <div class="saas-left"> 
        <div class="row no-gutters">
            <div class="card saas-cpad">
             <div class="saas-amargin d-flex text-center justify-content-between">
-              <button type="button" class="btn btn-primary" ngbTooltip="Customer" (click)="open(content, 'Table', 'ex: 1')">customer Details</button>
-              <button type="button" class="btn btn-secondary" (click)="open(content, 'Item', 'ex: egg')">Add Item</button>    
-              <button type="button" class="btn btn-warning">Add Menu</button>    
-              <button type="button" class="btn btn-success">Refresh</button>    
+              <button type="button" class="btn btn-primary" ngbTooltip="Customer" (click)="open(content)"><i data-feather="database"></i> Customer Details</button>
+              <button type="button" class="btn btn-secondary"><i data-feather="x-octagon"></i> Cancel Bill</button>    
+              <button type="button" class="btn btn-warning" (click)="openItem(newitem)"><i data-feather="file-plus"></i> Add Item</button>    
+              <button type="button" class="btn btn-success" (click)="refreshPage()"><i data-feather="refresh-cw"></i> Refresh</button>    
             </div>
-                   <div class="row d-flex justify-content-between">
-                   <div class="col-lg-3">
-                    <input type="text" placeholder="Select Menu" class="form-control">
-                   </div>
-                   <div class="col-lg-3">
-                    <input type="text" placeholder="Search by code" class="form-control">
-                   </div>
-                   <div class="col-lg-4">
-                    <input type="text" placeholder="Search by name" class="form-control">
-                   </div>
-                </div>
             </div>
        </div>
-       <div class="saas-zleft">
-           <div class="card">
-            <div class="card-header btn btn-light d-flex justify-content-between" (click)="open(content, 'Menu','ex: egg fry')">
-              Menu
-              <i class='uil uil-file-plus-alt'></i>
-            </div>
-            <div class="card-body saas-zpad">
-              <table class="table table-light table-striped table-bordered table-hover">
-                <thead class="thead back">
-                  <tr>
-                    <th scope="col-lg-3">Non-veg</th>
-                  </tr>
-                </thead>
-                <tbody *ngFor="let item of tableData">
-                  <tr><th><li (click)="open(content, 'Menu','ex: egg fry')">{{item.itemType}}</li></th></tr>
-                </tbody>
-                <thead class="thead back">
-                  <tr>
-                    <th scope="col-lg-3">veg</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><th>paneer</th></tr>
-                  <tr><th>Veg Mix</th></tr>
-                  <tr><th>Beef</th></tr>
-                  <tr><th>Mutton</th></tr>
-                  <tr><th>Egg</th></tr>
-                </tbody>
-              </table>
-            </div>
-            <!-- <ul class="list-group list-group-flush">
-              <li class="list-group-item" *ngIf="[itemValue]!=''" (click)="open(content, 'Menu','ex: egg fry')">{{ itemValue }}</li>
-              <li class="list-group-item">Table Order</li>
-            </ul> -->
+       <div class="card saas-btn">
+         <div class="card-header text-center">
+           <h3>Item Detail</h3>
+         </div>
+         <div class="card-body">
+           <div class="row">
+            <div class="col-lg-4">
+              <label for="name">Item Name:</label>
+              <input id="name" type="text" class="form-control" value="{{ dproduct }}"disabled>
+              <label for="code">Item Code: </label>
+              <input  class="form-control" type="text" id="code" value="{{ dcode }}"disabled>  
+             </div>
+             <div class="col-lg-4">
+              <label for="qty">Item Qty:</label>
+              <input id="qty" type="text" class="form-control" value="{{ dqty }}">
+              <label for="price">Item Price: </label>
+              <input  class="form-control" type="text" id="price" value="{{ dprice }}" disabled>  
+             </div>  
            </div>
-       </div>
-       <div class="saas-zright">
-           <div class="card" style="background-color: aqua;">
-            <div class="card-header">
-              Sub Menu
-            </div>
-            <table class="table table-light table-striped table-bordered table-hover">
-              <thead class="thead back">
-                <tr>
-                  <th scope="col-lg-3">Non-veg</th>
-                </tr>
-              </thead>
-              <tbody *ngFor="let item of tableData">
-                <tr><th><li>{{item.itema}}</li></th></tr>
-                <tr><th><li>{{item.itemb}}</li></th></tr>
-                <tr><th><li>{{item.itemc}}</li></th></tr>
-                <tr><th><li>{{item.iteme}}</li></th></tr>
-                <tr><th><li>{{item.itemd}}</li></th></tr>
-              </tbody>
-            </table>
-           </div>
+          </div>
        </div>
     </div>
     <div class="saas-right">
     <div class="row no-gutters">
         <div class="card saas-bill-card">
             <div class="card-header saas-zpad">
-                <div class="col saas-pad">
-                    <div class="btn-group btn-block" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-secondary">Dine In</button>
-                        <button type="button" class="btn btn-secondary">Takeaway</button>
-                        <button type="button" class="btn btn-secondary">Home Delivery</button>
-                    </div>
-                </div>
                 <div class="col saas-pad">
                     <div class="btn-group btn-block" role="group" aria-label="Basic example">
                         <button type="button" class="btn btn-secondary">KOT</button>
@@ -124,24 +60,12 @@
                             <th scope="col">Price</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr>
-                            <th scope="row">1</th>
-                            <td>Biryani FP</td>
-                            <td>2</td>
-                            <td>$4.1</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">2</th>
-                            <td>butter chicken F</td>
-                            <td>2</td>
-                            <td>$2.50</td>
-                          </tr>
-                          <tr>
-                            <th scope="row">3</th>
-                            <td>rumali roti</td>
-                            <td>6</td>
-                            <td>$1.50</td>
+                        <tbody *ngFor="let item of billing">
+                          <tr (click)="getDetails(item)">
+                            <th scope="row">{{ item.no }}</th>
+                            <td>{{ item.product }}</td>
+                            <td>{{ item.qty }}</td>
+                            <td>${{ item.price }}</td>
                           </tr>
                         </tbody>
                       </table>
@@ -191,16 +115,16 @@
     </div>
     <div class="row">
     <div class="modal-body col-lg-4">
-      <input type="text" class="form-control" placeholder="Fast Name" #fName>
-      <input type="text" class="form-control" placeholder="Last Name" #lName>
-      <input type="text" class="form-control" placeholder="mobile" #mobile>
-      <input type="text" class="form-control" placeholder="Email" #email>
-      <div class="text-center">
+      <input type="text" class="form-control" placeholder="Fast Name" value="{{ fname }}" #fName>
+      <input type="text" class="form-control" placeholder="Last Name " value="{{ lname }}" #lName>
+      <input type="text" class="form-control" placeholder="mobile" value="{{ cMobile }}" #mobile>
+      <input type="text" class="form-control" placeholder="Email " value="{{ cEmail }}" #email>
+      <div class="text-right">
         <button class="btn btn-primary" (click)='addNew(fName,lName,mobile,email)'>Add</button>
         <button class="btn btn-primary">Update</button>
       </div>
     </div>
-    <div class="col-lg-7">
+    <div class="col-lg-7 saas-scr">
       <table class="table table-light table-striped table-bordered table-hover">
         <thead class="thead thead-dark">
           <tr>
@@ -212,7 +136,7 @@
           </tr>
         </thead>
         <tbody *ngFor="let customer of customerData">
-          <tr><th>{{ customer.srno }}</th>
+          <tr (click)="getValue(customer)" #data><th>{{ customer.srno }}</th>
           <th>{{ customer.fname }}</th>
           <th>{{ customer.lname }}</th>
           <th>{{ customer.mobile }}</th>
@@ -227,6 +151,95 @@
     </div>
   </ng-template>
   
+  <ng-template #menu let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title text-white" id="modal-basic-title">Customer Details</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="row">
+    <div class="modal-body col-lg-4">
+      <input type="text" class="form-control" placeholder="Fast Name" value="{{ fname }}" #fName>
+      <input type="text" class="form-control" placeholder="Last Name " value="{{ lname }}" #lName>
+      <input type="text" class="form-control" placeholder="mobile" value="{{ cMobile }}" #mobile>
+      <input type="text" class="form-control" placeholder="Email " value="{{ cEmail }}" #email>
+      <div class="text-right">
+        <button class="btn btn-primary" (click)='addNew(fName,lName,mobile,email)'>Add</button>
+        <button class="btn btn-primary">Update</button>
+      </div>
+    </div>
+    </div>
+    <div class="modal-footer"></div>
+    <div class="text-right saas-amargin">
+      <button type="button" class="btn btn-danger btn-rounded" aria-label="Close" (click)="modal.dismiss('Close')">close</button>
+    </div>
+  </ng-template>
+  <ng-template #newitem let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add New Item</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="row">
+    <div class="modal-body col-lg-4">
+      <label for="code">Item Code</label>
+      <input type="text" id="code" class="form-control" placeholder="Item Code" value="{{ iCode }}" #icode>
+      <label for="name">Item Name</label>
+      <input type="text" id="name" class="form-control" placeholder="Item Name" value="{{ iName }}" #iname>
+      <label for="gname">Group Name</label>
+      <input type="text" id="gname" class="form-control" placeholder="Group Name" value="{{ gName }}" #gname>
+      <label for="vendor">Vendor</label>
+      <input type="text" id="vendor" class="form-control" placeholder="Vendor" value="{{ iVendor }}" #vendor>
+      <label for="pprice">Purchase Price</label>
+      <input type="text" id="pprice" class="form-control" placeholder="Purchase Price" value="{{ pPrice }}" #pprice>
+      <label for="unit">Item Unit</label>
+      <input type="text" id="unit" class="form-control" placeholder="Item Unit" value="{{ iUnit }}" #unit>
+      <label for="sprice">Sales Price</label>
+      <input type="text" id="sprice" class="form-control" placeholder="Sales Price" value="{{ sPrice }}" #sprice>
+      <label for="Shelf">Shelf No.</label>
+      <input type="text" id="Shelf" class="form-control" placeholder="Shelf No." value="{{ iShelf }}" #shelf>
+      <div class="text-right">
+        <button class="btn btn-primary" (click)='addItem(icode,iname,gname,vendor,pprice,unit,sprice,shelf)'>Add</button>
+        <button class="btn btn-primary">Update</button>
+      </div>
+    </div>
+    <div class="col-lg-7">
+      <table class="table table-light table-striped table-bordered table-hover">
+        <thead class="thead thead-dark">
+          <tr>
+            <th scope="col-lg-3">Item Code</th>
+            <th scope="col-lg-3">Item Name</th>
+            <th scope="col-lg-3">Group Name</th>
+            <th scope="col-lg-3">Vendor</th>
+            <th scope="col-lg-3">Purchase Price</th>
+            <th scope="col-lg-3">Item Unit</th>
+            <th scope="col-lg-3">Sales Price</th>
+            <th scope="col-lg-3">Shelf No.</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let product of products">
+          <tr (click)="getItemD(product)">
+            <th>{{ product.ICode }}</th>
+            <th>{{ product.IName }}</th>
+            <th>{{ product.GName }}</th>
+            <th>{{ product.vendor }}</th>
+            <th>{{ product.pPrice }}</th>
+            <th>{{ product.IUnit }}</th>
+            <th>{{ product.sPrice }}</th>
+            <th>{{ product.shelf }}</th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+    <div class="modal-footer"></div>
+    <div class="text-right saas-amargin">
+      <button type="button" class="btn btn-danger btn-rounded" aria-label="Close" (click)="modal.dismiss('Close')">close</button>
+    </div>
+  </ng-template>
+
   <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
   
   <hr>
