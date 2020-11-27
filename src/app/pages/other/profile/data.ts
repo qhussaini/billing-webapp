@@ -1,8 +1,8 @@
 const activities = [
     {
         time: '02 hours ago',
-        title: 'Designing AQ-saas Admin',
-        text: 'AQ-saas Admin - A responsive admin and dashboard template'
+        title: 'Designing pro Admin',
+        text: 'pro Admin - A responsive admin and dashboard template'
     },
     {
         time: '21 hours ago',

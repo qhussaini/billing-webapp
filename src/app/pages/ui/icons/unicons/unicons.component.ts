@@ -17,6 +17,6 @@ export class UniconsComponent implements OnInit {
    constructor() { }
 
    ngOnInit() {
-     this.breadCrumbItems = [{ label: 'AQ-saas', path: '/' }, { label: 'Icons', path: '/' }, { label: 'Unicons', active: true }];
+     this.breadCrumbItems = [{ label: 'pro', path: '/' }, { label: 'Icons', path: '/' }, { label: 'Unicons', active: true }];
    }
 }

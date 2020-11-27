@@ -39,7 +39,7 @@ export class AdvancedComponent implements OnInit {
 
   ngOnInit() {
     // tslint:disable-next-line: max-line-length
-    this.breadCrumbItems = [{ label: 'AQ-saas', path: '/' }, { label: 'Tables', path: '/' }, { label: 'Advanced', path: '/', active: true }];
+    this.breadCrumbItems = [{ label: 'pro', path: '/' }, { label: 'Tables', path: '/' }, { label: 'Advanced', path: '/', active: true }];
 
     /**
      * fetch data

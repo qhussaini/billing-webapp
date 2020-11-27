@@ -46,7 +46,7 @@ export class ChartsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.breadCrumbItems = [{ label: 'AQ-saas', path: '/' }, { label: 'Components', path: '/' }, { label: 'Charts', active: true }];
+    this.breadCrumbItems = [{ label: 'pro', path: '/' }, { label: 'Components', path: '/' }, { label: 'Charts', active: true }];
 
     /**
      * Fethches the chart data

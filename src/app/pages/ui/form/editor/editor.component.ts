@@ -19,7 +19,7 @@ export class EditorComponent implements OnInit {
 
   ngOnInit() {
     // tslint:disable-next-line: max-line-length
-    this.breadCrumbItems = [{ label: 'AQ-saas', path: '/' }, { label: 'Forms', path: '/' }, { label: 'Editor', path: '/', active: true }];
+    this.breadCrumbItems = [{ label: 'pro', path: '/' }, { label: 'Forms', path: '/' }, { label: 'Editor', path: '/', active: true }];
   }
 
 }

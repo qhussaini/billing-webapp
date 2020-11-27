@@ -52,7 +52,7 @@ export class ChatComponent implements OnInit {
 
       // Message Push in Chat
       this.chatData.push({
-        name: 'AQ-saas',
+        name: 'pro',
         image: 'assets/images/users/avatar-7.jpg',
         message,
         time: currentDate.getHours() + ':' + currentDate.getMinutes()

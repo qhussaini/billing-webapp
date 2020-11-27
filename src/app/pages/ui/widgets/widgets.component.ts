@@ -17,6 +17,6 @@ export class WidgetsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.breadCrumbItems = [{ label: 'AQ-saas', path: '/' }, { label: 'Components', path: '/' }, { label: 'Widgets', active: true }];
+    this.breadCrumbItems = [{ label: 'pro', path: '/' }, { label: 'Components', path: '/' }, { label: 'Widgets', active: true }];
   }
 }

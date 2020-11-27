@@ -1,12 +1,12 @@
-<div class="container-fluid saas-amargin no-gutters">
-    <div class="saas-left"> 
+<!-- <div class="container-fluid saas-amargin no-gutters">
+    <div class="saas-left">
        <div class="row no-gutters">
            <div class="card saas-cpad">
             <div class="saas-amargin d-flex text-center justify-content-between">
               <button type="button" class="btn btn-primary" ngbTooltip="Customer" (click)="open(content)"><i data-feather="database"></i> Customer Details</button>
-              <button type="button" class="btn btn-secondary"><i data-feather="x-octagon"></i> Cancel Bill</button>    
-              <button type="button" class="btn btn-warning" (click)="openItem(newitem)"><i data-feather="file-plus"></i> Add Item</button>    
-              <button type="button" class="btn btn-success" (click)="refreshPage()"><i data-feather="refresh-cw"></i> Refresh</button>    
+              <button type="button" class="btn btn-secondary" (click)="cancelBill(deleteAt,item)"><i data-feather="x-octagon"></i> Cancel Bill</button>
+              <button type="button" class="btn btn-warning" (click)="openItem(newitem)"><i data-feather="file-plus"></i> Add Item</button>
+              <button type="button" class="btn btn-success" (click)="refreshPage()"><i data-feather="refresh-cw"></i> Refresh</button>
             </div>
             </div>
        </div>
@@ -18,16 +18,16 @@
            <div class="row">
             <div class="col-lg-4">
               <label for="name">Item Name:</label>
-              <input id="name" type="text" class="form-control" value="{{ dproduct }}"disabled>
+              <input id="name" type="text" placeholder="Item Name" class="form-control" value="{{ dproduct }}"disabled>
               <label for="code">Item Code: </label>
-              <input  class="form-control" type="text" id="code" value="{{ dcode }}"disabled>  
+              <input  class="form-control" type="text" id="code" placeholder="Item Code" value="{{ dcode }}"disabled>
              </div>
              <div class="col-lg-4">
               <label for="qty">Item Qty:</label>
-              <input id="qty" type="text" class="form-control" value="{{ dqty }}">
+              <input id="qty" type="text" class="form-control" placeholder="Item Qty" value="{{ dqty }}">
               <label for="price">Item Price: </label>
-              <input  class="form-control" type="text" id="price" value="{{ dprice }}" disabled>  
-             </div>  
+              <input  class="form-control" type="text" placeholder="Item Price" id="price" value="{{ dprice }}" disabled>
+             </div>
            </div>
           </div>
        </div>
@@ -48,7 +48,7 @@
                 </div>
                 <input type="text" class="form-control" placeholder="KOT No." aria-label="Username" aria-describedby="kotno">
                 </div>
-            </div> 
+            </div>
             <div class="card-body saas-zpad">
                 <div class="saas-con">
                     <table class="table table-striped">
@@ -58,6 +58,7 @@
                             <th scope="col">Item</th>
                             <th scope="col">Qty</th>
                             <th scope="col">Price</th>
+                            <th scope="col">Action</th>
                           </tr>
                         </thead>
                         <tbody *ngFor="let item of billing">
@@ -66,6 +67,7 @@
                             <td>{{ item.product }}</td>
                             <td>{{ item.qty }}</td>
                             <td>${{ item.price }}</td>
+                            <td><a (click)="deleteItem(item)"><i data-feather="x-octagon" ></i></a></td>
                           </tr>
                         </tbody>
                       </table>
@@ -78,7 +80,7 @@
                             </div>
                             <input type="text" aria-label="First name" class="form-control">
                             <input type="text" aria-label="Last name" class="form-control" onkeypress="return event.charCode>=40  && event.charCode<=57">
-                          </div>    
+                          </div>
                     </div>
                     <div>
                         <label for="dcustomer">Show on Bill</label>
@@ -104,16 +106,166 @@
         </div>
     </div>
     </div>
+</div> -->
+
+<div class="row">
+  <div class="card col-lg-8 vh-100 p-0" [class.dark-mcard]='topBar.selectedTheme' [class.text-white]='topBar.selectedTheme'>
+    <div class="card-header" [class.dark-mcard-header]='topBar.selectedTheme'>
+      <form action="" class="form-group" [autoClose]="true"
+      ngbPopover="{{ showCmt }}" popoverClass="saas-pop" #popover="ngbPopover" placement="right">
+        <input matInput placeholder="{{ showCmt }}" [matAutocomplete]="auto" class="form-control"
+          [formControl]="searchControl">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="searchProductFn">
+          <div *ngIf="!showCustomer">
+          <mat-option *ngFor="let option of filterSearch | async" (click)="addbill(option, qty)" [value]="option.IName">
+            <div *ngIf="!option.hold">
+              <span>{{option.IName}}</span>|
+              <small>Vendor: {{option.vendor}} | {{option.sPrice | currency:"USD":true}}</small>
+            </div>
+          </mat-option>
+          </div>
+          <div *ngIf="showCustomer">
+              <mat-option *ngFor="let option of filterCustomer | async" [value]="option.fname">
+                {{option.fname}} |
+                <small>Last Name: {{option.lname}} | {{option.mobile}}</small>
+              </mat-option>
+          </div>
+        </mat-autocomplete>
+        <input type="number" class="form-control" value="1" #qty>
+      </form>
+      <div class="card-footer d-flex justify-content-between" [class.dark-mcard-header]='topBar.selectedTheme'>
+        <button mat-raised-button color="warn" matTooltip="Clear Bill" matTooltipPosition="above">
+          <mat-icon aria-hidden="false" aria-label="clear-icon" (click)="clearBill()">delete_sweep</mat-icon>Clear
+          Bill
+        </button>
+        <button mat-raised-button color="primary" matTooltip="Bill Discount" matTooltipPosition="above">
+          <mat-icon aria-hidden="false" aria-label="clear-icon">card_giftcard</mat-icon>Bill
+          Discount
+        </button>
+        <button mat-raised-button color="primary" matTooltip="Price Level" matTooltipPosition="above">
+          <mat-icon aria-hidden="false" aria-label="clear-icon">request_quote</mat-icon>Price
+          Level
+        </button>
+        <button mat-raised-button color="accent" matTooltip="Hold Bill" matTooltipPosition="above">
+          <mat-icon aria-hidden="false" aria-label="clear-icon">pan_tool</mat-icon>Hold Bill
+        </button>
+        <button mat-raised-button color="primary" matTooltip="Delivery Bill" matTooltipPosition="above">
+          <mat-icon aria-hidden="false" aria-label="clear-icon">local_shipping</mat-icon>Delivery
+          Bill
+        </button>
+      </div>
+    </div>
+    <div class="card-body d-flex flex-wrap align-content-start" *ngIf="topBar.selectedView">
+      <!-- <div matRipple class="card text-left sa-card saas-product m-1" (click)="addbill(option,qty)" *ngFor="let option of options">
+        <img [src]="option.src" class="card-img-top saas-product-img">
+        <div class="card-body">
+          <h5 class="card-title">{{ option.IName | titlecase }}</h5>
+          <h6 class="card-text">{{ option.sPrice | currency:"USD":true }}</h6>
+        </div>
+      </div> -->
+      <mat-card matRipple class="saas-product m-1 sa-pointer" (click)="addbill(option,qty)" *ngFor="let option of orderService.products">
+        <img src="{{option.src}}" class="saas-product-img" alt="">
+        <mat-card-content>
+          {{ option.IName | titlecase }} <br>
+          {{ option.sPrice | currency:"USD":true }}
+        </mat-card-content>
+      </mat-card>
+      <!-- <jqxGrid width='100%' [selectionmode]="'checkbox'" [source]="source" [theme]="'material'" [autoheight]="true"
+        [pageable]="true" [altrows]="true" [filterable]="true" [sortable]="true" [columns]="columns" #grid>
+      </jqxGrid> -->
+    </div>
+    <div class="card-body" *ngIf="!topBar.selectedView">
+      <table class="table table-hover table-striped table-bordered">
+              <thead class="thead thead-dark">
+                <tr>
+                  <th scope="col-lg-3">Code.</th>
+                  <th scope="col-lg-3">Product</th>
+                  <th scope="col-lg-3">Group Type</th>
+                  <th scope="col-lg-3">Vendor</th>
+                  <th scope="col-lg-3">Qty</th>
+                  <th scope="col-lg-3">Sales Price</th>
+                  <th scope="col-lg-3">Shelf</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let option of orderService.bill">
+                <tr #data>
+                  <th>{{ option.Icode }}</th>
+                  <th>{{ option.Iname }}</th>
+                  <th>{{ option.Itype }}</th>
+                  <th>{{ option.vendor }}</th>
+                  <th><input type="number" class="form-control-sm" (ngModelChange)="onChange($event)" [(ngModel)]="option.qty"></th>
+                  <th>{{ option.Iprice * option.qty }}</th>
+                  <th>{{ option.shelf }}</th>
+                </tr>
+              </tbody>
+            </table>
+    </div>
+  </div>
+  <div class="card col-lg-4 vh-100 p-0" [class.dark-card]='topBar.selectedTheme' [class.text-white]='topBar.selectedTheme'>
+      <div class="card-header" [class.dark-card-header]='topBar.selectedTheme'>
+        Customer Info
+        <div class="dropdown-divider"></div>
+        <div class="jqx-link" (click)="changeViewCus()" (click)="popover.toggle()" id="button">Select Customer</div>
+      </div>
+      <div class="card-body" (click)="openBill(editBill)">
+        <table class="table table-hover table-striped saas-billsize" appSlimScroll ngx-auto-scroll observe-attributes lock-y-offset="10">
+          <thead>
+            <tr>
+              <th scope="col-1">#</th>
+              <th scope="col-6">Product</th>
+              <th scope="col-2">Qty</th>
+              <th scope="col-3">Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let bill of orderService.bill;index as i">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{ bill.Iname | summary: 15}}</td>
+              <td>{{ bill.qty }}</td>
+              <td>{{ bill.Iprice * bill.qty | currency:"USD":true }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- <jqxGrid width='100%' [source]="source" [theme]="'material'" [autoheight]="true" [pageable]="true"
+          [altrows]="true" [filterable]="true" [sortable]="true" [columns]="bColumns" #grid>
+        </jqxGrid> -->
+        <div>
+          Bill No # {{billNum}}
+          <div class="dropdown-divider"></div>
+          Sales Summery
+          <div class="dropdown-divider"></div>
+          Sub Total: {{totalPrice | currency:"USD":true}} <br>
+          %2 Tax : {{totalPrice *2 /100 | currency:"USD":true}}<br>
+          Round Off
+          <div class="dropdown-divider"></div>
+          <h3 [class.text-white]='topBar.selectedTheme'>Total : {{totalPrice *2 /100 + totalPrice}}</h3>
+        </div>
+        <div>
+          <div class="d-flex justify-content-between">
+            <button mat-raised-button color="primary" class="btn-xs"><i class="material-icons md-48 img">redeem</i> Coupon</button>
+            <button mat-raised-button color="primary" class="btn-xs"  [attr.disabled]="!billSet"><i class="material-icons md-48 img">local_atm</i> Cash</button>
+            <button mat-raised-button color="primary" class="btn-xs"><i class="material-icons md-48 img">credit_card</i> Credit Card</button>
+          </div>
+          <div class="mt-3 mb-3 d-flex justify-content-between">
+            <button mat-raised-button color="primary" class="btn-xs"><i class="material-icons md-48 img">qr_code_scanner</i> UPI Pay</button>
+            <button mat-raised-button color="primary" class="btn-xs"><i class="material-icons md-48 img">credit_card</i> Card</button>
+            <button mat-raised-button color="primary" class="btn-xs"><i class="material-icons md-48 img">account_balance_wallet</i> PayPal</button>
+          </div>
+          <button mat-raised-button color="primary" class="btn-block"><i class="material-icons md-48 img">point_of_sale</i> Payment</button>
+        </div>
+      </div>
+  </div>
 </div>
 
+
 <ng-template #content let-modal>
-    <div class="modal-header saas-color">
-      <h4 class="modal-title text-white" id="modal-basic-title">Customer Details</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="row">
+  <div class="modal-header saas-color">
+    <h4 class="modal-title text-white" id="modal-basic-title">Customer Details</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="row">
     <div class="modal-body col-lg-4">
       <input type="text" class="form-control" placeholder="Fast Name" value="{{ fname }}" #fName>
       <input type="text" class="form-control" placeholder="Last Name " value="{{ lname }}" #lName>
@@ -124,8 +276,11 @@
         <button class="btn btn-primary">Update</button>
       </div>
     </div>
-    <div class="col-lg-7 saas-scr">
-      <table class="table table-light table-striped table-bordered table-hover">
+    <div appSlimScroll class="col-lg-7">
+      <jqxGrid width='100%' [source]="cList" [theme]="'material'" [autoheight]="true" [pageable]="true" [altrows]="true"
+        [filterable]="true" [sortable]="true" [columns]="columnsList">
+      </jqxGrid>
+      <!-- <table class="table table-light table-striped table-bordered table-hover">
         <thead class="thead thead-dark">
           <tr>
             <th scope="col-lg-3">Sr No.</th>
@@ -142,23 +297,24 @@
           <th>{{ customer.mobile }}</th>
           <th>{{ customer.email }}</th></tr>
         </tbody>
-      </table>
+      </table> -->
     </div>
-    </div>
-    <div class="modal-footer"></div>
-    <div class="text-right saas-amargin">
-      <button type="button" class="btn btn-danger btn-rounded" aria-label="Close" (click)="modal.dismiss('Close')">close</button>
-    </div>
-  </ng-template>
-  
-  <ng-template #menu let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title text-white" id="modal-basic-title">Customer Details</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="row">
+  </div>
+  <div class="modal-footer"></div>
+  <div class="text-right saas-amargin">
+    <button type="button" class="btn btn-danger btn-rounded" aria-label="Close"
+      (click)="modal.dismiss('Close')">close</button>
+  </div>
+</ng-template>
+
+<ng-template #menu let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title text-white" id="modal-basic-title">Customer Details</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="row">
     <div class="modal-body col-lg-4">
       <input type="text" class="form-control" placeholder="Fast Name" value="{{ fname }}" #fName>
       <input type="text" class="form-control" placeholder="Last Name " value="{{ lname }}" #lName>
@@ -169,20 +325,21 @@
         <button class="btn btn-primary">Update</button>
       </div>
     </div>
-    </div>
-    <div class="modal-footer"></div>
-    <div class="text-right saas-amargin">
-      <button type="button" class="btn btn-danger btn-rounded" aria-label="Close" (click)="modal.dismiss('Close')">close</button>
-    </div>
-  </ng-template>
-  <ng-template #newitem let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Add New Item</h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="row">
+  </div>
+  <div class="modal-footer"></div>
+  <div class="text-right saas-amargin">
+    <button type="button" class="btn btn-danger btn-rounded" aria-label="Close"
+      (click)="modal.dismiss('Close')">close</button>
+  </div>
+</ng-template>
+<ng-template #newitem let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add New Item</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="row">
     <div class="modal-body col-lg-4">
       <label for="code">Item Code</label>
       <input type="text" id="code" class="form-control" placeholder="Item Code" value="{{ iCode }}" #icode>
@@ -201,7 +358,8 @@
       <label for="Shelf">Shelf No.</label>
       <input type="text" id="Shelf" class="form-control" placeholder="Shelf No." value="{{ iShelf }}" #shelf>
       <div class="text-right">
-        <button class="btn btn-primary" (click)='addItem(icode,iname,gname,vendor,pprice,unit,sprice,shelf)'>Add</button>
+        <button class="btn btn-primary"
+          (click)='addItem(icode,iname,gname,vendor,pprice,unit,sprice,shelf)'>Add</button>
         <button class="btn btn-primary">Update</button>
       </div>
     </div>
@@ -219,7 +377,7 @@
             <th scope="col-lg-3">Shelf No.</th>
           </tr>
         </thead>
-        <tbody *ngFor="let product of products">
+        <tbody *ngFor="let product of orderService.products">
           <tr (click)="getItemD(product)">
             <th>{{ product.ICode }}</th>
             <th>{{ product.IName }}</th>
@@ -233,15 +391,75 @@
         </tbody>
       </table>
     </div>
-    </div>
-    <div class="modal-footer"></div>
-    <div class="text-right saas-amargin">
-      <button type="button" class="btn btn-danger btn-rounded" aria-label="Close" (click)="modal.dismiss('Close')">close</button>
-    </div>
-  </ng-template>
+  </div>
+  <div class="modal-footer"></div>
+  <div class="text-right saas-amargin">
+    <button type="button" class="btn btn-danger btn-rounded" aria-label="Close"
+      (click)="modal.dismiss('Close')">close</button>
+  </div>
+</ng-template>
 
-  <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
-  
-  <hr>
-  
-  <!-- <pre>{{ closeResult }}</pre> -->
+<ng-template #deleteAt let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">! Warning !</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="row">
+    <div class="modal-body">
+      <div class="icon-item">
+        <i data-feather="x-circle"></i>
+      </div>
+      <h1 style="color: red;"><i data-feather="x-octagon"></i></h1>
+      <label for="confirm Password"></label>
+      <input type="text" class="form-control" placeholder="Password">
+      <div class="text-right">
+        <button class="btn btn-primary" (click)="modal.close('delete')">Confirm</button>
+        <button class="btn btn-primary" (click)="modal.dismiss('close')">Cancel</button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #editBill let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">! Warning !</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="row">
+    <div class="modal-body">
+    <table class="table table-light table-striped table-bordered table-hover">
+      <thead class="thead thead-dark">
+        <tr>
+          <th scope="col-lg-3">Code.</th>
+          <th scope="col-lg-3">Product</th>
+          <th scope="col-lg-3">Group Type</th>
+          <th scope="col-lg-3">Vendor</th>
+          <th scope="col-lg-3">Qty</th>
+          <th scope="col-lg-3">Sales Price</th>
+          <th scope="col-lg-3">Shelf</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let option of makeBill">
+        <tr #data>
+          <th>{{ option.Icode }}</th>
+          <th>{{ option.Iname }}</th>
+          <th>{{ option.Itype }}</th>
+          <th>{{ option.vendor }}</th>
+          <th><input type="number" class="form-control-sm" (ngModelChange)="onChange($event)" [(ngModel)]="option.qty"></th>
+          <th>{{ option.Iprice * option.qty }}</th>
+          <th>{{ option.shelf }}</th>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</ng-template>
+
+<!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
+
+<hr>
+
+<!-- <pre>{{ closeResult }}</pre> -->

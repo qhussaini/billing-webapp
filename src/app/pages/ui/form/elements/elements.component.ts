@@ -13,6 +13,6 @@ export class ElementsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.breadCrumbItems = [{ label: 'AQ-saas', path: '/' }, { label: 'Forms', path: '/' }, { label: 'Basic', active: true }];
+    this.breadCrumbItems = [{ label: 'pro', path: '/' }, { label: 'Forms', path: '/' }, { label: 'Basic', active: true }];
   }
 }

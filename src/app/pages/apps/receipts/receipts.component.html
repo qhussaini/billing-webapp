@@ -16,10 +16,10 @@
             <option value='10'>October</option>
             <option value='11'>November</option>
             <option value='12'>December</option>
-        </select> 
+        </select>
     </div>
     </div>
-    <div class="col-lg-2"> 
+    <div class="col-lg-2">
         <div class="btn-group" role="group" aria-label="Button-group">
             <button type="button" class="btn btn-secondary">All</button>
             <button type="button" class="btn btn-secondary">Todays</button>
@@ -32,16 +32,16 @@
           <option value='1'>Table 1</option>
           <option value='2'>Table 2</option>
           <option value='3'>Table 3</option>
-      </select> 
+      </select>
   </div>
   </div>
-    <div class="col-lg-2"> 
+    <div class="col-lg-2">
         <input placeholder="From Date" class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date">
     </div>
     <div class="col-lg-2">
         <input placeholder="To Date" class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date">
     </div>
-    <div class="col-lg-2"> 
+    <div class="col-lg-2">
         <div class="d-flex justify-content-between">
             <button type="button" class="btn saas-button">To Excel</button>
             <button type="button" class="btn saas-button">To PDF</button>
@@ -49,29 +49,45 @@
     </div>
     </div>
 </div>
+<div class="card">
+<div class="card-body">
+  <jqxGrid #myGrid width="100%" [source]="dataAdapter" [columns]="columns" [sortable]="true" [altrows]="true">
+  </jqxGrid>
+</div>
+  <div class="card-fooder">
+      <button mat-raised-button color="primary" (onClick)="excelBtnOnClick()">Export to Excel</button>
+      <!-- <button mat-raised-button color="primary" (onClick)="xmlBtnOnClick()">Export to XML</button> -->
+      <button mat-raised-button color="primary" (onClick)="csvBtnOnClick()">Export to CSV</button>
+      <!-- <button mat-raised-button color="primary" (onClick)="tsvBtnOnClick()">Export to TSV</button> -->
+      <!-- <button mat-raised-button color="primary" (onClick)="htmlBtnOnClick()">Export to HTML</button> -->
+      <!-- <button mat-raised-button color="primary" (onClick)="jsonBtnOnClick()">Export to JSON</button> -->
+      <button mat-raised-button color="primary" (onClick)="pdfBtnOnClick()">Export to PDF</button>
+  </div>
+</div>
 
-<div class="saas-back">
+
+<!-- <div class="saas-back">
     <div class="tbl-header">
-      <table cellpadding="0" cellspacing="0" border="0">
+      <table class="saas-mtable" cellpadding="0" cellspacing="0" border="0">
         <thead>
           <tr>
-            <th>Bill No.</th>
-            <th>Table</th>
-            <th>Date</th>
-            <th>Amount</th>
-            <th>Discount</th>
-            <th>Tax</th>
-            <th>Order Type</th>
-            <th>Payment</th>
-            <th>Customer</th>
-            <th>Status</th>
-            <th>Employee ID</th>
+            <th class="saas-th">Bill No.</th>
+            <th class="saas-th">Table</th>
+            <th class="saas-th">Date</th>
+            <th class="saas-th">Amount</th>
+            <th class="saas-th">Discount</th>
+            <th class="saas-th">Tax</th>
+            <th class="saas-th">Order Type</th>
+            <th class="saas-th">Payment</th>
+            <th class="saas-th">Customer</th>
+            <th class="saas-th">Status</th>
+            <th class="saas-th">Employee ID</th>
           </tr>
         </thead>
       </table>
     </div>
     <div class="tbl-content">
-      <table cellpadding="0" cellspacing="0" border="0">
+      <table class="saas-mtable" cellpadding="0" cellspacing="0" border="0">
         <tbody>
           <tr>
             <td>1</td>
@@ -219,7 +235,7 @@
         </tbody>
       </table>
     </div>
-</div>
+</div> -->
 <div class="row">
     <div class="col-lg-4">
         <div class="card text-center saas-card">
@@ -232,19 +248,19 @@
     <div class="col-lg-4">
         <div class="saas-table">
             <div class="tbl-header">
-              <table cellpadding="0" cellspacing="0" border="0">
+              <table class="saas-mtable" cellpadding="0" cellspacing="0" border="0">
                 <thead>
                   <tr>
-                    <th>Item</th>
-                    <th>Qty</th>
-                    <th>Price</th>
-                    <th>Amount</th>
+                    <th class="saas-th">Item</th>
+                    <th class="saas-th">Qty</th>
+                    <th class="saas-th">Price</th>
+                    <th class="saas-th">Amount</th>
                   </tr>
                 </thead>
               </table>
             </div>
             <div class="tbl-sub-content">
-              <table cellpadding="0" cellspacing="0" border="0">
+              <table class="saas-mtable" cellpadding="0" cellspacing="0" border="0">
                 <tbody>
                   <tr>
                     <td>Biryani FP</td>
@@ -294,5 +310,5 @@
         </div>
         </div>
     </div>
-    
+
 </div>

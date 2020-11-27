@@ -1,5 +1,5 @@
 /*
-Template Name: AQ-saas - Responsive Bootstrap 4 Admin Dashboard
+Template Name: pro - Responsive Bootstrap 4 Admin Dashboard
 Author: CoderThemes
 Version: 1.0.0
 Website: https://coderthemes.com/
@@ -9,32 +9,30 @@ File: Main Css File
 
 /* =======================
     TABLE OF CSS
-    1. Fonts 
-    2. General 
-    3. Left Menu 
-    4. Topbar 
-    5. Page Head 
-    6. Footer 
-    7. Horizontal Nav 
-    8. Right Sidebar 
-    9. Layouts 
-    10. Helper 
-    11. Social 
-    12. Widgets 
-    13. Custom Checkbox 
-    14. Custom Radio 
-    15. Print 
-    16. Preloader 
-    17. Plugins 
-    18. Components Demo 
-    19. Tasks 
-    20. Email 
-    21. Timeline 
-    22. Extra Pages 
-    23. Authentication 
+    1. Fonts
+    2. General
+    3. Left Menu
+    4. Topbar
+    5. Page Head
+    6. Footer
+    7. Horizontal Nav
+    8. Right Sidebar
+    9. Layouts
+    10. Helper
+    11. Social
+    12. Widgets
+    13. Custom Checkbox
+    14. Custom Radio
+    15. Print
+    16. Preloader
+    17. Plugins
+    18. Components Demo
+    19. Tasks
+    20. Email
+    21. Timeline
+    22. Extra Pages
+    23. Authentication
    ======================= */
-
-
 
 //Fonts
 /* 1. Fonts */
@@ -93,6 +91,8 @@ File: Main Css File
 @import "custom/plugins/datatable";
 @import "custom/plugins/kanban";
 @import "custom/plugins/metismenu";
+@import "ag-grid-community/dist/styles/ag-grid.css";
+@import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 
 //Pages
 /* 18. Components Demo */
@@ -107,7 +107,7 @@ File: Main Css File
 @import "custom/pages/extra-pages";
 /* 23. Authentication */
 @import "custom/pages/authentication";
-.anwar  {
-    background-color: black;
-    color: burlywood;
-}
+/* 23.  Dark Theme*/
+@import "custom/pages/dark-theme";
+/* 23.  saas-custom*/
+@import "custom/pages/saas-custom";

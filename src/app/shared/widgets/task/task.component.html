@@ -2,10 +2,10 @@
     <div class="col">
         <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="task{{ id }}">
-            <label class="custom-control-label" for="task{{ id }}">
+            <label class="custom-control-label" for="task{{ id }}" [class.text-white]='topBar.selectedTheme'>
                 {{ title }}
             </label>
-            <p class="font-size-13 text-muted">{{ text }}</p>
+            <p class="font-size-13 text-muted" [class.text-white]='topBar.selectedTheme'>{{ text }}</p>
         </div> <!-- end checkbox -->
     </div>
 </div>

@@ -28,7 +28,7 @@ export class InboxComponent implements OnInit {
 
   ngOnInit() {
     // tslint:disable-next-line: max-line-length
-    this.breadCrumbItems = [{ label: 'AQ-saas', path: '/' }, { label: 'Apps', path: '/' }, { label: 'Email', path: '/' }, { label: 'Inbox', active: true }];
+    this.breadCrumbItems = [{ label: 'pro', path: '/' }, { label: 'Apps', path: '/' }, { label: 'Email', path: '/' }, { label: 'Inbox', active: true }];
 
     this._fetchData();
     this.isChatVisible = true;

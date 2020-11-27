@@ -30,7 +30,7 @@ export class ValidationComponent implements OnInit {
 
   ngOnInit() {
     // tslint:disable-next-line: max-line-length
-    this.breadCrumbItems = [{ label: 'AQ-saas', path: '/' }, { label: 'Forms', path: '/' }, { label: 'Validation', path: '/', active: true }];
+    this.breadCrumbItems = [{ label: 'pro', path: '/' }, { label: 'Forms', path: '/' }, { label: 'Validation', path: '/', active: true }];
     /**
      * Bootstrap validation form data
      */

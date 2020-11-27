@@ -17,6 +17,6 @@ export class FeatherComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.breadCrumbItems = [{ label: 'AQ-saas', path: '/' }, { label: 'Icons', path: '/' }, { label: 'Feather Icons', active: true }];
+    this.breadCrumbItems = [{ label: 'pro', path: '/' }, { label: 'Icons', path: '/' }, { label: 'Feather Icons', active: true }];
   }
 }

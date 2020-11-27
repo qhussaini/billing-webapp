@@ -200,7 +200,7 @@ const ordersData = [
     {
         id: '#98751',
         product: 'Lightweight Jacket',
-        name: 'AQ-saas N',
+        name: 'pro N',
         price: '$49.49',
         status: 'Delivered',
     },

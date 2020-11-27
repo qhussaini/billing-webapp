@@ -5,8 +5,8 @@
 
     <app-leftsidebar [sidebarType]="sidebarType"></app-leftsidebar>
 
-    <div class="content-page">
-        <div class="content">
+    <div class="content-page p-0" [class.dark-mcard]='topBar.selectedTheme'>
+        <div class="content fixHeight" appSlimScroll>
             <!-- content -->
             <router-outlet></router-outlet>
         </div>

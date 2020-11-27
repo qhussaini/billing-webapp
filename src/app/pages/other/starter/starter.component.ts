@@ -17,6 +17,6 @@ export class StarterComponent implements OnInit {
    constructor() { }
 
    ngOnInit() {
-     this.breadCrumbItems = [{ label: 'AQ-saas', path: '/' }, { label: 'Pages', path: '/' }, { label: 'Starter', active: true }];
+     this.breadCrumbItems = [{ label: 'pro', path: '/' }, { label: 'Pages', path: '/' }, { label: 'Starter', active: true }];
    }
 }

@@ -17,6 +17,6 @@ export class ActivityComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.breadCrumbItems = [{ label: 'AQ-saas', path: '/' }, { label: 'Pages', path: '/' }, { label: 'Activity', active: true }];
+    this.breadCrumbItems = [{ label: 'pro', path: '/' }, { label: 'Pages', path: '/' }, { label: 'Activity', active: true }];
   }
 }

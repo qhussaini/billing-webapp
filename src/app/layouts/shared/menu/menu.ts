@@ -34,8 +34,8 @@ export const MENU: MenuItem[] = [
         link: '/apps-receipts',
     },
     {
-        label: 'Purchase',
-        icon: 'truck',
+        label: 'Inventory',
+        icon: 'package',
         link: '/apps-purchase',
     },
     {

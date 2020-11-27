@@ -1,29 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, Validators, FormGroup } from "@angular/forms";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGrigPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import bootstrapPlugin from '@fullcalendar/bootstrap';
-import listPlugin from '@fullcalendar/list';
-import { EventInput } from '@fullcalendar/core';
+import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGrigPlugin from "@fullcalendar/timegrid";
+import interactionPlugin from "@fullcalendar/interaction";
+import bootstrapPlugin from "@fullcalendar/bootstrap";
+import listPlugin from "@fullcalendar/list";
+import { EventInput } from "@fullcalendar/core";
 
-import { Event } from './event.model';
+import { Event } from "./event.model";
 
-import { category, calendarEvents } from './data';
+import { category, calendarEvents } from "./data";
+import { TopBar } from "src/app/layouts/shared/topbar/topbar.model";
 
 @Component({
-  selector: 'app-calendar',
-  templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss']
+  selector: "app-calendar",
+  templateUrl: "./calendar.component.html",
+  styleUrls: ["./calendar.component.scss"],
 })
 
 /**
  * Calendar component - handling calendar with sidebar and content
  */
 export class CalendarComponent implements OnInit {
-
   // bread crumb items
   breadCrumbItems: Array<{}>;
 
@@ -48,26 +48,40 @@ export class CalendarComponent implements OnInit {
   deleteEvent: EventInput;
 
   // calendar plugin
-  calendarPlugins = [dayGridPlugin, bootstrapPlugin, timeGrigPlugin, interactionPlugin, listPlugin];
+  calendarPlugins = [
+    dayGridPlugin,
+    bootstrapPlugin,
+    timeGrigPlugin,
+    interactionPlugin,
+    listPlugin,
+  ];
   calendarWeekends: any;
   // show events
   calendarEvents: EventInput[];
 
-  constructor(private modalService: NgbModal, private formBuilder: FormBuilder) { }
+  constructor(
+    private modalService: NgbModal,
+    private formBuilder: FormBuilder,
+    public topBar: TopBar
+  ) {}
 
   ngOnInit() {
-    this.breadCrumbItems = [{ label: 'AQ-saas', path: '/' }, { label: 'Apps', path: '/' }, { label: 'Calendar', active: true }];
+    this.breadCrumbItems = [
+      { label: "pro", path: "/" },
+      { label: "Apps", path: "/" },
+      { label: "Calendar", active: true },
+    ];
 
     this.formCreateEvent = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      category: ['', [Validators.required]],
+      name: ["", [Validators.required]],
+      category: ["", [Validators.required]],
     });
 
     /**
      * Edit Event Model Data
      */
     this.formEditEvent = this.formBuilder.group({
-      editTitle: ['', [Validators.required]],
+      editTitle: ["", [Validators.required]],
     });
 
     /**
@@ -101,19 +115,19 @@ export class CalendarComponent implements OnInit {
     }
 
     if (this.formCreateEvent.valid) {
-      const title = this.formCreateEvent.get('name').value;
+      const title = this.formCreateEvent.get("name").value;
       // tslint:disable-next-line: no-shadowed-variable
-      const category = this.formCreateEvent.get('category').value;
+      const category = this.formCreateEvent.get("category").value;
 
       this.calendarEvents = this.calendarEvents.concat({
         id: this.calendarEvents.length + 1,
         title,
         className: category,
-        start: this.newEventDate || new Date()
+        start: this.newEventDate || new Date(),
       });
       this.formCreateEvent = this.formBuilder.group({
-        name: '',
-        category: ''
+        name: "",
+        category: "",
       });
       this.modalService.dismissAll();
     }
@@ -139,7 +153,12 @@ export class CalendarComponent implements OnInit {
       editTitle: event.event.title,
     });
     // tslint:disable-next-line: max-line-length
-    this.editEvent = { id: event.event.id, title: event.event.title, start: event.event.start, classNames: event.event.classNames };
+    this.editEvent = {
+      id: event.event.id,
+      title: event.event.title,
+      start: event.event.start,
+      classNames: event.event.classNames,
+    };
     this.modalService.open(editcontent);
   }
 
@@ -153,12 +172,19 @@ export class CalendarComponent implements OnInit {
       return;
     }
 
-    const editTitle = this.formEditEvent.get('editTitle').value;
-    const editId = this.calendarEvents.findIndex(x => x.id + '' === this.editEvent.id + '');
+    const editTitle = this.formEditEvent.get("editTitle").value;
+    const editId = this.calendarEvents.findIndex(
+      (x) => x.id + "" === this.editEvent.id + ""
+    );
     // tslint:disable-next-line: radix
-    this.calendarEvents[editId] = { ...this.editEvent, title: editTitle, id: parseInt(this.editEvent.id + ''), className: '' };
+    this.calendarEvents[editId] = {
+      ...this.editEvent,
+      title: editTitle,
+      id: parseInt(this.editEvent.id + ""),
+      className: "",
+    };
     this.formEditEvent = this.formBuilder.group({
-      editTitle: '',
+      editTitle: "",
     });
     this.modalService.dismissAll();
   }
@@ -168,8 +194,10 @@ export class CalendarComponent implements OnInit {
    */
   deleteEventData() {
     const deleteId = this.editEvent.id;
-    const deleteEvent = this.calendarEvents.findIndex(x => x.id + '' === deleteId + '');
-    this.calendarEvents[deleteEvent] = { ...this.deleteEvent, id: '' };
+    const deleteEvent = this.calendarEvents.findIndex(
+      (x) => x.id + "" === deleteId + ""
+    );
+    this.calendarEvents[deleteEvent] = { ...this.deleteEvent, id: "" };
     delete this.calendarEvents[deleteEvent].id;
     this.modalService.dismissAll();
   }

@@ -1,29 +1,46 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  HostListener,
+} from "@angular/core";
+import { Router } from "@angular/router";
 
-import { AuthenticationService } from '../../../core/services/auth.service';
+import { AuthenticationService } from "../../../core/services/auth.service";
 
-import { Notification } from './topbar.model';
+import { Notification, TopBar } from "./topbar.model";
 
-import { notificationItems } from './data';
+import { notificationItems } from "./data";
+import { EventService } from "src/app/core/services/event.service";
 
 @Component({
-  selector: 'app-topbar',
-  templateUrl: './topbar.component.html',
-  styleUrls: ['./topbar.component.scss']
+  selector: "app-topbar",
+  templateUrl: "./topbar.component.html",
+  styleUrls: ["./topbar.component.scss"],
 })
 export class TopbarComponent implements OnInit {
-
+  @HostListener("window:resize", ["$event"])
+  onResize(event?) {
+    this.topBar.screenHeight = window.innerHeight;
+    this.topBar.screenWidth = window.innerWidth;
+    console.log(
+      "Width : " +
+        this.topBar.screenWidth +
+        " and Height: " +
+        this.topBar.screenHeight
+    );
+  }
   notificationItems: Notification[];
   languages: Array<{
-    id: number,
-    flag?: string,
-    name: string
+    id: number;
+    flag?: string;
+    name: string;
   }>;
   selectedLanguage: {
-    id: number,
-    flag?: string,
-    name: string
+    id: number;
+    flag?: string;
+    name: string;
   };
 
   openMobileMenu: boolean;
@@ -31,7 +48,15 @@ export class TopbarComponent implements OnInit {
   @Output() settingsButtonClicked = new EventEmitter();
   @Output() mobileMenuButtonClicked = new EventEmitter();
 
-  constructor(private router: Router, private authService: AuthenticationService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthenticationService,
+    public topBar: TopBar,
+    private eventService: EventService
+  ) {
+    this.onResize();
+    this.topBar.checkSize();
+  }
 
   ngOnInit() {
     // get the notifications
@@ -45,6 +70,18 @@ export class TopbarComponent implements OnInit {
    */
   changeLanguage(language) {
     this.selectedLanguage = language;
+  }
+
+  changeView(touce: boolean, theme?: boolean) {
+    this.topBar.selectedView = touce;
+    this.topBar.selectedTheme = theme;
+    console.log(this.topBar.selectedView);
+  }
+  darktheme(theme: string) {
+    this.eventService.broadcast("changeLayout", "vertical");
+    this.eventService.broadcast("changeLeftSidebarTheme", theme);
+    this.eventService.broadcast("changeLeftSidebarType", "default");
+    console.log(theme);
   }
 
   /**
@@ -67,7 +104,7 @@ export class TopbarComponent implements OnInit {
    */
   logout() {
     this.authService.logout();
-    this.router.navigate(['/account/login']);
+    this.router.navigate(["/account/login"]);
   }
 
   /**

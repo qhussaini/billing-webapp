@@ -13,6 +13,6 @@ export class InvoiceComponent implements OnInit {
    constructor() { }
 
    ngOnInit() {
-     this.breadCrumbItems = [{ label: 'AQ-saas', path: '/' }, { label: 'Pages', path: '/' }, { label: 'Invoice', active: true }];
+     this.breadCrumbItems = [{ label: 'pro', path: '/' }, { label: 'Pages', path: '/' }, { label: 'Invoice', active: true }];
    }
 }

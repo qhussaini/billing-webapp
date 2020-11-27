@@ -1,21 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
-import { revenueAreaChart, targetsBarChart, salesDonutChart, ordersData } from './data';
+import {
+  revenueAreaChart,
+  targetsBarChart,
+  salesDonutChart,
+  ordersData,
+} from "./data";
 
-import { ChartType, OrdersTable } from './dashboard.model';
+import { ChartType, OrdersTable } from "./dashboard.model";
+import { TopBar } from "src/app/layouts/shared/topbar/topbar.model";
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: "app-dashboard",
+  templateUrl: "./dashboard.component.html",
+  styleUrls: ["./dashboard.component.scss"],
 })
 
 /**
  * Dashboard component - handling dashboard with sidear and content
  */
 export class DashboardComponent implements OnInit {
-
-  constructor() { }
+  constructor(public topBar: TopBar) {}
 
   revenueAreaChart: ChartType;
   targetsBarChart: ChartType;
@@ -23,7 +28,6 @@ export class DashboardComponent implements OnInit {
   ordersData: OrdersTable[];
 
   ngOnInit() {
-
     /**
      * Fetches the data
      */

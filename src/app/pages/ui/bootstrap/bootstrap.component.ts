@@ -45,7 +45,7 @@ export class BootstrapComponent implements OnInit {
   constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
-    this.breadCrumbItems = [{ label: 'AQ-saas', path: '/' }, { label: 'Components', path: '/' }, { label: 'Bootstrap UI', active: true }];
+    this.breadCrumbItems = [{ label: 'pro', path: '/' }, { label: 'Components', path: '/' }, { label: 'Bootstrap UI', active: true }];
 
     this._fetchData();
   }

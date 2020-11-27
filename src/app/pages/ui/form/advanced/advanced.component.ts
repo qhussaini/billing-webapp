@@ -24,7 +24,7 @@ export class AdvancedComponent implements OnInit {
 
   ngOnInit() {
     // tslint:disable-next-line: max-line-length
-    this.breadCrumbItems = [{ label: 'AQ-saas', path: '/' }, { label: 'Forms', path: '/' }, { label: 'Advanced', path: '/', active: true }];
+    this.breadCrumbItems = [{ label: 'pro', path: '/' }, { label: 'Forms', path: '/' }, { label: 'Advanced', path: '/', active: true }];
 
     // Select dropdown value
     // tslint:disable-next-line: max-line-length

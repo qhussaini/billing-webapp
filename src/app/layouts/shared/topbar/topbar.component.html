@@ -1,11 +1,11 @@
 <!-- Topbar Start -->
-<div class="navbar navbar-expand flex-column flex-md-row navbar-custom">
+<div class="navbar navbar-expand flex-column flex-md-row navbar-custom sa-shadow" [class.dark-card]='topBar.selectedTheme' [class.text-white]='topBar.selectedTheme'>
   <div class="container-fluid">
     <!-- LOGO -->
     <a routerLink="/" class="navbar-brand mr-0 mr-md-2 logo">
       <span class="logo-lg">
         <img src="assets/images/logo.png" alt="" height="24" />
-        <span class="d-inline h5 ml-1 text-logo ml-2">AQ-saas</span>
+        <span class="d-inline h5 ml-1 text-logo ml-2" [class.text-white]='topBar.selectedTheme'>pro</span>
       </span>
       <span class="logo-sm">
         <img src="assets/images/logo.png" alt="" height="24">
@@ -33,9 +33,40 @@
         </div>
       </li>
 
+      <li class="dropdown d-none d-lg-block" placement="left" ngbTooltip="Change View" ngbDropdown>
+        <a class="nav-link dropdown-toggle mr-0" ngbDropdownToggle href="javascript: void(0);" role="button">
+          <span class="material-icons align-middle" [class.text-white]='topBar.selectedTheme'>
+            room_preferences
+          </span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
+          <!-- item-->
+          <a href="javascript:void(0);" (click)="changeView(true, false)" (click)="darktheme('vertical')" class="dropdown-item notify-item" ngbDropdownItem>
+            <i [attr.data-feather]="'tablet'" appFeatherIcon></i><span
+              class="align-middle">Touce</span>
+          </a>
+          <!-- item-->
+          <a href="javascript:void(0);" (click)="changeView(true, true)" (click)="darktheme('dark')" class="dropdown-item notify-item" ngbDropdownItem>
+            <i [attr.data-feather]="'tablet'" appFeatherIcon></i><span class="align-middle">Touce (Dark)</span>
+          </a>
+
+          <!-- item-->
+          <a href="javascript:void(0);" (click)="changeView(false, false)" (click)="darktheme('vertical')" class="dropdown-item notify-item" ngbDropdownItem>
+            <i [attr.data-feather]="'mouse-pointer'" appFeatherIcon></i><span
+              class="align-middle">Standerd</span>
+          </a>
+
+          <!-- item-->
+          <a href="javascript:void(0);" (click)="changeView(false, true)" (click)="darktheme('dark')" class="dropdown-item notify-item" ngbDropdownItem>
+            <i [attr.data-feather]="'mouse-pointer'" appFeatherIcon></i><span class="align-middle">Standerd (Dark)</span>
+          </a>
+        </div>
+      </li>
       <li class="dropdown d-none d-lg-block" placement="left" ngbTooltip="Change language" ngbDropdown>
         <a class="nav-link dropdown-toggle mr-0" ngbDropdownToggle href="javascript: void(0);" role="button">
-          <i [attr.data-feather]="'globe'" appFeatherIcon></i>
+          <span class="material-icons align-middle" [class.text-white]='topBar.selectedTheme'>
+            language
+          </span>
         </a>
         <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
           <!-- item-->
@@ -63,10 +94,11 @@
           </a>
         </div>
       </li>
-
       <li class="dropdown notification-list" placement="left" ngbTooltip="8 new unread notifications" ngbDropdown>
         <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript: void(0);" role="button">
-          <i [attr.data-feather]="'bell'" appFeatherIcon></i>
+          <span class="material-icons align-middle" [class.text-white]='topBar.selectedTheme'>
+            notifications
+          </span>
           <span class="noti-icon-badge"></span>
         </a>
         <div class="dropdown-menu dropdown-menu-right dropdown-lg" ngbDropdownMenu>
@@ -109,7 +141,9 @@
 
       <li class="dropdown notification-list" placement="left" ngbTooltip="Settings">
         <a href="javascript:void(0);" class="nav-link right-bar-toggle" (click)="toggleRightSidebar()">
-          <i [attr.data-feather]="'settings'" class="right-bar-toggle" appFeatherIcon></i>
+          <span class="material-icons align-middle" [class.text-white]='topBar.selectedTheme'>
+            settings
+          </span>
         </a>
       </li>
 
@@ -119,7 +153,7 @@
             <img src="assets/images/users/avatar-7.jpg" alt="user-image" class="rounded-circle align-self-center" />
             <div class="media-body text-left">
               <h6 class="pro-user-name ml-2 my-0">
-                <span>AQ-saas N</span>
+                <span>pro N</span>
                 <span class="pro-user-desc text-muted d-block mt-1">Administrator </span>
               </h6>
             </div>

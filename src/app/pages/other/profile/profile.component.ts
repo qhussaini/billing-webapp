@@ -25,7 +25,7 @@ export class ProfileComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.breadCrumbItems = [{ label: 'AQ-saas', path: '/' }, { label: 'Pages', path: '/' }, { label: 'Profile', active: true }];
+    this.breadCrumbItems = [{ label: 'pro', path: '/' }, { label: 'Pages', path: '/' }, { label: 'Profile', active: true }];
 
     this._fetchData();
   }

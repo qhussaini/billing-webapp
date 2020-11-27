@@ -1,15 +1,15 @@
-<div class="card">
+<div class="card" [class.dark-card]='topBar.selectedTheme'>
     <div class="card-body p-0">
         <div class="media p-3">
             <div class="media-body">
-                <span class="text-muted text-uppercase font-size-12 font-weight-bold">{{ mainTitle }}</span>
-                <h2 class="mb-0">{{ value }}</h2>
+                <span class="text-uppercase font-size-12 font-weight-bold" [class.text-muted]='!topBar.selectedTheme' [class.text-white-50]='topBar.selectedTheme'>{{ mainTitle }}</span>
+                <h2 class="mb-0"  [class.text-white]='topBar.selectedTheme'>{{ value }}</h2>
             </div>
             <div class="align-self-center">
                 <apx-chart #chart class="apex-chart-widget" [series]="series" [chart]="chartData" [colors]="colors"
                     [tooltip]="tooltip" [stroke]="stroke" [fill]="fill" [markers]="markers">
                 </apx-chart>
-                <span class="text-success font-weight-bold font-size-13"
+                <span class="text-success font-weight-bold font-size-13"  [class.text-white]='topBar.selectedTheme'
                     [ngClass]="{ 'text-danger': subValue === '5.05%' }"><i class='uil'
                         [ngClass]="{ 'uil uil-arrow-down': subValue === '5.05%' , 'uil uil-arrow-up': subValue !== '5.05%'}"></i>
                     {{ subValue }}</span>
