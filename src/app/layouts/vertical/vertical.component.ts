@@ -7,7 +7,13 @@ import {
   SimpleChanges,
   SimpleChange,
 } from "@angular/core";
-import { Router, NavigationEnd } from "@angular/router";
+import {
+  Router,
+  NavigationEnd,
+  NavigationStart,
+  NavigationError,
+  NavigationCancel,
+} from "@angular/router";
 
 import {
   LAYOUT_WIDTH_FLUID,

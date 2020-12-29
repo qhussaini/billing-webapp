@@ -1,0 +1,19 @@
+  <!-- Terminal -->
+  <div class="terminal">
+    <barcode-scanner-livestream class="sa-cam" [type]="['code_128', 'code_39', 'ean_8']"
+      (valueChanges)="onValueChanges($event)" (started)="onStarted($event)"></barcode-scanner-livestream>
+    <div>
+      {{ barcodeValue }}
+      add java program for barcode R&W
+    </div>
+
+    <!-- <qr-scanner [canvasWidth]="100"
+      [canvasHeight]="100"
+      [debug]="false"
+      [updateTime]="500"
+      [stopAfterScan]="true"
+      [chooseCamera]="chosenCameraSubject"
+      (foundCameras)="listCameras($event)">
+      (capturedQr)="decoded($event)"
+    </qr-scanner> -->
+  </div>

@@ -44,10 +44,11 @@ export class TopbarComponent implements OnInit {
   };
 
   openMobileMenu: boolean;
+  alertToolTip: string;
 
   @Output() settingsButtonClicked = new EventEmitter();
   @Output() mobileMenuButtonClicked = new EventEmitter();
-
+  acType: string;
   constructor(
     private router: Router,
     private authService: AuthenticationService,
@@ -56,6 +57,16 @@ export class TopbarComponent implements OnInit {
   ) {
     this.onResize();
     this.topBar.checkSize();
+    this.acType = this.authService.currentUser().type;
+    console.log("acType" + this.acType);
+    if (this.acType === "emp") {
+      this.topBar.isAdmin = false;
+    } else {
+      this.topBar.isAdmin = true;
+    }
+    this.alertToolTip = this.topBar.alertItem
+      ? `${this.topBar.alertItem.length}`
+      : "no";
   }
 
   ngOnInit() {
@@ -70,6 +81,9 @@ export class TopbarComponent implements OnInit {
    */
   changeLanguage(language) {
     this.selectedLanguage = language;
+  }
+  clearNotification() {
+    this.topBar.alertItem = [];
   }
 
   changeView(touce: boolean, theme?: boolean) {

@@ -12,13 +12,17 @@ import { TopBar } from "../topbar/topbar.model";
   styleUrls: ["./leftsidebar.component.scss"],
 })
 export class LeftsidebarComponent implements OnInit {
+  userName: string;
+  acType: string;
   @Input() sidebarType: string;
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
     public topBar: TopBar
-  ) {}
+  ) {
+    this.getUserName();
+  }
 
   ngOnInit() {}
 
@@ -37,5 +41,10 @@ export class LeftsidebarComponent implements OnInit {
     this.router.navigate(["/account/login"], {
       queryParams: { returnUrl: "/" },
     });
+  }
+  getUserName() {
+    this.userName = this.authenticationService.currentUser().username;
+    this.acType = this.authenticationService.currentUser().type;
+    console.log(":::" + this.authenticationService.currentUser().type);
   }
 }

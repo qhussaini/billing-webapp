@@ -3,13 +3,13 @@
     <app-topbar (settingsButtonClicked)="onSettingsButtonClicked()" (mobileMenuButtonClicked)="onToggleMobileMenu()">
     </app-topbar>
 
-    <app-leftsidebar [sidebarType]="sidebarType"></app-leftsidebar>
+    <app-leftsidebar *ngIf="topBar.isAdmin" [sidebarType]="sidebarType"></app-leftsidebar>
 
-    <div class="content-page p-0" [class.dark-mcard]='topBar.selectedTheme'>
-        <div class="content fixHeight" appSlimScroll>
+    <div class="p-0" [class.dark-mcard]='topBar.selectedTheme' [class.content-page]='topBar.isAdmin' [class.content-full-page]='!topBar.isAdmin'>
+        <!-- <div class="content fixHeight" appSlimScroll> -->
             <!-- content -->
             <router-outlet></router-outlet>
-        </div>
+        <!-- </div> -->
 
         <!-- footer -->
         <app-footer></app-footer>

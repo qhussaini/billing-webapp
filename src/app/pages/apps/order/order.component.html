@@ -1,180 +1,59 @@
-<!-- <div class="container-fluid saas-amargin no-gutters">
-    <div class="saas-left">
-       <div class="row no-gutters">
-           <div class="card saas-cpad">
-            <div class="saas-amargin d-flex text-center justify-content-between">
-              <button type="button" class="btn btn-primary" ngbTooltip="Customer" (click)="open(content)"><i data-feather="database"></i> Customer Details</button>
-              <button type="button" class="btn btn-secondary" (click)="cancelBill(deleteAt,item)"><i data-feather="x-octagon"></i> Cancel Bill</button>
-              <button type="button" class="btn btn-warning" (click)="openItem(newitem)"><i data-feather="file-plus"></i> Add Item</button>
-              <button type="button" class="btn btn-success" (click)="refreshPage()"><i data-feather="refresh-cw"></i> Refresh</button>
-            </div>
-            </div>
-       </div>
-       <div class="card saas-btn">
-         <div class="card-header text-center">
-           <h3>Item Detail</h3>
-         </div>
-         <div class="card-body">
-           <div class="row">
-            <div class="col-lg-4">
-              <label for="name">Item Name:</label>
-              <input id="name" type="text" placeholder="Item Name" class="form-control" value="{{ dproduct }}"disabled>
-              <label for="code">Item Code: </label>
-              <input  class="form-control" type="text" id="code" placeholder="Item Code" value="{{ dcode }}"disabled>
-             </div>
-             <div class="col-lg-4">
-              <label for="qty">Item Qty:</label>
-              <input id="qty" type="text" class="form-control" placeholder="Item Qty" value="{{ dqty }}">
-              <label for="price">Item Price: </label>
-              <input  class="form-control" type="text" placeholder="Item Price" id="price" value="{{ dprice }}" disabled>
-             </div>
-           </div>
-          </div>
-       </div>
-    </div>
-    <div class="saas-right">
-    <div class="row no-gutters">
-        <div class="card saas-bill-card">
-            <div class="card-header saas-zpad">
-                <div class="col saas-pad">
-                    <div class="btn-group btn-block" role="group" aria-label="Basic example">
-                        <button type="button" class="btn btn-secondary">KOT</button>
-                        <button type="button" class="btn btn-secondary">Billing</button>
-                    </div>
-                </div>
-            <div class="input-group btn-block">
-                <div class="input-group-prepend">
-                  <span class="input-group-text btn-secondary" id="kotno">KOT</span>
-                </div>
-                <input type="text" class="form-control" placeholder="KOT No." aria-label="Username" aria-describedby="kotno">
-                </div>
-            </div>
-            <div class="card-body saas-zpad">
-                <div class="saas-con">
-                    <table class="table table-striped">
-                        <thead>
-                          <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Item</th>
-                            <th scope="col">Qty</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Action</th>
-                          </tr>
-                        </thead>
-                        <tbody *ngFor="let item of billing">
-                          <tr (click)="getDetails(item)">
-                            <th scope="row">{{ item.no }}</th>
-                            <td>{{ item.product }}</td>
-                            <td>{{ item.qty }}</td>
-                            <td>${{ item.price }}</td>
-                            <td><a (click)="deleteItem(item)"><i data-feather="x-octagon" ></i></a></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                </div>
-                <blockquote class="blockquote saas-pad">
-                    <div>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text">customer name and Phone No.</span>
-                            </div>
-                            <input type="text" aria-label="First name" class="form-control">
-                            <input type="text" aria-label="Last name" class="form-control" onkeypress="return event.charCode>=40  && event.charCode<=57">
-                          </div>
-                    </div>
-                    <div>
-                        <label for="dcustomer">Show on Bill</label>
-                        <input type="checkbox" id="dcustomer">
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">Totel $</span>
-                        </div>
-                        <input type="text" class="form-control text-right" disabled value="8.1" aria-label="Amount (to the nearest dollar)">
-                        <div class="input-group-append">
-                          <span class="input-group-text">.00</span>
-                        </div>
-                      </div>
-                    <div class="text-center">
-                        <button type="button" class="btn btn-danger">Send & Save</button>
-                        <button type="button" class="btn btn-warning saas-amargin">Print & save</button>
-                        <button type="button" class="btn btn-info">Save</button>
-                    </div>
-                </blockquote>
-            </div>
-
-        </div>
-    </div>
-    </div>
-</div> -->
-
 <div class="row">
-  <div class="card col-lg-8 vh-100 p-0" [class.dark-mcard]='topBar.selectedTheme' [class.text-white]='topBar.selectedTheme'>
+  <div class="card col-lg-8 p-0" [class.dark-mcard]='topBar.selectedTheme' [class.text-white]='topBar.selectedTheme'>
     <div class="card-header" [class.dark-mcard-header]='topBar.selectedTheme'>
-      <form action="" class="form-group" [autoClose]="true"
+      <form action="" class="position-relative me-auto" [autoClose]="true"
       ngbPopover="{{ showCmt }}" popoverClass="saas-pop" #popover="ngbPopover" placement="right">
-        <input matInput placeholder="{{ showCmt }}" [matAutocomplete]="auto" class="form-control"
-          [formControl]="searchControl">
+      <div class="sa-search-input">
+        <input class="form-control" placeholder="{{ showCmt }}" (click)="checkCustomers()" [matAutocomplete]="auto"  [formControl]="searchControl" id="customerInput" #customerInput>
+          <div class="pl-1 pr-1 m-1 sa-outline rounded text-dark" *ngIf="!showCustomer">
+            Ctrl+/
+          </div>
+          <button mat-icon-button *ngIf="showCustomer" class="sa-pointer" (click)="open(content)" mat-ripple matTooltip="New Customer"
+            matTooltipPosition="above">
+            <mat-icon>person_add</mat-icon>
+          </button>
+      </div>
         <mat-autocomplete #auto="matAutocomplete" [displayWith]="searchProductFn">
           <div *ngIf="!showCustomer">
-          <mat-option *ngFor="let option of filterSearch | async" (click)="addbill(option, qty)" [value]="option.IName">
-            <div *ngIf="!option.hold">
-              <span>{{option.IName}}</span>|
-              <small>Vendor: {{option.vendor}} | {{option.sPrice | currency:"USD":true}}</small>
-            </div>
+          <mat-option *ngFor="let option of filterSearch | async" (click)="addbill(option)" (keydown.enter)="addbill(option)" [value]="option.IName">
+              <span>{{option.IName}}</span> |
+              <small> Vendor: {{option.vendor}} | {{option.sPrice | currency:"INR"}}</small>
           </mat-option>
           </div>
           <div *ngIf="showCustomer">
-              <mat-option *ngFor="let option of filterCustomer | async" [value]="option.fname">
+              <mat-option *ngFor="let option of filterCustomer | async" (click)="getCustomer(option)" [value]="option.fname">
                 {{option.fname}} |
                 <small>Last Name: {{option.lname}} | {{option.mobile}}</small>
               </mat-option>
           </div>
         </mat-autocomplete>
-        <input type="number" class="form-control" value="1" #qty>
       </form>
+      <!-- <input type="number" class="form-control" value="1" #qty> -->
       <div class="card-footer d-flex justify-content-between" [class.dark-mcard-header]='topBar.selectedTheme'>
-        <button mat-raised-button color="warn" matTooltip="Clear Bill" matTooltipPosition="above">
-          <mat-icon aria-hidden="false" aria-label="clear-icon" (click)="clearBill()">delete_sweep</mat-icon>Clear
-          Bill
+        <button mat-raised-button color="warn" matTooltip="Clear Bill" (click)="clearBill(pass)" matTooltipPosition="above" id="deleteB">
+          <mat-icon aria-hidden="false" aria-label="clear-icon">delete_sweep</mat-icon>Clear
+          Bill [Alt+W]
         </button>
-        <button mat-raised-button color="primary" matTooltip="Bill Discount" matTooltipPosition="above">
-          <mat-icon aria-hidden="false" aria-label="clear-icon">card_giftcard</mat-icon>Bill
-          Discount
+
+        <button mat-raised-button color="primary" matTooltip="Price Level" (click)="open(barcode)" matTooltipPosition="above" id="scannerB">
+          <mat-icon aria-hidden="false" aria-label="clear-icon">qr_code_scanner</mat-icon> Scanner [Alt+R]
         </button>
-        <button mat-raised-button color="primary" matTooltip="Price Level" matTooltipPosition="above">
-          <mat-icon aria-hidden="false" aria-label="clear-icon">request_quote</mat-icon>Price
-          Level
-        </button>
-        <button mat-raised-button color="accent" matTooltip="Hold Bill" matTooltipPosition="above">
-          <mat-icon aria-hidden="false" aria-label="clear-icon">pan_tool</mat-icon>Hold Bill
-        </button>
-        <button mat-raised-button color="primary" matTooltip="Delivery Bill" matTooltipPosition="above">
-          <mat-icon aria-hidden="false" aria-label="clear-icon">local_shipping</mat-icon>Delivery
-          Bill
+
+        <button mat-raised-button color="primary" matTooltip="{{holdName}}" matTooltipPosition="above" (click)="holdBill()" id="holdB">
+          <mat-icon aria-hidden="false" aria-label="clear-icon">{{holdIcon}}</mat-icon>{{holdName}} [Alt+J]
         </button>
       </div>
     </div>
-    <div class="card-body d-flex flex-wrap align-content-start" *ngIf="topBar.selectedView">
-      <!-- <div matRipple class="card text-left sa-card saas-product m-1" (click)="addbill(option,qty)" *ngFor="let option of options">
-        <img [src]="option.src" class="card-img-top saas-product-img">
-        <div class="card-body">
-          <h5 class="card-title">{{ option.IName | titlecase }}</h5>
-          <h6 class="card-text">{{ option.sPrice | currency:"USD":true }}</h6>
-        </div>
-      </div> -->
-      <mat-card matRipple class="saas-product m-1 sa-pointer" (click)="addbill(option,qty)" *ngFor="let option of orderService.products">
+    <div class="card-body d-flex flex-wrap align-content-start">
+      <mat-card matRipple class="saas-product m-1 sa-pointer" [class.sa-no-product]="!option.active" (click)="addbill(option)" *ngFor="let option of orderService.products">
         <img src="{{option.src}}" class="saas-product-img" alt="">
         <mat-card-content>
           {{ option.IName | titlecase }} <br>
-          {{ option.sPrice | currency:"USD":true }}
+          {{ option.sPrice | currency:"INR" }}
         </mat-card-content>
       </mat-card>
-      <!-- <jqxGrid width='100%' [selectionmode]="'checkbox'" [source]="source" [theme]="'material'" [autoheight]="true"
-        [pageable]="true" [altrows]="true" [filterable]="true" [sortable]="true" [columns]="columns" #grid>
-      </jqxGrid> -->
     </div>
-    <div class="card-body" *ngIf="!topBar.selectedView">
+    <!-- <div class="card-body" *ngIf="!topBar.selectedView">
       <table class="table table-hover table-striped table-bordered">
               <thead class="thead thead-dark">
                 <tr>
@@ -199,30 +78,54 @@
                 </tr>
               </tbody>
             </table>
-    </div>
+    </div> -->
   </div>
-  <div class="card col-lg-4 vh-100 p-0" [class.dark-card]='topBar.selectedTheme' [class.text-white]='topBar.selectedTheme'>
+  <div class="card col-lg-4 p-0 sa-border" [class.dark-card]='topBar.selectedTheme' [class.text-white]='topBar.selectedTheme'>
       <div class="card-header" [class.dark-card-header]='topBar.selectedTheme'>
-        Customer Info
-        <div class="dropdown-divider"></div>
-        <div class="jqx-link" (click)="changeViewCus()" (click)="popover.toggle()" id="button">Select Customer</div>
+       <div class="row">
+        <div class="col">
+          Customer Info
+          <div class="dropdown-divider"></div>
+          <div class="jqx-link" (click)="changeViewCus()" (click)="popover.toggle()" id="sCustomer" #sCustomer>Select Customer [Alt+C]</div>
+        </div>
+        <div class="col" *ngIf="showClock">
+          <sa-digital-clock longClock = true ></sa-digital-clock>
+        </div>
+       </div>
+
       </div>
-      <div class="card-body" (click)="openBill(editBill)">
-        <table class="table table-hover table-striped saas-billsize" appSlimScroll ngx-auto-scroll observe-attributes lock-y-offset="10">
+      <div class="card-body">
+        <table class="table table-hover table-striped saas-billsize" (click)="openBill(editBill)" appSlimScroll ngx-auto-scroll observe-attributes lock-y-offset="10">
           <thead>
             <tr>
               <th scope="col-1">#</th>
-              <th scope="col-6">Product</th>
-              <th scope="col-2">Qty</th>
+              <th scope="col-4">Product</th>
+              <th scope="col-3">Qty</th>
               <th scope="col-3">Price</th>
+              <th scope="col-lg-1">Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let bill of orderService.bill;index as i">
               <th scope="row">{{ i + 1 }}</th>
-              <td>{{ bill.Iname | summary: 15}}</td>
-              <td>{{ bill.qty }}</td>
-              <td>{{ bill.Iprice * bill.qty | currency:"USD":true }}</td>
+              <td>{{ bill.Iname | summary: 10}}</td>
+              <td>
+              <a class="sa-pointer ml-1" (click)="incrementItem(bill)" mat-ripple matTooltip="Delete Product"
+                matTooltipPosition="above">
+                <mat-icon color="primary">add</mat-icon>
+              </a>
+              {{ bill.qty }}
+              <a class="sa-pointer ml-1" (click)="decrementItem(bill)" mat-ripple matTooltip="Delete Product"
+                matTooltipPosition="above">
+                <mat-icon color="warn">remove</mat-icon>
+              </a>
+                </td>
+              <td>{{ bill.Iprice * bill.qty | currency:"INR" }}</td>
+              <td>
+              <a class="sa-pointer ml-1" (click)="deleteItem(bill)" mat-ripple matTooltip="Delete Product"
+                  matTooltipPosition="above">
+                  <mat-icon color="warn">clear</mat-icon>
+                </a></td>
             </tr>
           </tbody>
         </table>
@@ -234,24 +137,48 @@
           <div class="dropdown-divider"></div>
           Sales Summery
           <div class="dropdown-divider"></div>
-          Sub Total: {{totalPrice | currency:"USD":true}} <br>
-          %2 Tax : {{totalPrice *2 /100 | currency:"USD":true}}<br>
-          Round Off
+          <div>
+            <mat-checkbox class="example-margin" [(ngModel)]="checked" color="primary" (click)='checkCustomer(input)'>Show Name on Bill</mat-checkbox>
+            <h6 *ngIf="checked">{{ customerBill }}</h6>
+          </div>
+          Sub Total: {{ totalPrice | currency:"INR" }} <br>
+          %2 Tax : {{totalPrice *2 /100 | currency:"INR"}}<br>
+          <h6>Coupon</h6>
+          <h6 *ngIf="!couponRedeem">Not Applied</h6>
+          <mat-chip-list *ngIf="couponRedeem">
+            <mat-chip [removable]="true" (removed)="removeCoupon()">
+              {{couponName}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          </mat-chip-list>
           <div class="dropdown-divider"></div>
-          <h3 [class.text-white]='topBar.selectedTheme'>Total : {{totalPrice *2 /100 + totalPrice}}</h3>
+          <h3 [class.text-white]='topBar.selectedTheme'>Total : <label class="sa-line-through">{{ beforRedeem }}</label> {{netAmount | currency:"INR"}}</h3>
         </div>
         <div>
-          <div class="d-flex justify-content-between">
-            <button mat-raised-button color="primary" class="btn-xs"><i class="material-icons md-48 img">redeem</i> Coupon</button>
-            <button mat-raised-button color="primary" class="btn-xs"  [attr.disabled]="!billSet"><i class="material-icons md-48 img">local_atm</i> Cash</button>
-            <button mat-raised-button color="primary" class="btn-xs"><i class="material-icons md-48 img">credit_card</i> Credit Card</button>
+          <div class="btn-group btn-block btn-group-sm">
+            <button id="coupon" (click)="couponget()" class="btn btn-primary"><i class="material-icons md-48 img">redeem</i> Coupon [Alt+Y]</button>
+            <jqxPopover [selector]="'#coupon'" [title]="'Coupon'" [arrowOffsetValue]="50"
+              [offset]="{ left: left, top: top }">
+              <div>
+                <div *ngIf="!couponRedeem">
+                    <label for="couponInput">Enter Coupon</label>
+                    <input type="text" class="form-control" id="couponInput" placeholder="XXXXXX" #couponInput>
+                    <button class="btn btn-dark m-1" (click)="getCoupon(couponInput)">redeem</button>
+                </div>
+                <div *ngIf="couponRedeem">
+                  <h3 class="text-danger">Coupon already applied</h3>
+                </div>
+              </div>
+            </jqxPopover>
+            <button class="btn btn-primary"  (click)="getCashPay(cash)" id="cashB"><i class="material-icons md-48 img">local_atm</i> Cash [F2]</button>
+            <button class="btn btn-primary" id="cCardB"><i class="material-icons md-48 img">credit_card</i> Credit Card [F8]</button>
           </div>
-          <div class="mt-3 mb-3 d-flex justify-content-between">
-            <button mat-raised-button color="primary" class="btn-xs"><i class="material-icons md-48 img">qr_code_scanner</i> UPI Pay</button>
-            <button mat-raised-button color="primary" class="btn-xs"><i class="material-icons md-48 img">credit_card</i> Card</button>
-            <button mat-raised-button color="primary" class="btn-xs"><i class="material-icons md-48 img">account_balance_wallet</i> PayPal</button>
+          <div class="mt-2 mb-2 btn-group btn-block btn-group-sm">
+            <button class="btn btn-primary" (click)="gpayOpen(gpay)" id="upiB"><i class="material-icons">qr_code_scanner</i> UPI Pay[Alt+U]</button>
+            <button class="btn btn-primary" id="cardB"><i class="material-icons md-48 img">credit_card</i> Card [F4]</button>
+            <button class="btn btn-primary" id="payPalB"><i class="material-icons md-48 img">account_balance_wallet</i> PayPal[Alt+P]</button>
           </div>
-          <button mat-raised-button color="primary" class="btn-block"><i class="material-icons md-48 img">point_of_sale</i> Payment</button>
+          <button mat-raised-button color="primary" class="btn-block" (click)="makeReceipt()" id="paymentB"><i class="material-icons md-48 img">point_of_sale</i> Payment [F9]</button>
         </div>
       </div>
   </div>
@@ -265,41 +192,21 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="row">
-    <div class="modal-body col-lg-4">
-      <input type="text" class="form-control" placeholder="Fast Name" value="{{ fname }}" #fName>
-      <input type="text" class="form-control" placeholder="Last Name " value="{{ lname }}" #lName>
-      <input type="text" class="form-control" placeholder="mobile" value="{{ cMobile }}" #mobile>
-      <input type="text" class="form-control" placeholder="Email " value="{{ cEmail }}" #email>
-      <div class="text-right">
-        <button class="btn btn-primary" (click)='addNew(fName,lName,mobile,email)'>Add</button>
-        <button class="btn btn-primary">Update</button>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Fast Name" value="{{ fname }}" #fName>
+          <input type="text" class="form-control" placeholder="Last Name " value="{{ lname }}" #lName>
+        </div>
+        <div class="col">
+          <input type="text" class="form-control" placeholder="mobile" value="{{ cMobile }}" #mobile>
+          <input type="text" class="form-control" placeholder="Email " value="{{ cEmail }}" #email>
+        </div>
+      </div>
+      <div class="text-right mt-1">
+        <button mat-raised-button color="primary" (click)='addNew(fName,lName,mobile,email)'>Add</button>
       </div>
     </div>
-    <div appSlimScroll class="col-lg-7">
-      <jqxGrid width='100%' [source]="cList" [theme]="'material'" [autoheight]="true" [pageable]="true" [altrows]="true"
-        [filterable]="true" [sortable]="true" [columns]="columnsList">
-      </jqxGrid>
-      <!-- <table class="table table-light table-striped table-bordered table-hover">
-        <thead class="thead thead-dark">
-          <tr>
-            <th scope="col-lg-3">Sr No.</th>
-            <th scope="col-lg-3">Fast Name</th>
-            <th scope="col-lg-3">Last Name</th>
-            <th scope="col-lg-3">Mobile</th>
-            <th scope="col-lg-3">Email</th>
-          </tr>
-        </thead>
-        <tbody *ngFor="let customer of customerData">
-          <tr (click)="getValue(customer)" #data><th>{{ customer.srno }}</th>
-          <th>{{ customer.fname }}</th>
-          <th>{{ customer.lname }}</th>
-          <th>{{ customer.mobile }}</th>
-          <th>{{ customer.email }}</th></tr>
-        </tbody>
-      </table> -->
-    </div>
-  </div>
   <div class="modal-footer"></div>
   <div class="text-right saas-amargin">
     <button type="button" class="btn btn-danger btn-rounded" aria-label="Close"
@@ -324,72 +231,6 @@
         <button class="btn btn-primary" (click)='addNew(fName,lName,mobile,email)'>Add</button>
         <button class="btn btn-primary">Update</button>
       </div>
-    </div>
-  </div>
-  <div class="modal-footer"></div>
-  <div class="text-right saas-amargin">
-    <button type="button" class="btn btn-danger btn-rounded" aria-label="Close"
-      (click)="modal.dismiss('Close')">close</button>
-  </div>
-</ng-template>
-<ng-template #newitem let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Add New Item</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="row">
-    <div class="modal-body col-lg-4">
-      <label for="code">Item Code</label>
-      <input type="text" id="code" class="form-control" placeholder="Item Code" value="{{ iCode }}" #icode>
-      <label for="name">Item Name</label>
-      <input type="text" id="name" class="form-control" placeholder="Item Name" value="{{ iName }}" #iname>
-      <label for="gname">Group Name</label>
-      <input type="text" id="gname" class="form-control" placeholder="Group Name" value="{{ gName }}" #gname>
-      <label for="vendor">Vendor</label>
-      <input type="text" id="vendor" class="form-control" placeholder="Vendor" value="{{ iVendor }}" #vendor>
-      <label for="pprice">Purchase Price</label>
-      <input type="text" id="pprice" class="form-control" placeholder="Purchase Price" value="{{ pPrice }}" #pprice>
-      <label for="unit">Item Unit</label>
-      <input type="text" id="unit" class="form-control" placeholder="Item Unit" value="{{ iUnit }}" #unit>
-      <label for="sprice">Sales Price</label>
-      <input type="text" id="sprice" class="form-control" placeholder="Sales Price" value="{{ sPrice }}" #sprice>
-      <label for="Shelf">Shelf No.</label>
-      <input type="text" id="Shelf" class="form-control" placeholder="Shelf No." value="{{ iShelf }}" #shelf>
-      <div class="text-right">
-        <button class="btn btn-primary"
-          (click)='addItem(icode,iname,gname,vendor,pprice,unit,sprice,shelf)'>Add</button>
-        <button class="btn btn-primary">Update</button>
-      </div>
-    </div>
-    <div class="col-lg-7">
-      <table class="table table-light table-striped table-bordered table-hover">
-        <thead class="thead thead-dark">
-          <tr>
-            <th scope="col-lg-3">Item Code</th>
-            <th scope="col-lg-3">Item Name</th>
-            <th scope="col-lg-3">Group Name</th>
-            <th scope="col-lg-3">Vendor</th>
-            <th scope="col-lg-3">Purchase Price</th>
-            <th scope="col-lg-3">Item Unit</th>
-            <th scope="col-lg-3">Sales Price</th>
-            <th scope="col-lg-3">Shelf No.</th>
-          </tr>
-        </thead>
-        <tbody *ngFor="let product of orderService.products">
-          <tr (click)="getItemD(product)">
-            <th>{{ product.ICode }}</th>
-            <th>{{ product.IName }}</th>
-            <th>{{ product.GName }}</th>
-            <th>{{ product.vendor }}</th>
-            <th>{{ product.pPrice }}</th>
-            <th>{{ product.IUnit }}</th>
-            <th>{{ product.sPrice }}</th>
-            <th>{{ product.shelf }}</th>
-          </tr>
-        </tbody>
-      </table>
     </div>
   </div>
   <div class="modal-footer"></div>
@@ -457,9 +298,81 @@
     </div>
   </div>
 </ng-template>
-
-<!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
-
-<hr>
-
-<!-- <pre>{{ closeResult }}</pre> -->
+<ng-template #pass let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="pass">Admin Pass</label>
+        <input type="password" id="pass" (keydown.enter)="modal.close(pass.value)" class="form-control" #pass>
+      </div>
+    </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close(pass.value)">Save</button>
+  </div>
+</ng-template>
+<ng-template #input let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Warning</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <h6>Customer selection is mandatory to proceed further!</h6>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger mr-1"  aria-label="Close"
+      (click)="modal.dismiss('Close')">close</button>
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('yes')">Select Customer</button>
+  </div>
+</ng-template>
+<ng-template #cash let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Cash</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <div>
+        <h6>Confirm Cash</h6>
+        <label>Total Amount</label> <br>
+        <h6>{{ netAmount | currency:"INR" }}</h6>
+      </div>
+      <label for="amountPay">Amount Cash</label>
+      <input type="number" id="amountPay" class="form-control" value="{{netAmount}}" #amountPay>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger mr-1" aria-label="Close" (click)="modal.dismiss('Close')">close</button>
+    <button type="button" class="btn btn-outline-dark" (click)="paymaent(amountPay.value)">Payed Out</button>
+  </div>
+</ng-template>
+<ng-template #barcode let-modal>
+    <sa-barcodescanner></sa-barcodescanner>
+</ng-template>
+<ng-template #gpay let-modal>
+  <img src="../../../../assets/images/gpay.jpg">
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger mr-1" aria-label="Close" (click)="modal.dismiss('Close')">close</button>
+    <button type="button" class="btn btn-outline-dark" (click)="gPayment(getPaymentId)">Payed by UPI</button>
+  </div>
+</ng-template>
+<ng-template #getPaymentId let-modal>
+  <div>
+    <label for="paymentId">UPI Transaction ID</label>
+    <input id="paymentId" type="number" class="form-control" required minlength=12 maxlength=12 #paymentId>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger mr-1" aria-label="Close" (click)="modal.dismiss('Close')">close</button>
+    <button type="button" class="btn btn-outline-dark" (click)="getUpiTId(paymentId)">Payment ID</button>
+  </div>
+</ng-template>

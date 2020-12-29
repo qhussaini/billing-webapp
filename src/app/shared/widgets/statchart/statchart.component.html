@@ -9,9 +9,8 @@
                 <apx-chart #chart class="apex-chart-widget" [series]="series" [chart]="chartData" [colors]="colors"
                     [tooltip]="tooltip" [stroke]="stroke" [fill]="fill" [markers]="markers">
                 </apx-chart>
-                <span class="text-success font-weight-bold font-size-13"  [class.text-white]='topBar.selectedTheme'
-                    [ngClass]="{ 'text-danger': subValue === '5.05%' }"><i class='uil'
-                        [ngClass]="{ 'uil uil-arrow-down': subValue === '5.05%' , 'uil uil-arrow-up': subValue !== '5.05%'}"></i>
+                <span class="text-success font-weight-bold font-size-13" [class.text-danger]="down" [class.text-white]='topBar.selectedTheme'><i class='uil'
+                        [ngClass]="{ 'uil uil-arrow-down': down , 'uil uil-arrow-up': !down}"></i>
                     {{ subValue }}</span>
             </div>
         </div>

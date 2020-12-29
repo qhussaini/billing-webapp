@@ -1,19 +1,31 @@
-<div class="card">
-  <div class="card-header row">
+<div class="card" [class.dark-card]='topBar.selectedTheme'>
+  <div class="card-header row" [class.dark-card-header]='topBar.selectedTheme'>
     <div class="col-md">
-      <input matInput placeholder="Sort Table" class="form-control">
+              <input matInput placeholder="Search" class="form-control"
+                [formControl]="searchControl">
+              <!-- <mat-autocomplete #auto="matAutocomplete" [displayWith]="searchProductFn">
+                  <mat-option *ngFor="let option of filterSearch | async"
+                     [value]="option.IName">
+                      <span>{{option.IName}}</span>|
+                      <small>Vendor: {{option.vendor}} | {{option.sPrice | currency:"USD"}}</small>
+                  </mat-option>
+              </mat-autocomplete> -->
     </div>
     <div class="col-md d-flex justify-content-end">
-    <button mat-raised-button color="primary" matTooltip="Add Product" (click)="openItem(addNewproduct)" matTooltipPosition="above">
-      <mat-icon aria-hidden="false" aria-label="clear-icon">add_box</mat-icon>Add Product
-    </button>
-    <button mat-raised-button color="primary" class="ml-1" matTooltip="Deliveries" matTooltipPosition="above">
-      <mat-icon aria-hidden="false" aria-label="clear-icon">local_shipping</mat-icon>Deliveries
-    </button>
+      <button mat-raised-button color="primary" matTooltip="Delect All" (click)="clearProduct(pass)"
+        matTooltipPosition="above">
+        <mat-icon aria-hidden="false" aria-label="clear-icon">delete_sweep</mat-icon>Delect All
+      </button>
+      <button mat-raised-button color="primary" class="ml-1" matTooltip="Add Product" (click)="openItem(addNewproduct)" matTooltipPosition="above">
+        <mat-icon aria-hidden="false" aria-label="clear-icon">add_box</mat-icon>Add Product
+      </button>
+      <button mat-raised-button color="primary" class="ml-1" matTooltip="Deliveries" matTooltipPosition="above">
+        <mat-icon aria-hidden="false" aria-label="clear-icon">local_shipping</mat-icon>Deliveries
+      </button>
     </div>
   </div>
   <div class="card-body">
-    <table class="table table-striped">
+    <table class="table table-hover">
       <thead >
         <tr>
           <th scope="col">#</th>
@@ -50,7 +62,6 @@
           <div>
             <a class="sa-pointer" (click)="holdProduct(product)" mat-ripple matTooltip="{{ product.holdName }}" matTooltipPosition="above">
               <mat-icon aria-hidden="false" aria-label="clear-icon" color="{{ product.holdColor }}">{{ product.holdIcon }}</mat-icon>
-
             </a>
             <a class="sa-pointer ml-1"  (click)="deleteItem(product)" mat-ripple matTooltip="Delete Product" matTooltipPosition="above">
               <mat-icon color="warn">delete_forever</mat-icon>
@@ -125,7 +136,7 @@
           <img [src]="image.value" class="card-img-top">
           <div class="card-body">
             <h5 class="card-title">{{ iname.value | titlecase }}</h5>
-            <h6 class="card-text">{{ sprice.value | currency:"USD":true }}</h6>
+            <h6 class="card-text">{{ sprice.value | currency:"INR" }}</h6>
           </div>
         </div>
         <input type="submit" name="" value="Close" (click)="modal.dismiss('Close')" /><br />
@@ -207,7 +218,7 @@
           <img [src]="image.value" class="card-img-top">
           <div class="card-body">
             <h5 class="card-title">{{ iname.value | titlecase }}</h5>
-            <h6 class="card-text">{{ sprice.value | currency:"USD":true }}</h6>
+            <h6 class="card-text">{{ sprice.value | currency:"INR" }}</h6>
           </div>
         </div>
         <input type="submit" name="" value="Close" (click)="modal.dismiss('Close')" /><br />
@@ -272,5 +283,22 @@
       </div>
     </div>
 
+  </div>
+</ng-template>
+<ng-template #pass let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="pass">Admin Pass</label>
+      <input type="password" id="pass" (keydown.enter)="modal.close(pass.value)" class="form-control" #pass>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close(pass.value)">Save</button>
   </div>
 </ng-template>

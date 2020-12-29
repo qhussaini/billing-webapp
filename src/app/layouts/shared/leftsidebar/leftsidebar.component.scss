@@ -1,4 +1,8 @@
 .fixHeight {
-  height: calc(90vh - 100px);
-  overflow: scroll;
+  height: calc(100vh - 50px);
+}
+
+.sa-border {
+  border-top: 0px;
+  border-right: solid 1px rgba(0, 0, 0, 0.185);
 }

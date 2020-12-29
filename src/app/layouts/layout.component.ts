@@ -1,18 +1,20 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from "@angular/core";
 
-import { EventService } from '../core/services/event.service';
+import { EventService } from "../core/services/event.service";
 
 import {
-  LAYOUT_VERTICAL, LAYOUT_HORIZONTAL, LAYOUT_WIDTH_FLUID,
-  LAYOUT_WIDTH_BOXED, SIDEBAR_THEME_DEFAULT
-} from './layout.model';
+  LAYOUT_VERTICAL,
+  LAYOUT_HORIZONTAL,
+  LAYOUT_WIDTH_FLUID,
+  LAYOUT_WIDTH_BOXED,
+  SIDEBAR_THEME_DEFAULT,
+} from "./layout.model";
 
 @Component({
-  selector: 'app-layout',
-  templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss']
+  selector: "app-layout",
+  templateUrl: "./layout.component.html",
+  styleUrls: ["./layout.component.scss"],
 })
-
 export class LayoutComponent implements OnInit, AfterViewInit {
   // layout related config
   layoutType: string;
@@ -20,7 +22,7 @@ export class LayoutComponent implements OnInit, AfterViewInit {
   leftSidebarTheme: string;
   leftSidebarWidth: string;
 
-  constructor(private eventService: EventService) { }
+  constructor(private eventService: EventService) {}
 
   ngOnInit() {
     // default settings
@@ -28,28 +30,27 @@ export class LayoutComponent implements OnInit, AfterViewInit {
     this.layoutWidth = LAYOUT_WIDTH_FLUID;
 
     this.leftSidebarTheme = SIDEBAR_THEME_DEFAULT;
-    this.leftSidebarWidth = 'default';
+    this.leftSidebarWidth = "default";
 
     // listen to event and change the layout, theme, etc
-    this.eventService.subscribe('changeLayout', (layout) => {
+    this.eventService.subscribe("changeLayout", (layout) => {
       this.layoutType = layout;
     });
 
-    this.eventService.subscribe('changeLeftSidebarTheme', (theme) => {
+    this.eventService.subscribe("changeLeftSidebarTheme", (theme) => {
       this.leftSidebarTheme = theme;
     });
 
-    this.eventService.subscribe('changeLeftSidebarType', (type) => {
+    this.eventService.subscribe("changeLeftSidebarType", (type) => {
       this.leftSidebarWidth = type;
     });
 
-    this.eventService.subscribe('changeLayoutWidth', (width) => {
+    this.eventService.subscribe("changeLayoutWidth", (width) => {
       this.layoutWidth = width;
     });
   }
 
-  ngAfterViewInit() {
-  }
+  ngAfterViewInit() {}
 
   /**
    * Check if the vertical layout is requested

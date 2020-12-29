@@ -11,6 +11,7 @@ export class StatchartComponent implements OnInit {
   @Input() value: number;
   @Input() subValue: string;
   @Input() chartColors: string;
+  @Input() down: boolean;
 
   @ViewChild("chart", { static: true }) chartRef: any;
 

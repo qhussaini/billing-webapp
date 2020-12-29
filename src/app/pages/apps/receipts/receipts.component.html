@@ -1,314 +1,134 @@
-<div class="card saas-card">
+<div class="card p-3" [class.dark-card]='topBar.selectedTheme'>
     <div class="row text-center">
         <div class="col-lg-2">
         <div id="head1">
-        <select id='gMonth1' class="btn btn-light">
-            <option value=''>--Select Month--</option>
-            <option selected value='1'>Janaury</option>
-            <option value='2'>February</option>
-            <option value='3'>March</option>
-            <option value='4'>April</option>
-            <option value='5'>May</option>
-            <option value='6'>June</option>
-            <option value='7'>July</option>
-            <option value='8'>August</option>
-            <option value='9'>September</option>
-            <option value='10'>October</option>
-            <option value='11'>November</option>
-            <option value='12'>December</option>
+        <select matNativeControl [(ngModel)]="dateSearch" class="btn btn-light">
+            <option selected value='0'>--Select Month--</option>
+            <option *ngFor="let month of month" value={{month.value}}>{{month.value}}</option>
         </select>
     </div>
     </div>
     <div class="col-lg-2">
         <div class="btn-group" role="group" aria-label="Button-group">
-            <button type="button" class="btn btn-secondary">All</button>
-            <button type="button" class="btn btn-secondary">Todays</button>
+            <button type="button" class="btn btn-secondary" (click)="getAll()">All</button>
+            <button type="button" class="btn btn-secondary" (click)="getTodayDate()">Todays</button>
         </div>
     </div>
-    <div class="col-lg-2">
-      <div id="head1">
-      <select id='gMonth1' class="btn btn-light">
-          <option selected value=''>--Select Table--</option>
-          <option value='1'>Table 1</option>
-          <option value='2'>Table 2</option>
-          <option value='3'>Table 3</option>
-      </select>
-  </div>
-  </div>
-    <div class="col-lg-2">
-        <input placeholder="From Date" class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date">
+    <div class="col-lg-4">
+      <li class="d-none d-sm-block">
+        <div class="app-search">
+          <form>
+            <div class="input-group">
+              <input type="text" class="form-control" name="searchTerm" [(ngModel)]="searchTerm" placeholder="Search...">
+              <i [attr.data-feather]="'search'" appFeatherIcon></i>
+            </div>
+          </form>
+        </div>
+      </li>
     </div>
     <div class="col-lg-2">
-        <input placeholder="To Date" class="form-control" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" id="date">
     </div>
     <div class="col-lg-2">
         <div class="d-flex justify-content-between">
-            <button type="button" class="btn saas-button">To Excel</button>
-            <button type="button" class="btn saas-button">To PDF</button>
+            <button type="button" class="btn saas-button" (click)="excelBtnOnClick()">To Excel</button>
+            <button type="button" class="btn saas-button" (click)="pdfBtnOnClick()">To PDF</button>
         </div>
     </div>
     </div>
 </div>
-<div class="card">
+<div class="card" [class.dark-card]='topBar.selectedTheme'>
 <div class="card-body">
-  <jqxGrid #myGrid width="100%" [source]="dataAdapter" [columns]="columns" [sortable]="true" [altrows]="true">
-  </jqxGrid>
+  <ag-grid-angular
+  class="sa-ag-grid-sizs ag-column-resizing ag-cell-auto-height ag-layout-auto-height ag-filter-loading"
+  [class.ag-theme-balham]='!topBar.selectedTheme'
+  [class.ag-theme-balham-dark]='topBar.selectedTheme'
+  [rowData]="filteredReceipts"
+  [columnDefs]="columnsAg"
+  rowSelection='single'
+  (rowClicked)="onRowClicked($event)"
+  (gridReady)="onGridReady($event)">
+  </ag-grid-angular>
+  <!-- <mat-card *ngFor="let receipt of filteredReceipts">
+    <mat-card-header>
+      {{receipt.customer}}
+    </mat-card-header>
+    <mat-card-content>
+      bill # : {{receipt.billno}}
+      <h6 *ngFor="let bill of receipt.billDetail">{{bill.Iname}}</h6>
+      Amount : {{receipt.amount}}
+      Date : {{receipt.date}}
+    </mat-card-content>
+  </mat-card> -->
+  <span id="selectedRows"></span>
 </div>
-  <div class="card-fooder">
-      <button mat-raised-button color="primary" (onClick)="excelBtnOnClick()">Export to Excel</button>
-      <!-- <button mat-raised-button color="primary" (onClick)="xmlBtnOnClick()">Export to XML</button> -->
-      <button mat-raised-button color="primary" (onClick)="csvBtnOnClick()">Export to CSV</button>
-      <!-- <button mat-raised-button color="primary" (onClick)="tsvBtnOnClick()">Export to TSV</button> -->
-      <!-- <button mat-raised-button color="primary" (onClick)="htmlBtnOnClick()">Export to HTML</button> -->
-      <!-- <button mat-raised-button color="primary" (onClick)="jsonBtnOnClick()">Export to JSON</button> -->
-      <button mat-raised-button color="primary" (onClick)="pdfBtnOnClick()">Export to PDF</button>
-  </div>
 </div>
 
 
-<!-- <div class="saas-back">
-    <div class="tbl-header">
-      <table class="saas-mtable" cellpadding="0" cellspacing="0" border="0">
-        <thead>
-          <tr>
-            <th class="saas-th">Bill No.</th>
-            <th class="saas-th">Table</th>
-            <th class="saas-th">Date</th>
-            <th class="saas-th">Amount</th>
-            <th class="saas-th">Discount</th>
-            <th class="saas-th">Tax</th>
-            <th class="saas-th">Order Type</th>
-            <th class="saas-th">Payment</th>
-            <th class="saas-th">Customer</th>
-            <th class="saas-th">Status</th>
-            <th class="saas-th">Employee ID</th>
-          </tr>
-        </thead>
-      </table>
-    </div>
-    <div class="tbl-content">
-      <table class="saas-mtable" cellpadding="0" cellspacing="0" border="0">
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>3 </td>
-            <td>02/10/2020 </td>
-            <td>$1.38</td>
-            <td>-2.01</td>
-            <td>5%</td>
-            <td>Dine in</td>
-            <td>Cash</td>
-            <td>Anwaar</td>
-            <td>Fullfiled</td>
-            <td>685424</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>3 </td>
-            <td>02/10/2020 </td>
-            <td>$1.38</td>
-            <td>-2.01</td>
-            <td>5%</td>
-            <td>Dine in</td>
-            <td>Cash</td>
-            <td>Anwaar</td>
-            <td>Fullfiled</td>
-            <td>685424</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>3 </td>
-            <td>02/10/2020 </td>
-            <td>$1.38</td>
-            <td>-2.01</td>
-            <td>5%</td>
-            <td>Dine in</td>
-            <td>Cash</td>
-            <td>Anwaar</td>
-            <td>Fullfiled</td>
-            <td>685424</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>3 </td>
-            <td>02/10/2020 </td>
-            <td>$1.38</td>
-            <td>-2.01</td>
-            <td>5%</td>
-            <td>Dine in</td>
-            <td>Cash</td>
-            <td>Anwaar</td>
-            <td>Fullfiled</td>
-            <td>685424</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>3 </td>
-            <td>02/10/2020 </td>
-            <td>$1.38</td>
-            <td>-2.01</td>
-            <td>5%</td>
-            <td>Dine in</td>
-            <td>Cash</td>
-            <td>Anwaar</td>
-            <td>Fullfiled</td>
-            <td>685424</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>3 </td>
-            <td>02/10/2020 </td>
-            <td>$1.38</td>
-            <td>-2.01</td>
-            <td>5%</td>
-            <td>Dine in</td>
-            <td>Cash</td>
-            <td>Anwaar</td>
-            <td>Fullfiled</td>
-            <td>685424</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>3 </td>
-            <td>02/10/2020 </td>
-            <td>$1.38</td>
-            <td>-2.01</td>
-            <td>5%</td>
-            <td>Dine in</td>
-            <td>Cash</td>
-            <td>Anwaar</td>
-            <td>Fullfiled</td>
-            <td>685424</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>3 </td>
-            <td>02/10/2020 </td>
-            <td>$1.38</td>
-            <td>-2.01</td>
-            <td>5%</td>
-            <td>Dine in</td>
-            <td>Cash</td>
-            <td>Anwaar</td>
-            <td>Fullfiled</td>
-            <td>685424</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>3 </td>
-            <td>02/10/2020 </td>
-            <td>$1.38</td>
-            <td>-2.01</td>
-            <td>5%</td>
-            <td>Dine in</td>
-            <td>Cash</td>
-            <td>Anwaar</td>
-            <td>Fullfiled</td>
-            <td>685424</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>3 </td>
-            <td>02/10/2020 </td>
-            <td>$1.38</td>
-            <td>-2.01</td>
-            <td>5%</td>
-            <td>Dine in</td>
-            <td>Cash</td>
-            <td>Anwaar</td>
-            <td>Fullfiled</td>
-            <td>685424</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>3 </td>
-            <td>02/10/2020 </td>
-            <td>$1.38</td>
-            <td>-2.01</td>
-            <td>5%</td>
-            <td>Dine in</td>
-            <td>Cash</td>
-            <td>Anwaar</td>
-            <td>Fullfiled</td>
-            <td>685424</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-</div> -->
 <div class="row">
     <div class="col-lg-4">
         <div class="card text-center saas-card">
-            <label>Bill Number  :   1</label>
-            <label>Table Number :   3</label>
-            <label>Total Bills  :   15</label>
-            <button class="btn btn-danger btn-block">Delete All Bills</button>
+            <label>Bill Number  : {{orderService.receiptsData.length | number}}</label>
+            <label>Total Bills  : {{totalPrice | currency:"INR"}}</label>
+            <button class="btn btn-danger btn-block" (click)="deleteBill(pass)">Delete All Bills</button>
         </div>
     </div>
     <div class="col-lg-4">
-        <div class="saas-table">
-            <div class="tbl-header">
-              <table class="saas-mtable" cellpadding="0" cellspacing="0" border="0">
-                <thead>
-                  <tr>
-                    <th class="saas-th">Item</th>
-                    <th class="saas-th">Qty</th>
-                    <th class="saas-th">Price</th>
-                    <th class="saas-th">Amount</th>
-                  </tr>
-                </thead>
-              </table>
-            </div>
-            <div class="tbl-sub-content">
-              <table class="saas-mtable" cellpadding="0" cellspacing="0" border="0">
-                <tbody>
-                  <tr>
-                    <td>Biryani FP</td>
-                    <td>3 </td>
-                    <td>$5</td>
-                    <td>$15</td>
-                  </tr>
-                  <tr>
-                    <td>butter chicken F</td>
-                    <td>2 </td>
-                    <td>$2</td>
-                    <td>$4</td>
-                  </tr>
-                  <tr>
-                    <td>butter chicken F</td>
-                    <td>2 </td>
-                    <td>$2</td>
-                    <td>$4</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-        </div>
+      Bill # : <span>{{billNo}}</span>
+        <ag-grid-angular class="sa-ag-grid-afsizs ag-column-resizing ag-cell-auto-height ag-layout-auto-height ag-filter-loading"
+          [class.ag-theme-balham]='!topBar.selectedTheme'(gridReady)="onGridReady($event)" [class.ag-theme-balham-dark]='topBar.selectedTheme'
+          [rowData]="afRowData" [columnDefs]="columnsAf" rowSelection='single' (selectionChanged)="onSelectionChanged()">
+        </ag-grid-angular>
     </div>
+    <!-- <div class="col-lg-4">
+      Bill # : <span>{{billNo}}</span>
+        <ag-grid-angular
+          class="sa-ag-grid-afsizs ag-column-resizing ag-cell-auto-height ag-layout-auto-height ag-filter-loading"
+          [class.ag-theme-balham]='!topBar.selectedTheme'
+          [class.ag-theme-balham-dark]='topBar.selectedTheme' [rowData]="orderService.customerData" [columnDefs]="columnsAfCus"
+          rowSelection='single'>
+        </ag-grid-angular>
+    </div> -->
     <div class="col-lg-4">
-        <div class="card">
-          <div><button class="btn btn-warning">Clear Selections</button></div>
+        <div class="card p-2">
         <div>
-            <input type="checkbox" id="modify">
-            <label for="modify">Modify Bill Tax And Discount</label>
+          <mat-checkbox class="m-1" color="primary">Modify Bill Tax And Discount</mat-checkbox>
         </div>
         <div>
-            <input type="checkbox" id="showcd">
-            <label for="showcd">Show Customer Details on bill</label> &nbsp;
-            <input type="checkbox" id="sendbill">
-            <label for="sendbill">Send Bill</label>
+            <mat-checkbox class="m-1" color="primary" [(ngModel)]="showCustomer">Show Customer Details of bill</mat-checkbox>
+            <mat-checkbox class="m-1" color="primary">Send Bill</mat-checkbox>
         </div>
-        <div class="justify-content-between btn-primary btn d-flex">
+        <div class="justify-content-between btn btn-success d-flex disable">
             <label>Grand Total: </label>
             <label>$55</label>
         </div>
-        <div class="text-center justify-content-between d-flex">
+          <div class="btn-group mt-1" role="group" aria-label="Button-group">
             <button class="btn btn-primary">Payment</button>
-            <button class="btn btn-info">save</button>
-            <button class="btn btn-info">save & Print</button>
+            <button class="btn btn-primary">save</button>
+            <button class="btn btn-primary">save & Print</button>
             <button class="btn btn-danger">Delete</button>
-        </div>
+          </div>
+            <!-- <button class="btn btn-primary m-1">Payment</button>
+            <button class="btn btn-primary m-1">save</button>
+            <button class="btn btn-primary m-1">save & Print</button>
+            <button class="btn btn-danger m-1">Delete</button> -->
         </div>
     </div>
 
 </div>
+<ng-template #pass let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="pass">Admin Pass</label>
+      <input type="password" id="pass" (keydown.enter)="modal.close(pass.value)" class="form-control" #pass>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close(pass.value)">Save</button>
+  </div>
+</ng-template>

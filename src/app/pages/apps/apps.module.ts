@@ -34,6 +34,8 @@ import { MatDividerModule } from "@angular/material/divider";
 import { NgxAutoScrollModule } from "ngx-auto-scroll";
 import { MatSelectModule } from "@angular/material/select";
 import { jqxDropDownListModule } from "jqwidgets-ng/jqxdropdownlist";
+import { MatDialogModule } from "@angular/material/dialog";
+import { WidgetModule } from "src/app/shared/widgets/widget.module";
 
 import { CalendarComponent } from "./calendar/calendar.component";
 import { OrderService } from "./order/order.service";
@@ -41,6 +43,10 @@ import { OrderComponent } from "./order/order.component";
 import { ReceiptsComponent } from "./receipts/receipts.component";
 import { PurchaseComponent } from "./purchase/purchase.component";
 import { SummaryPipe } from "./summary.pipe";
+import { AutofocusDirective } from "./order/autofocus.directive";
+import { BarcodeScannerLivestreamModule } from "ngx-barcode-scanner";
+import { BarcodescannerComponent } from "./barcodescanner/barcodescanner.component";
+import { NgQrScannerModule } from "angular2-qrscanner";
 
 @NgModule({
   declarations: [
@@ -49,10 +55,13 @@ import { SummaryPipe } from "./summary.pipe";
     ReceiptsComponent,
     PurchaseComponent,
     SummaryPipe,
+    AutofocusDirective,
+    BarcodescannerComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
+    WidgetModule,
     ReactiveFormsModule,
     NgbModalModule,
     NgbModule,
@@ -65,6 +74,7 @@ import { SummaryPipe } from "./summary.pipe";
     MatTooltipModule,
     MatRippleModule,
     MatChipsModule,
+    MatDialogModule,
     ClipboardModule,
     MatIconModule,
     MatCardModule,
@@ -84,7 +94,9 @@ import { SummaryPipe } from "./summary.pipe";
     MatDividerModule,
     MatSelectModule,
     jqxDropDownListModule,
+    BarcodeScannerLivestreamModule,
+    NgQrScannerModule,
   ],
-  exports: [OrderService],
+  providers: [OrderService],
 })
 export class AppsModule {}

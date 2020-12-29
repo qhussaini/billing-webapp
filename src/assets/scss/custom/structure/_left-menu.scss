@@ -38,7 +38,13 @@
   min-height: 80vh;
   margin-top: $topbar-height;
 }
-
+.content-full-page {
+  margin-left: 0;
+  overflow: hidden;
+  padding: 0px 12.5px 5px 12.5px;
+  min-height: 80vh;
+  margin-top: $topbar-height;
+}
 // Sidemenu
 .left-side-menu {
   width: $leftbar-width;

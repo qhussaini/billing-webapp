@@ -1,6 +1,45 @@
-.saas-card {
-  padding: 1%;
-  margin: 0px;
+.app-search {
+  padding: 0px 0;
+  overflow: hidden;
+  margin-left: 15px;
+  margin-right: 15px;
+  form {
+    max-width: 320px;
+  }
+  .form-control {
+    border: 1px solid transparent;
+    height: 38px;
+    padding-left: 40px;
+    padding-right: 20px;
+    background-color: black;
+    box-shadow: none;
+    border-radius: 0.3rem;
+
+    &:focus {
+      background-color: white;
+      border: 1px solid black;
+    }
+  }
+  svg {
+    position: absolute;
+    z-index: 10;
+    font-size: 18px;
+    color: gray;
+    line-height: 38px;
+    left: 10px;
+    top: 5px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.sa-ag-grid-sizs {
+  width: calc(75vw);
+  height: calc(50vh);
+}
+.sa-ag-grid-afsizs {
+  width: 100%;
+  height: 100%;
 }
 .saas-margin {
   margin: 5px;

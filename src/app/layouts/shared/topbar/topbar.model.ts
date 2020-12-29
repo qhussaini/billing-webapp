@@ -17,6 +17,12 @@ export class TopBar {
   selectedTheme: boolean = false;
   screenHeight: number;
   screenWidth: number;
+  isAdmin: boolean;
+  alertItem: Notification[] = [];
+  newAlert: boolean = false;
+  alertCheck(alert: boolean) {
+    this.newAlert = alert;
+  }
   checkSize() {
     if (this.screenWidth <= 768) {
       this.selectedView = true;

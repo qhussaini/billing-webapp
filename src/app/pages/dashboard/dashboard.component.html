@@ -37,16 +37,16 @@
   <!-- Widget  -->
   <div class="row">
     <div class="col-md-6 col-xl-3">
-      <app-statchart mainTitle="today's Sale" value=1100 subValue="10.21%" chartColors="#5369f8"></app-statchart>
+      <app-statchart mainTitle="today's Sale" [down]="todaySaleDown" [value]="todaySale|number|currency:'INR'" [subValue]="todayPer|number" chartColors="#5369f8"></app-statchart>
     </div>
     <div class="col-md-6 col-xl-3">
-      <app-statchart mainTitle="Month Sale" value=3065 subValue='7.15%' chartColors="#ffbe0b"></app-statchart>
+      <app-statchart mainTitle="This Month sale" [down]="monthSaleDown" [value]="monthlysale|number|currency:'INR'" [subValue]="monthPer|number" chartColors="#f77e53"></app-statchart>
     </div>
     <div class="col-md-6 col-xl-3">
-      <app-statchart mainTitle="New Customer" value=11 subValue="5.05%" chartColors="#f77e53"></app-statchart>
+      <app-statchart mainTitle="New Coustomer" [value]="toCustomer-5" subValue='7.15%' chartColors="#ffbe0b"></app-statchart>
     </div>
     <div class="col-md-6 col-xl-3">
-      <app-statchart mainTitle="Total Customer" value=750 subValue="25.05%" chartColors="#ffbe0b"></app-statchart>
+      <app-statchart mainTitle="Total Customer" [value]="toCustomer" subValue="25.05%" chartColors="#ffbe0b"></app-statchart>
     </div>
   </div>
   <!-- end widget -->
@@ -56,11 +56,11 @@
         <div class="card-body p-0">
           <h5 class="card-title header-title border-bottom p-3 mb-0" [class.dark-card]='topBar.selectedTheme' [class.text-white]='topBar.selectedTheme'>This Month Overview</h5>
           <!-- Overview data -->
-          <app-overview value='12,000' icon='archive' title="Total Sale" classNames="px-3 py-4">
+          <app-overview [value]='monthlysale|number|currency:"INR"' icon='archive' title="Total Sale" classNames="px-3 py-4">
           </app-overview>
           <app-overview value='2,000' icon='zap' title="Total Expense" classNames="px-3 py-4">
           </app-overview>
-          <app-overview value='$9.4K' icon='pie-chart' title="Total Profit" classNames="px-3 py-4"></app-overview>
+          <app-overview [value]='totalProfit|number|currency:"INR"' icon='pie-chart' title="Total Profit" classNames="px-3 py-4"></app-overview>
         </div>
       </div>
     </div>
