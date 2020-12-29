@@ -33,8 +33,12 @@
   }
 }
 
+.card {
+  margin: 0;
+}
+
 .sa-ag-grid-sizs {
-  width: calc(75vw);
+  width: calc(85vw - 80px);
   height: calc(50vh);
 }
 .sa-ag-grid-afsizs {

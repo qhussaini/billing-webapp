@@ -19,11 +19,13 @@ export class PurchaseComponent implements OnInit {
   pass: string;
   filterSearch: Observable<Product[]>;
   searchControl = new FormControl();
+  private _searchTerm: string;
+  filteredSearch: Product[] = this.orderService.products;
   constructor(
     private dialog: NgbModal,
     public topBar: TopBar,
     private toastr: ToastrService,
-    private orderService: OrderService
+    public orderService: OrderService
   ) {
     this.filterSearch = this.searchControl.valueChanges.pipe(
       startWith(""),
@@ -38,6 +40,20 @@ export class PurchaseComponent implements OnInit {
 
     return this.orderService.products.filter(
       (option) => option.IName.toLowerCase().indexOf(filterValue) === 0
+    );
+  }
+
+  get searchTerm(): string {
+    return this._searchTerm;
+  }
+  set searchTerm(value: string) {
+    this._searchTerm = value;
+    this.filteredSearch = this.filterProductSearch(value);
+  }
+  filterProductSearch(searchString: string) {
+    return this.orderService.products.filter(
+      (product) =>
+        product.IName.toLowerCase().indexOf(searchString.toLowerCase()) !== -1
     );
   }
 
@@ -255,7 +271,7 @@ export class PurchaseComponent implements OnInit {
         src: image.value,
         ICode: icode.value,
         IName: iname.value,
-        GName: gname.value,
+        Category: gname.value,
         vendor: vendor.value,
         pPrice: pprice.value,
         IUnit: unit.value,
@@ -265,7 +281,7 @@ export class PurchaseComponent implements OnInit {
         holdName: "Hold Product",
         holdColor: "accent",
         holdIcon: "pan_tool",
-        active: true,
+        Available: true,
       });
       console.log(gname.value);
       image.value = "";

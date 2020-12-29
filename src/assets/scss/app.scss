@@ -37,6 +37,13 @@ File: Main Css File
 //Fonts
 /* 1. Fonts */
 @import "custom/fonts/fonts";
+@font-face {
+  font-family: "Cassandra Personal Use";
+  src: url("../fonts/CassandraPersonalUse-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 //Core files
 @import "./node_modules/bootstrap/scss/functions";

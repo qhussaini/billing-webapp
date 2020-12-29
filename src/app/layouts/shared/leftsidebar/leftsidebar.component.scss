@@ -6,3 +6,12 @@
   border-top: 0px;
   border-right: solid 1px rgba(0, 0, 0, 0.185);
 }
+
+.sa-text-white :hover {
+  border-left: 3px solid #5369f8;
+  color: #5369f8;
+  background-color: #f7f7ff;
+}
+.sa-text-white :focus :active {
+  color: #5369f8;
+}

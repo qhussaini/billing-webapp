@@ -4,9 +4,9 @@
       <form action="" class="position-relative me-auto" [autoClose]="true"
       ngbPopover="{{ showCmt }}" popoverClass="saas-pop" #popover="ngbPopover" placement="right">
       <div class="sa-search-input">
-        <input class="form-control" placeholder="{{ showCmt }}" (click)="checkCustomers()" [matAutocomplete]="auto"  [formControl]="searchControl" id="customerInput" #customerInput>
+        <input class="form-control" [(ngModel)]="searchTerm" placeholder="{{ showCmt }}" (click)="checkCustomers()" [matAutocomplete]="auto"  [formControl]="searchControl" id="customerInput" #customerInput>
           <div class="pl-1 pr-1 m-1 sa-outline rounded text-dark" *ngIf="!showCustomer">
-            Ctrl+/
+            Ctrl+S
           </div>
           <button mat-icon-button *ngIf="showCustomer" class="sa-pointer" (click)="open(content)" mat-ripple matTooltip="New Customer"
             matTooltipPosition="above">
@@ -29,29 +29,42 @@
         </mat-autocomplete>
       </form>
       <!-- <input type="number" class="form-control" value="1" #qty> -->
-      <div class="card-footer d-flex justify-content-between" [class.dark-mcard-header]='topBar.selectedTheme'>
-        <button mat-raised-button color="warn" matTooltip="Clear Bill" (click)="clearBill(pass)" matTooltipPosition="above" id="deleteB">
-          <mat-icon aria-hidden="false" aria-label="clear-icon">delete_sweep</mat-icon>Clear
-          Bill [Alt+W]
-        </button>
-
-        <button mat-raised-button color="primary" matTooltip="Price Level" (click)="open(barcode)" matTooltipPosition="above" id="scannerB">
-          <mat-icon aria-hidden="false" aria-label="clear-icon">qr_code_scanner</mat-icon> Scanner [Alt+R]
-        </button>
-
-        <button mat-raised-button color="primary" matTooltip="{{holdName}}" matTooltipPosition="above" (click)="holdBill()" id="holdB">
-          <mat-icon aria-hidden="false" aria-label="clear-icon">{{holdIcon}}</mat-icon>{{holdName}} [Alt+J]
-        </button>
-      </div>
     </div>
-    <div class="card-body d-flex flex-wrap align-content-start">
-      <mat-card matRipple class="saas-product m-1 sa-pointer" [class.sa-no-product]="!option.active" (click)="addbill(option)" *ngFor="let option of orderService.products">
+    <div class="card-footer d-flex justify-content-between mt-0 pt-0" [class.dark-mcard-header]='topBar.selectedTheme'>
+      <button mat-raised-button color="warn" matTooltip="Clear Bill" (click)="clearBill(pass)" matTooltipPosition="above"
+        id="deleteB">
+        <mat-icon aria-hidden="false" aria-label="clear-icon">delete_sweep</mat-icon>Clear
+        Bill [Ctrl+D]
+      </button>
+
+      <button mat-raised-button color="primary" matTooltip="Scanner" (click)="open(barcode)" matTooltipPosition="above"
+        id="scannerB">
+        <mat-icon aria-hidden="false" aria-label="clear-icon">qr_code_scanner</mat-icon> Scanner [Ctrl+R]
+      </button>
+
+      <button mat-raised-button color="primary" matTooltip="{{holdName}}" matTooltipPosition="above" (click)="holdBill()"
+        id="holdB">
+        <mat-icon aria-hidden="false" aria-label="clear-icon">{{holdIcon}}</mat-icon>{{holdName}} [Ctrl+H]
+      </button>
+    </div>
+    <div class="card-body d-flex flex-wrap align-content-start sa-product-size">
+      <mat-card matRipple matTooltip="Available Qty {{option.IUnit}}" class="m-1 sa-pointer"
+      [class.saas-product]='!topBar.selectedTheme'
+      [class.saas-product-dark]='topBar.selectedTheme'
+      [class.sa-no-product]="!option.Available"
+      [class.sa-hold]="option.hold"
+      (click)="addbill(option)"
+      *ngFor="let option of filteredProduct">
         <img src="{{option.src}}" class="saas-product-img" alt="">
         <mat-card-content>
-          {{ option.IName | titlecase }} <br>
+          {{ option.IName | titlecase |summary: 18 }} <br>
           {{ option.sPrice | currency:"INR" }}
         </mat-card-content>
       </mat-card>
+      <div *ngIf="filteredProduct.length===0" class="text-center" style="flex: auto;"[class.text-white]='topBar.selectedTheme'>
+        <img src="../../../../assets/images/404_not.gif" class="rounded mx-auto d-block"> <br>
+        Product not available
+      </div>
     </div>
     <!-- <div class="card-body" *ngIf="!topBar.selectedView">
       <table class="table table-hover table-striped table-bordered">
@@ -79,6 +92,25 @@
               </tbody>
             </table>
     </div> -->
+    <div class="card-body sa-card-select pt-1 mt-1">
+      <div class="d-inline-flex btn-block">
+        <button class="btn sa-btn text-white mr-1 btn-primary" (click)="scrollTo('catB','left')">
+          <mat-icon aria-hidden="false" aria-label="clear-icon">chevron_left</mat-icon>
+        </button>
+        <div class="sa-slider">
+          <button class="mr-1 btn text-nowrap btn-primary" (click)="seachByCat('All Item')" id="catB0">
+            All Item
+          </button>
+          <button class="mr-1 btn text-nowrap btn-primary" *ngFor="let type of orderService.categorys; index as i"
+            (click)="seachByCat(type.categoryName)" id="catB{{i+1}}">
+            {{type.categoryName}}
+          </button>
+        </div>
+        <button class="btn sa-btn text-white ml-1 btn-primary" (click)="scrollTo('catB','right')">
+          <mat-icon aria-hidden="false" aria-label="clear-icon">chevron_right</mat-icon>
+        </button>
+      </div>
+    </div>
   </div>
   <div class="card col-lg-4 p-0 sa-border" [class.dark-card]='topBar.selectedTheme' [class.text-white]='topBar.selectedTheme'>
       <div class="card-header" [class.dark-card-header]='topBar.selectedTheme'>
@@ -95,14 +127,19 @@
 
       </div>
       <div class="card-body">
-        <table class="table table-hover table-striped saas-billsize" (click)="openBill(editBill)" appSlimScroll ngx-auto-scroll observe-attributes lock-y-offset="10">
+        <div>
+          <input type="text" (keydown.enter)="orderService.scannerValue()" placeholder="Enter product Barcode [ ||||||||||||||||||||| ]"
+          [(ngModel)]="orderService.barcodeValue" class="form-control">
+        </div>
+        <table class="table table-hover table-striped saas-billsize" appSlimScroll ngx-auto-scroll observe-attributes lock-y-offset="10">
           <thead>
             <tr>
-              <th scope="col-1">#</th>
-              <th scope="col-4">Product</th>
-              <th scope="col-3">Qty</th>
-              <th scope="col-3">Price</th>
-              <th scope="col-lg-1">Actions</th>
+              <th scope="col">#</th>
+              <th scope="col">Product</th>
+              <th scope="col">Qty</th>
+              <th scope="col">Price</th>
+              <th scope="col">Total</th>
+              <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -110,16 +147,17 @@
               <th scope="row">{{ i + 1 }}</th>
               <td>{{ bill.Iname | summary: 10}}</td>
               <td>
-              <a class="sa-pointer ml-1" (click)="incrementItem(bill)" mat-ripple matTooltip="Delete Product"
+              <a class="sa-pointer ml-1" (click)="incrementItem(bill)" mat-ripple matTooltip="incres Qty"
                 matTooltipPosition="above">
                 <mat-icon color="primary">add</mat-icon>
               </a>
               {{ bill.qty }}
-              <a class="sa-pointer ml-1" (click)="decrementItem(bill)" mat-ripple matTooltip="Delete Product"
+              <a class="sa-pointer ml-1" (click)="decrementItem(bill)" mat-ripple matTooltip="decres Qty"
                 matTooltipPosition="above">
                 <mat-icon color="warn">remove</mat-icon>
               </a>
                 </td>
+              <td>{{ bill.Iprice | currency:"INR" }}</td>
               <td>{{ bill.Iprice * bill.qty | currency:"INR" }}</td>
               <td>
               <a class="sa-pointer ml-1" (click)="deleteItem(bill)" mat-ripple matTooltip="Delete Product"
@@ -133,7 +171,7 @@
           [altrows]="true" [filterable]="true" [sortable]="true" [columns]="bColumns" #grid>
         </jqxGrid> -->
         <div>
-          Bill No # {{billNum}}
+          Bill No # {{orderService.billNum}}
           <div class="dropdown-divider"></div>
           Sales Summery
           <div class="dropdown-divider"></div>
@@ -141,10 +179,10 @@
             <mat-checkbox class="example-margin" [(ngModel)]="checked" color="primary" (click)='checkCustomer(input)'>Show Name on Bill</mat-checkbox>
             <h6 *ngIf="checked">{{ customerBill }}</h6>
           </div>
-          Sub Total: {{ totalPrice | currency:"INR" }} <br>
-          %2 Tax : {{totalPrice *2 /100 | currency:"INR"}}<br>
-          <h6>Coupon</h6>
-          <h6 *ngIf="!couponRedeem">Not Applied</h6>
+          Sub Total: {{ orderService.totalPrice | currency:"INR" }} <br>
+          %2 Tax : {{orderService.totalPrice *2 /100 | currency:"INR"}}<br>
+          <h6 [class.text-white]='topBar.selectedTheme'>Coupon</h6>
+          <h6 *ngIf="!couponRedeem" [class.text-white]='topBar.selectedTheme'>Not Applied</h6>
           <mat-chip-list *ngIf="couponRedeem">
             <mat-chip [removable]="true" (removed)="removeCoupon()">
               {{couponName}}
@@ -152,11 +190,11 @@
           </mat-chip>
           </mat-chip-list>
           <div class="dropdown-divider"></div>
-          <h3 [class.text-white]='topBar.selectedTheme'>Total : <label class="sa-line-through">{{ beforRedeem }}</label> {{netAmount | currency:"INR"}}</h3>
+          <h5 [class.text-white]='topBar.selectedTheme'>Total : <label class="sa-line-through">{{ beforRedeem }}</label> {{orderService.netAmount | currency:"INR"}}</h5>
         </div>
         <div>
           <div class="btn-group btn-block btn-group-sm">
-            <button id="coupon" (click)="couponget()" class="btn btn-primary"><i class="material-icons md-48 img">redeem</i> Coupon [Alt+Y]</button>
+            <button id="coupon" (click)="couponget()" class="btn btn-primary d-inline-flex"><i class="material-icons md-48 img">redeem</i> Coupon [F5]</button>
             <jqxPopover [selector]="'#coupon'" [title]="'Coupon'" [arrowOffsetValue]="50"
               [offset]="{ left: left, top: top }">
               <div>
@@ -170,13 +208,13 @@
                 </div>
               </div>
             </jqxPopover>
-            <button class="btn btn-primary"  (click)="getCashPay(cash)" id="cashB"><i class="material-icons md-48 img">local_atm</i> Cash [F2]</button>
-            <button class="btn btn-primary" id="cCardB"><i class="material-icons md-48 img">credit_card</i> Credit Card [F8]</button>
+            <button class="btn btn-primary d-inline-flex"  (click)="getCashPay(cash)" id="cashB"><i class="material-icons md-48 img">local_atm</i> Cash [F2]</button>
+            <button class="btn btn-primary d-inline-flex" id="cCardB"><i class="material-icons md-48 img">credit_card</i> Credit Card [F8]</button>
           </div>
           <div class="mt-2 mb-2 btn-group btn-block btn-group-sm">
-            <button class="btn btn-primary" (click)="gpayOpen(gpay)" id="upiB"><i class="material-icons">qr_code_scanner</i> UPI Pay[Alt+U]</button>
-            <button class="btn btn-primary" id="cardB"><i class="material-icons md-48 img">credit_card</i> Card [F4]</button>
-            <button class="btn btn-primary" id="payPalB"><i class="material-icons md-48 img">account_balance_wallet</i> PayPal[Alt+P]</button>
+            <button class="btn btn-primary d-inline-flex" (click)="gpayOpen(gpay)" id="upiB"><i class="material-icons">qr_code_scanner</i> UPI Pay[F3]</button>
+            <button class="btn btn-primary d-inline-flex" id="cardB"><i class="material-icons md-48 img">credit_card</i> Card [F4]</button>
+            <button class="btn btn-primary d-inline-flex" id="payPalB"><i class="material-icons md-48 img">account_balance_wallet</i> PayPal[F1]</button>
           </div>
           <button mat-raised-button color="primary" class="btn-block" (click)="makeReceipt()" id="paymentB"><i class="material-icons md-48 img">point_of_sale</i> Payment [F9]</button>
         </div>
@@ -262,42 +300,6 @@
     </div>
   </div>
 </ng-template>
-<ng-template #editBill let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">! Warning !</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="row">
-    <div class="modal-body">
-    <table class="table table-light table-striped table-bordered table-hover">
-      <thead class="thead thead-dark">
-        <tr>
-          <th scope="col-lg-3">Code.</th>
-          <th scope="col-lg-3">Product</th>
-          <th scope="col-lg-3">Group Type</th>
-          <th scope="col-lg-3">Vendor</th>
-          <th scope="col-lg-3">Qty</th>
-          <th scope="col-lg-3">Sales Price</th>
-          <th scope="col-lg-3">Shelf</th>
-        </tr>
-      </thead>
-      <tbody *ngFor="let option of makeBill">
-        <tr #data>
-          <th>{{ option.Icode }}</th>
-          <th>{{ option.Iname }}</th>
-          <th>{{ option.Itype }}</th>
-          <th>{{ option.vendor }}</th>
-          <th><input type="number" class="form-control-sm" (ngModelChange)="onChange($event)" [(ngModel)]="option.qty"></th>
-          <th>{{ option.Iprice * option.qty }}</th>
-          <th>{{ option.shelf }}</th>
-        </tr>
-      </tbody>
-    </table>
-    </div>
-  </div>
-</ng-template>
 <ng-template #pass let-modal>
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
@@ -345,10 +347,10 @@
       <div>
         <h6>Confirm Cash</h6>
         <label>Total Amount</label> <br>
-        <h6>{{ netAmount | currency:"INR" }}</h6>
+        <h6>{{ orderService.netAmount | currency:"INR" }}</h6>
       </div>
       <label for="amountPay">Amount Cash</label>
-      <input type="number" id="amountPay" class="form-control" value="{{netAmount}}" #amountPay>
+      <input type="number" id="amountPay" class="form-control" value="{{orderService.netAmount}}" #amountPay>
     </div>
   </div>
   <div class="modal-footer">
@@ -363,13 +365,13 @@
   <img src="../../../../assets/images/gpay.jpg">
   <div class="modal-footer">
     <button type="button" class="btn btn-danger mr-1" aria-label="Close" (click)="modal.dismiss('Close')">close</button>
-    <button type="button" class="btn btn-outline-dark" (click)="gPayment(getPaymentId)">Payed by UPI</button>
+    <button type="button" class="btn btn-outline-dark" ngbAutofocus (click)="gPayment(getPaymentId)" (keydown.enter)="gPayment(getPaymentId)">Payed by UPI</button>
   </div>
 </ng-template>
 <ng-template #getPaymentId let-modal>
   <div>
     <label for="paymentId">UPI Transaction ID</label>
-    <input id="paymentId" type="number" class="form-control" required minlength=12 maxlength=12 #paymentId>
+    <input id="paymentId" type="number" class="form-control" required minlength=12 (keydown.enter)="getUpiTId(paymentId)" maxlength=12 #paymentId>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-danger mr-1" aria-label="Close" (click)="modal.dismiss('Close')">close</button>

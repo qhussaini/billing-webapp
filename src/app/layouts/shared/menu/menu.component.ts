@@ -1,19 +1,27 @@
-import { Component, OnInit, AfterViewInit, Input, OnChanges, ViewChild, ElementRef } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  Input,
+  OnChanges,
+  ViewChild,
+  ElementRef,
+} from "@angular/core";
+import { Router, NavigationEnd } from "@angular/router";
 
-import MetisMenu from 'metismenujs/dist/metismenujs';
+import MetisMenu from "metismenujs/dist/metismenujs";
 
-import { activateMenuItems, resetMenuItems } from './utils';
-import { MENU } from './menu';
-import { MenuItem } from './menu.model';
+import { activateMenuItems, resetMenuItems } from "./utils";
+import { MENU } from "./menu";
+import { MenuItem } from "./menu.model";
+import { TopBar } from "../topbar/topbar.model";
 
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.scss']
+  selector: "app-menu",
+  templateUrl: "./menu.component.html",
+  styleUrls: ["./menu.component.scss"],
 })
 export class MenuComponent implements OnInit, AfterViewInit, OnChanges {
-
   @Input() isCondensed: boolean;
   @Input() mode: string;
   sidebarScrollRef: any;
@@ -21,9 +29,9 @@ export class MenuComponent implements OnInit, AfterViewInit, OnChanges {
   menu: any;
 
   menuItems = [];
-  @ViewChild('sideMenu', { static: false }) sideMenu: ElementRef;
+  @ViewChild("sideMenu", { static: false }) sideMenu: ElementRef;
 
-  constructor(router: Router) {
+  constructor(router: Router, public topBar: TopBar) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
         this._activateMenuDropdown();
@@ -44,7 +52,7 @@ export class MenuComponent implements OnInit, AfterViewInit, OnChanges {
    * On prop change, look for layout settings
    */
   ngOnChanges() {
-    if (!this.isCondensed && this.sideMenu || this.isCondensed) {
+    if ((!this.isCondensed && this.sideMenu) || this.isCondensed) {
       setTimeout(() => {
         this._initMenu();
       });
@@ -57,33 +65,36 @@ export class MenuComponent implements OnInit, AfterViewInit, OnChanges {
    * Initizes metis menu
    */
   _initMenu() {
-    if (this.mode === 'horizontal') {
-      const menuRef = new MetisMenu(this.sideMenu.nativeElement).on('shown.metisMenu', (event) => {
-        window.addEventListener('click', function menuClick(e) {
-          if (!event.target.contains(e.target)) {
-            menuRef.hide(event.detail.shownElement);
-            window.removeEventListener('click', menuClick);
-          }
-        });
-      });
+    if (this.mode === "horizontal") {
+      const menuRef = new MetisMenu(this.sideMenu.nativeElement).on(
+        "shown.metisMenu",
+        (event) => {
+          window.addEventListener("click", function menuClick(e) {
+            if (!event.target.contains(e.target)) {
+              menuRef.hide(event.detail.shownElement);
+              window.removeEventListener("click", menuClick);
+            }
+          });
+        }
+      );
     } else {
       this.menu = new MetisMenu(this.sideMenu.nativeElement);
     }
     this._activateMenuDropdown();
   }
 
-
   /**
    * Activate the parent dropdown
    * TODO: This is hard-coded check - change to some common way
    */
   _activateMenuDropdown() {
-    const activeClass = this.mode === 'horizontal' ? 'active' : 'mm-active';
-    const dropdownActiveClass = this.mode === 'horizontal' ? 'active' : 'mm-show';
+    const activeClass = this.mode === "horizontal" ? "active" : "mm-active";
+    const dropdownActiveClass =
+      this.mode === "horizontal" ? "active" : "mm-show";
 
     resetMenuItems(activeClass, dropdownActiveClass);
-    if (this.mode === 'horizontal') {
-      resetMenuItems('mm-active', 'mm-show');
+    if (this.mode === "horizontal") {
+      resetMenuItems("mm-active", "mm-show");
     }
     activateMenuItems(activeClass, dropdownActiveClass);
   }
@@ -107,6 +118,6 @@ export class MenuComponent implements OnInit, AfterViewInit, OnChanges {
    * Hides the menubar
    */
   hideMenu() {
-    document.body.classList.remove('sidebar-enable');
+    document.body.classList.remove("sidebar-enable");
   }
 }

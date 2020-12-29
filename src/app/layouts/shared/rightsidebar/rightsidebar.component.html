@@ -16,8 +16,8 @@
       </span> Theme Color</h6>
       <div class="d-grid gap-2 d-flex justify-content-between">
         <h5 [class.text-white]='topBar.selectedTheme'>Dark Theme</h5>
-        <jqxSwitchButton id="theme" class="text-right" [class.text-white]='topBar.selectedTheme' (onChecked)="changeColor(true)" (onChecked)="darktheme('dark')"
-          (onUnchecked)="darktheme('vertical')" (onUnchecked)="changeColor(false)" [width]='65' [height]='20'>
+        <jqxSwitchButton id="theme" class="text-right" [class.text-white]='topBar.selectedTheme' (onChecked)="changeColor(true)"
+         (onUnchecked)="changeColor(false)" [width]='65' [height]='20'>
         </jqxSwitchButton>
       </div>
     </div>

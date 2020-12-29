@@ -1,24 +1,24 @@
 <!-- ========== Left Sidebar Start ========== -->
-<div class="left-side-menu sa-border">
-  <div class="media user-profile mt-2 mb-2">
+<div class="left-side-menu sa-border" [class.dark-nav]='topBar.selectedTheme' [class.text-white]='topBar.selectedTheme'>
+  <div class="media user-profile mt-2 mb-2" [class.text-white]='topBar.selectedTheme'>
     <img src="assets/images/users/avatar-7.jpg" class="avatar-sm rounded-circle mr-2" alt="pro">
     <img src="assets/images/users/avatar-7.jpg" class="avatar-xs rounded-circle mr-2" alt="pro">
 
-    <div class="media-body">
-      <h6 class="pro-user-name mt-0 mb-0">{{userName}}</h6>
+    <div class="media-body" [class.text-white]='topBar.selectedTheme'>
+      <h6 class="pro-user-name mt-0 mb-0" [class.text-white]='topBar.selectedTheme'>{{userName}}</h6>
       <span class="pro-user-desc">{{acType}}</span>
     </div>
-    <div class="dropdown align-self-center profile-dropdown-menu" ngbDropdown>
+    <div class="dropdown align-self-center profile-dropdown-menu" ngbDropdown [class.text-white]='topBar.selectedTheme'>
       <a class="dropdown-toggle mr-0" ngbDropdownToggle href="javascript: void(0);">
         <i [attr.data-feather]="'chevron-down'" appFeatherIcon></i>
       </a>
-      <div class="dropdown-menu profile-dropdown" ngbDropdownMenu>
+      <div class="dropdown-menu profile-dropdown" ngbDropdownMenu [class.text-white]='topBar.selectedTheme'>
         <a routerLink="/pages-profile" class="dropdown-item notify-item">
           <i [attr.data-feather]="'user'" class="icon-dual icon-xs mr-2"></i>
           <span>&nbsp;My Account</span>
         </a>
 
-        <a href="javascript:void(0);" class="dropdown-item notify-item">
+        <a href="javascript:void(0);" class="dropdown-item notify-item" >
           <i [attr.data-feather]="'settings'" class="icon-dual icon-xs mr-2"></i>
           <span>&nbsp;Settings</span>
         </a>
@@ -47,7 +47,7 @@
   <div class="sidebar-content">
     <!--- Sidemenu -->
     <div class="slimscroll-menu fixHeight" appSlimScroll *ngIf="!isSidebarCondensed()">
-      <app-menu id="sidebar-menu"></app-menu>
+      <app-menu id="sidebar-menu" [class.sa-text-white]='topBar.selectedTheme'></app-menu>
     </div>
 
     <div *ngIf="isSidebarCondensed()">

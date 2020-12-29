@@ -1,18 +1,42 @@
 import { Injectable } from "@angular/core";
+import { ToastrService } from "ngx-toastr";
+import data from "../../../../assets/data.json";
 
 @Injectable({
   providedIn: "root",
 })
 export class OrderService {
   testVal = [];
-  constructor() {}
+  barcodeValue: any;
+  constructor(private toastr: ToastrService) {}
+  categorys: category[] = [
+    { categoryName: "Biscuits" },
+    { categoryName: "Gourment&WorldFood" },
+    { categoryName: "Oil" },
+    { categoryName: "Scop" },
+    { categoryName: "Snacks&BranedFood" },
+    { categoryName: "Pure Ghee" },
+    { categoryName: "Fruits&Vegetables" },
+    { categoryName: "Foodgrains" },
+    { categoryName: "Masala" },
+    { categoryName: "Health" },
+    { categoryName: "Baby" },
+    { categoryName: "Dairy" },
+    { categoryName: "Beverages" },
+    { categoryName: "Eggs,Meat&Fish" },
+    { categoryName: "Sports&Outdoors" },
+    { categoryName: "Body Care" },
+    { categoryName: "Organic Items" },
+    { categoryName: "Mobile&Accessories" },
+    { categoryName: "Stationary" },
+  ];
   products: Product[] = [
     {
       src:
         "https://images-na.ssl-images-amazon.com/images/I/81d%2B4M0aFjL._SL1500_.jpg",
-      ICode: "ptb",
+      ICode: 8711909624,
       IName: "Skippy Peanut Butter",
-      GName: "dairy",
+      Category: "Gourment&WorldFood",
       vendor: "Skippy",
       pPrice: 5,
       IUnit: 10,
@@ -22,13 +46,13 @@ export class OrderService {
       holdColor: "accent",
       holdName: "Hold Product",
       holdIcon: "pan_tool",
-      active: true,
+      Available: true,
     },
     {
       src: "../../../../assets/images/products/Nutella-HazelnutSpread.jpg",
-      ICode: "nhs",
+      ICode: 8584886995,
       IName: "Nutella Hazelnut Spread",
-      GName: "Food",
+      Category: "Gourment&WorldFood",
       vendor: "Nutella",
       pPrice: 9,
       IUnit: 20,
@@ -38,13 +62,13 @@ export class OrderService {
       holdColor: "accent",
       holdName: "Hold Product",
       holdIcon: "pan_tool",
-      active: true,
+      Available: true,
     },
     {
       src: "../../../../assets/images/products/EATAnytime-MixedDryFruit.jpg",
-      ICode: "mdf",
+      ICode: 8589996584,
       IName: "EAT Anytime Mixed Dry Fruit",
-      GName: "nuts",
+      Category: "Foodgrains",
       vendor: "EAT Anytime",
       pPrice: 10,
       IUnit: 50,
@@ -54,13 +78,13 @@ export class OrderService {
       holdColor: "accent",
       holdName: "Hold Product",
       holdIcon: "pan_tool",
-      active: true,
+      Available: true,
     },
     {
       src: "../../../../assets/images/products/sandisk-MicroSd128g.jpg",
-      ICode: "smsd",
+      ICode: 8589985642,
       IName: "sandisk Micro Sd 128g",
-      GName: "mobile accessories",
+      Category: "Mobile&Accessories",
       vendor: "sandisk",
       pPrice: 150,
       IUnit: 20,
@@ -70,13 +94,13 @@ export class OrderService {
       holdColor: "accent",
       holdName: "Hold Product",
       holdIcon: "pan_tool",
-      active: true,
+      Available: true,
     },
     {
       src: "../../../../assets/images/products/Sony-WF-1000XM3.jpg",
-      ICode: "beb",
+      ICode: 8586755468,
       IName: "Sony WF-1000XM3",
-      GName: "mobile accessories",
+      Category: "Mobile&Accessories",
       vendor: "Sony",
       pPrice: 199,
       IUnit: 50,
@@ -86,9 +110,10 @@ export class OrderService {
       holdColor: "accent",
       holdName: "Hold Product",
       holdIcon: "pan_tool",
-      active: true,
+      Available: true,
     },
   ];
+  // products: Product[] = data;
   productDataColumns = [
     { text: "Id", datafield: "ICode" },
     { text: "Name", datafield: "IName" },
@@ -107,6 +132,7 @@ export class OrderService {
     "Home Appliances",
     "Snacks",
   ];
+  dataJson = data;
 
   bill: Bill[] = [];
 
@@ -216,6 +242,104 @@ export class OrderService {
       email: "ans.data@demo.com",
     },
   ];
+  showToastr(massage: string) {
+    this.toastr.success(massage, "Added", {
+      timeOut: 1500,
+      progressBar: true,
+      progressAnimation: "decreasing",
+      tapToDismiss: true,
+      closeButton: true,
+    });
+  }
+  showInfo(massage: string) {
+    this.toastr.info(massage, "Info", {
+      timeOut: 1500,
+      progressBar: true,
+      progressAnimation: "decreasing",
+      tapToDismiss: true,
+      closeButton: true,
+    });
+  }
+  billNum: number;
+  totalPrice: number = 0;
+  netAmount: number;
+
+  getBillNo() {
+    // if (this.makeBill != []) {
+    let bnum = this.receiptsData.length;
+    this.billNum = bnum !== 0 ? this.receiptsData[bnum - 1].billno + 1 : 5001;
+    console.log(bnum);
+    // }
+  }
+  totalAmount() {
+    let totalPriceValue = 0;
+    // let totalQtyValue = 0;
+    for (let cartValue of this.bill) {
+      // debugger;
+      totalPriceValue =
+        Number(cartValue.qty) * cartValue.Iprice + totalPriceValue;
+      // totalQtyValue += cartValue.qty;
+    }
+    this.totalPrice = totalPriceValue;
+    this.netAmount = (this.totalPrice * 2) / 100 + this.totalPrice;
+    // console.log(this.totalPrice);
+  }
+  scannerSound() {
+    let sound = new Audio();
+    sound.src = "assets/barcode.wav";
+    sound.load();
+    sound.play();
+  }
+
+  scannerValue() {
+    let dup = false;
+    this.products.forEach((addProduct) => {
+      if (this.barcodeValue == addProduct.ICode) {
+        if (addProduct.IUnit == 0) {
+          addProduct.Available = false;
+        } else {
+          if (this.bill.length === 0) {
+            this.bill.push({
+              Iname: addProduct.IName,
+              Iprice: addProduct.sPrice,
+              Icode: addProduct.ICode,
+              Itype: addProduct.Category,
+              vendor: addProduct.vendor,
+              shelf: addProduct.shelf,
+              qty: 1,
+            });
+            this.scannerSound();
+            addProduct.IUnit = addProduct.IUnit - 1;
+          } else {
+            this.bill.forEach((value) => {
+              if (value.Iname === addProduct.IName) {
+                value.qty++;
+                dup = true;
+                addProduct.IUnit = addProduct.IUnit - 1;
+                this.scannerSound();
+                this.showToastr(addProduct.IName + " is added successfully");
+              }
+            });
+            if (!dup && this.bill.length !== 0) {
+              this.bill.push({
+                Iname: addProduct.IName,
+                Iprice: addProduct.sPrice,
+                Icode: addProduct.ICode,
+                Itype: addProduct.Category,
+                vendor: addProduct.vendor,
+                shelf: addProduct.shelf,
+                qty: 1,
+              });
+              this.scannerSound();
+              addProduct.IUnit = addProduct.IUnit - 1;
+            }
+          }
+        }
+        this.getBillNo();
+        this.totalAmount();
+      }
+    });
+  }
 }
 export interface Customer {
   srno: number;
@@ -254,9 +378,10 @@ export interface receipt {
 }
 export interface Product {
   src: string;
-  ICode: string;
+  ICode: any;
   IName: string;
-  GName: string;
+  Description?: string;
+  Category: string;
   vendor: string;
   pPrice: number;
   hold: boolean;
@@ -265,6 +390,9 @@ export interface Product {
   holdIcon: string;
   IUnit: number;
   sPrice: number;
-  shelf: number;
-  active: boolean;
+  shelf?: number;
+  Available: boolean;
+}
+export interface category {
+  categoryName: string;
 }

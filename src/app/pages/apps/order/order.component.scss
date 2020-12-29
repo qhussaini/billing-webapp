@@ -28,7 +28,27 @@
   border-radius: 7px;
   background-color: white;
 }
-
+.sa-slider {
+  max-height: 40px;
+  display: flex;
+  // overflow-x: auto;
+  overflow: hidden;
+  scrollbar-width: none;
+}
+.sa-slider button {
+  max-height: 40px;
+}
+.sa-btn {
+  max-height: 40px;
+}
+.sa-btn-dark {
+  background-color: #1d4050;
+  max-height: 40px;
+}
+.sa-hold {
+  background-color: rgb(236, 181, 41);
+  color: white;
+}
 .sa-search-input input {
   padding: 10px;
   width: 100%;
@@ -40,12 +60,30 @@
   background-color: white;
 }
 
+.sa-product-size {
+  height: calc(70vh - 120px);
+  overflow-y: scroll;
+}
+
 .sa-search-input button {
   margin: 0 10px;
+}
+// .sa-search-input{
+//   border: 2px solid rgba(9, 61, 65, 0.486);
+//   border-radius: 7px;
+// }
+
+.sa-card-select {
+  min-height: 35px;
+  max-height: 50px;
 }
 
 .sa-line-through {
   text-decoration: line-through;
+}
+
+.saas-color-image {
+  background-image: rgba(0, 0, 0, 0.185);
 }
 
 .saas-color {
@@ -53,15 +91,23 @@
   background: cadetblue;
 }
 .saas-product {
-  width: fit-content;
-  height: fit-content;
+  width: 130px;
+  height: 190px;
+}
+.saas-product-dark {
+  width: 130px;
+  height: 190px;
+  background-color: #343c6d;
 }
 .saas-product:hover {
-  // border: 3px solid rgba(14, 9, 88, 0.705);
-  // border-radius: 7px;
-  // padding: 1%;
-  color: rgba(14, 9, 88, 0.726);
-  background-color: rgba(35, 2, 39, 0.438);
+  border-bottom: 5px solid #5369f8;
+  color: #5369f8;
+  background-color: #f7f7ff;
+}
+.saas-product-dark:hover {
+  border-bottom: 5px solid #5369f8;
+  color: #5369f8;
+  background-color: #0d0d29;
 }
 .saas-product-img {
   width: 90px;

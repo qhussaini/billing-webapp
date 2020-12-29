@@ -2,7 +2,7 @@
   <div class="card-header row" [class.dark-card-header]='topBar.selectedTheme'>
     <div class="col-md">
               <input matInput placeholder="Search" class="form-control"
-                [formControl]="searchControl">
+                [formControl]="searchControl" [(ngModel)]="searchTerm">
               <!-- <mat-autocomplete #auto="matAutocomplete" [displayWith]="searchProductFn">
                   <mat-option *ngFor="let option of filterSearch | async"
                      [value]="option.IName">
@@ -41,18 +41,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let product of products; index as i">
+        <tr *ngFor="let product of filteredSearch; index as i" [class.sa-not]="!product.Available" [class.sa-hold]="product.hold">
           <th scope="row" class="sa-sel">
             {{ i + 1 }}
             <!-- <mat-checkbox></mat-checkbox> -->
           </th>
           <td>
             <a href="javascript:void(0);" class="text-center">
-            <img src="{{ product.src }}" class="mr-2" style="width: 30px">
+            <img src="{{ product.src }}" class="mr-2" style="width: 30px"><br>
             {{ product.IName }}</a>
           </td>
           <td class="text-center">{{ product.ICode }}</td>
-          <td class="text-center">{{ product.GName }}</td>
+          <td class="text-center">{{ product.Category }}</td>
           <td class="text-center">{{ product.pPrice }}</td>
           <td class="text-center">{{ product.vendor }}</td>
           <td class="text-center">{{ product.sPrice }}</td>
@@ -168,11 +168,7 @@
                   <select ngbDropdown class="form-control" required #gname>
                     <option>Select Category *</option>
                     <div class="dropdown-divider"></div>
-                    <option>{{selection[0]}}</option>
-                    <option>{{selection[1]}}</option>
-                    <option>{{selection[3]}}</option>
-                    <option>{{selection[2]}}</option>
-                    <option>{{selection[4]}}</option>
+                    <option *ngFor="let category of orderService.categorys">{{category.categoryName}}</option>
                   </select>
                 </div>
                 <div class="form-group">

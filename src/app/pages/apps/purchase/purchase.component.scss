@@ -8,7 +8,14 @@
 // .sa-sel:hover mat-checkbox {
 //   visibility: visible;
 // }
-
+.sa-not {
+  background-color: rgba($color: #aa0b0b, $alpha: 1);
+  color: white;
+}
+.sa-hold {
+  background-color: rgb(236, 181, 41);
+  color: white;
+}
 .register-form input:disabled {
   border: red;
 }

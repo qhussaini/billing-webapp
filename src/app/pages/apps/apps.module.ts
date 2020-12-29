@@ -36,6 +36,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { jqxDropDownListModule } from "jqwidgets-ng/jqxdropdownlist";
 import { MatDialogModule } from "@angular/material/dialog";
 import { WidgetModule } from "src/app/shared/widgets/widget.module";
+import { MalihuScrollbarModule } from "ngx-malihu-scrollbar";
 
 import { CalendarComponent } from "./calendar/calendar.component";
 import { OrderService } from "./order/order.service";
@@ -96,6 +97,7 @@ import { NgQrScannerModule } from "angular2-qrscanner";
     jqxDropDownListModule,
     BarcodeScannerLivestreamModule,
     NgQrScannerModule,
+    MalihuScrollbarModule.forRoot(),
   ],
   providers: [OrderService],
 })

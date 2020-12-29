@@ -4,7 +4,13 @@ import { jqxGridComponent } from "jqwidgets-ng/jqxgrid";
 import { ToastrService } from "ngx-toastr";
 import { Observable } from "rxjs";
 import { TopBar } from "src/app/layouts/shared/topbar/topbar.model";
-import { OrderService, Product, receipt } from "../order/order.service";
+import {
+  Bill,
+  Customer,
+  OrderService,
+  Product,
+  receipt,
+} from "../order/order.service";
 // import { generatedata } from './../../../sampledata/generatedata';
 
 @Component({
@@ -17,7 +23,7 @@ export class ReceiptsComponent implements OnInit {
   private gridApi;
   private gridColumnApi;
   private defaultColDef;
-  billNo: any;
+  billNo: number = 0;
   pass: string;
   filteredReceipts: receipt[];
   private _searchTerm: string;
@@ -37,7 +43,10 @@ export class ReceiptsComponent implements OnInit {
     { value: "December" },
   ];
   showCustomer: boolean = false;
-  afCusData: any[];
+  afCusData: Customer[];
+  totalbill: number = 0;
+  afCoupon: any;
+  columnsAfCus: any[];
 
   get searchTerm(): string {
     return this._searchTerm;
@@ -81,7 +90,8 @@ export class ReceiptsComponent implements OnInit {
       minWidth: 100,
     };
   }
-  afRowData: any[];
+  afRowData: Bill[];
+  columnsAf = [];
   totalPrice: number = 0;
   ngOnInit() {
     this.orderService.receiptsData.forEach((data) => {
@@ -173,10 +183,23 @@ export class ReceiptsComponent implements OnInit {
 
   onRowClicked(event) {
     console.log(event.data.billDetail);
-    this.afCusData = event.data.customerDetail;
-    console.log(this.afCusData);
+    if (event.data.coupon !== "not Apply") {
+      this.afCoupon = event.data.amount;
+    } else {
+      this.afCoupon = 0;
+    }
+    console.table(event.data.customerDetail);
+    this.afCusData = [];
+    this.afCusData.push(event.data.customerDetail);
     this.afRowData = event.data.billDetail;
-
+    console.log(this.afRowData);
+    this.totalbill = 0;
+    if (this.afRowData.length !== 0) {
+      this.afRowData.forEach((data) => {
+        this.totalbill = this.totalbill + data.qty * data.Iprice;
+      });
+    }
+    console.log(this.totalbill);
     this.billNo = event.data.billno;
   }
 
@@ -247,46 +270,6 @@ export class ReceiptsComponent implements OnInit {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
   }
-
-  columnsAf = [
-    {
-      field: "Iname",
-      width: 140,
-      sortable: true,
-      filter: true,
-    },
-    {
-      field: "qty",
-      width: 100,
-      sortable: true,
-    },
-    {
-      field: "Iprice",
-      width: 100,
-      sortable: true,
-      filter: true,
-    },
-  ];
-
-  columnsAfCus = [
-    {
-      field: "fname",
-      width: 140,
-      sortable: true,
-      filter: true,
-    },
-    {
-      field: "mobile",
-      width: 100,
-      sortable: true,
-    },
-    {
-      field: "email",
-      width: 100,
-      sortable: true,
-      filter: true,
-    },
-  ];
 
   columnsAg: any[] = [
     { field: "billno", sortable: true, filter: true, width: 90 },
