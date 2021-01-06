@@ -126,7 +126,7 @@ export class ReceiptsComponent implements OnInit {
           this.pass = `Dismissed ${this.getDismissReason(reason)}`;
         }
       );
-    console.log(" pass : " + this.pass);
+    // console.log(" pass : " + this.pass);
   }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -182,7 +182,7 @@ export class ReceiptsComponent implements OnInit {
   }
 
   onRowClicked(event) {
-    console.log(event.data.billDetail);
+    // console.log(event.data.billDetail);
     if (event.data.coupon !== "not Apply") {
       this.afCoupon = event.data.amount;
     } else {
@@ -192,14 +192,14 @@ export class ReceiptsComponent implements OnInit {
     this.afCusData = [];
     this.afCusData.push(event.data.customerDetail);
     this.afRowData = event.data.billDetail;
-    console.log(this.afRowData);
+    // console.log(this.afRowData);
     this.totalbill = 0;
     if (this.afRowData.length !== 0) {
       this.afRowData.forEach((data) => {
         this.totalbill = this.totalbill + data.qty * data.Iprice;
       });
     }
-    console.log(this.totalbill);
+    // console.log(this.totalbill);
     this.billNo = event.data.billno;
   }
 

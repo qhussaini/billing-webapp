@@ -45,6 +45,6 @@ export class LeftsidebarComponent implements OnInit {
   getUserName() {
     this.userName = this.authenticationService.currentUser().username;
     this.acType = this.authenticationService.currentUser().type;
-    console.log(":::" + this.authenticationService.currentUser().type);
+    // console.log(":::" + this.authenticationService.currentUser().type);
   }
 }

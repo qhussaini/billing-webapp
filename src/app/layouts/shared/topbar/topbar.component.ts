@@ -24,12 +24,12 @@ export class TopbarComponent implements OnInit {
   onResize(event?) {
     this.topBar.screenHeight = window.innerHeight;
     this.topBar.screenWidth = window.innerWidth;
-    console.log(
-      "Width : " +
-        this.topBar.screenWidth +
-        " and Height: " +
-        this.topBar.screenHeight
-    );
+    // console.log(
+    //   "Width : " +
+    //     this.topBar.screenWidth +
+    //     " and Height: " +
+    //     this.topBar.screenHeight
+    // );
   }
   notificationItems: Notification[];
   languages: Array<{
@@ -58,7 +58,7 @@ export class TopbarComponent implements OnInit {
     this.onResize();
     this.topBar.checkSize();
     this.acType = this.authService.currentUser().type;
-    console.log("acType" + this.acType);
+    // console.log("acType" + this.acType);
     if (this.acType === "emp") {
       this.topBar.isAdmin = false;
     } else {
@@ -89,13 +89,13 @@ export class TopbarComponent implements OnInit {
   changeView(touce: boolean, theme?: boolean) {
     this.topBar.selectedView = touce;
     this.topBar.selectedTheme = theme;
-    console.log(this.topBar.selectedView);
+    // console.log(this.topBar.selectedView);
   }
   darktheme(theme: string) {
     this.eventService.broadcast("changeLayout", "vertical");
     this.eventService.broadcast("changeLeftSidebarTheme", theme);
     this.eventService.broadcast("changeLeftSidebarType", "default");
-    console.log(theme);
+    // console.log(theme);
   }
 
   /**

@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="card col-lg-8 p-0" [class.dark-mcard]='topBar.selectedTheme' [class.text-white]='topBar.selectedTheme'>
+  <div class="card col-lg-8 p-0" [class.dark-mcard]='topBar.selectedTheme'>
     <div class="card-header" [class.dark-mcard-header]='topBar.selectedTheme'>
       <form action="" class="position-relative me-auto" [autoClose]="true"
       ngbPopover="{{ showCmt }}" popoverClass="saas-pop" #popover="ngbPopover" placement="right">
@@ -37,7 +37,7 @@
         Bill [Ctrl+D]
       </button>
 
-      <button mat-raised-button color="primary" matTooltip="Scanner" (click)="open(barcode)" matTooltipPosition="above"
+      <button mat-raised-button color="primary" matTooltip="Scanner" (click)="openScanner(barcode)" matTooltipPosition="above"
         id="scannerB">
         <mat-icon aria-hidden="false" aria-label="clear-icon">qr_code_scanner</mat-icon> Scanner [Ctrl+R]
       </button>
@@ -47,6 +47,36 @@
         <mat-icon aria-hidden="false" aria-label="clear-icon">{{holdIcon}}</mat-icon>{{holdName}} [Ctrl+H]
       </button>
     </div>
+      <div class="card-body sa-card-select pt-1 mt-1">
+        <div class="d-flex justify-content-evenly">
+          <select matNativeControl class="btn text-nowrap btn-primary sa-categorys">
+            <option selected value='Search Categorys'>Search Categorys</option>
+            <div class="dropdown-divider"></div>
+            <option (click)="seachByCat('All Item')" value='All Item'>All Item</option>
+            <div class="dropdown-divider"></div>
+            <option *ngFor="let type of orderService.categorys"
+              (click)="seachByCat(type.categoryName)"
+              [value]="type.categoryName">
+              {{type.categoryName}}
+            </option>
+          </select>
+          <!-- <button class="btn sa-btn text-white mr-1 btn-primary" (click)="scrollTo('catB','left')">
+            <mat-icon aria-hidden="false" aria-label="clear-icon">chevron_left</mat-icon>
+          </button>
+          <div class="sa-slider">
+            <button class="mr-1 btn text-nowrap btn-primary" (click)="seachByCat('All Item')" id="catB0">
+              All Item
+            </button>
+            <button class="mr-1 btn text-nowrap btn-primary" *ngFor="let type of orderService.categorys; index as i"
+              (click)="seachByCat(type.categoryName)" id="catB{{i+1}}">
+              {{type.categoryName}}
+            </button>
+          </div>
+          <button class="btn sa-btn text-white ml-1 btn-primary" (click)="scrollTo('catB','right')">
+            <mat-icon aria-hidden="false" aria-label="clear-icon">chevron_right</mat-icon>
+          </button> -->
+        </div>
+      </div>
     <div class="card-body d-flex flex-wrap align-content-start sa-product-size">
       <mat-card matRipple matTooltip="Available Qty {{option.IUnit}}" class="m-1 sa-pointer"
       [class.saas-product]='!topBar.selectedTheme'
@@ -92,27 +122,8 @@
               </tbody>
             </table>
     </div> -->
-    <div class="card-body sa-card-select pt-1 mt-1">
-      <div class="d-inline-flex btn-block">
-        <button class="btn sa-btn text-white mr-1 btn-primary" (click)="scrollTo('catB','left')">
-          <mat-icon aria-hidden="false" aria-label="clear-icon">chevron_left</mat-icon>
-        </button>
-        <div class="sa-slider">
-          <button class="mr-1 btn text-nowrap btn-primary" (click)="seachByCat('All Item')" id="catB0">
-            All Item
-          </button>
-          <button class="mr-1 btn text-nowrap btn-primary" *ngFor="let type of orderService.categorys; index as i"
-            (click)="seachByCat(type.categoryName)" id="catB{{i+1}}">
-            {{type.categoryName}}
-          </button>
-        </div>
-        <button class="btn sa-btn text-white ml-1 btn-primary" (click)="scrollTo('catB','right')">
-          <mat-icon aria-hidden="false" aria-label="clear-icon">chevron_right</mat-icon>
-        </button>
-      </div>
-    </div>
   </div>
-  <div class="card col-lg-4 p-0 sa-border" [class.dark-card]='topBar.selectedTheme' [class.text-white]='topBar.selectedTheme'>
+  <div class="card col-lg-4 p-0" [class.sa-border-light]='!topBar.selectedTheme' [class.sa-border-dark]='topBar.selectedTheme' [class.dark-card]='topBar.selectedTheme' [class.text-white]='topBar.selectedTheme'>
       <div class="card-header" [class.dark-card-header]='topBar.selectedTheme'>
        <div class="row">
         <div class="col">
@@ -359,7 +370,9 @@
   </div>
 </ng-template>
 <ng-template #barcode let-modal>
-    <sa-barcodescanner></sa-barcodescanner>
+  <div class="terminal">
+    <sa-barcodescanner type="billing"></sa-barcodescanner>
+  </div>
 </ng-template>
 <ng-template #gpay let-modal>
   <img src="../../../../assets/images/gpay.jpg">

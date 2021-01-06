@@ -242,6 +242,16 @@ export class OrderService {
       email: "ans.data@demo.com",
     },
   ];
+
+  showError(error: string) {
+    this.toastr.error(error, "Error", {
+      timeOut: 2800,
+      progressBar: true,
+      progressAnimation: "decreasing",
+      tapToDismiss: true,
+      closeButton: true,
+    });
+  }
   showToastr(massage: string) {
     this.toastr.success(massage, "Added", {
       timeOut: 1500,
@@ -268,7 +278,7 @@ export class OrderService {
     // if (this.makeBill != []) {
     let bnum = this.receiptsData.length;
     this.billNum = bnum !== 0 ? this.receiptsData[bnum - 1].billno + 1 : 5001;
-    console.log(bnum);
+    // console.log(bnum);
     // }
   }
   totalAmount() {
@@ -282,7 +292,7 @@ export class OrderService {
     }
     this.totalPrice = totalPriceValue;
     this.netAmount = (this.totalPrice * 2) / 100 + this.totalPrice;
-    // console.log(this.totalPrice);
+    // // console.log(this.totalPrice);
   }
   scannerSound() {
     let sound = new Audio();
@@ -295,8 +305,13 @@ export class OrderService {
     let dup = false;
     this.products.forEach((addProduct) => {
       if (this.barcodeValue == addProduct.ICode) {
-        if (addProduct.IUnit == 0) {
-          addProduct.Available = false;
+        if (addProduct.IUnit == 0 || addProduct.hold === true) {
+          if (addProduct.hold === true) {
+            this.showError(addProduct.IName + " is on hold");
+          } else {
+            this.showError(addProduct.IName + " is not available");
+            addProduct.Available = false;
+          }
         } else {
           if (this.bill.length === 0) {
             this.bill.push({

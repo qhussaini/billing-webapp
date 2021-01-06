@@ -35,7 +35,7 @@ export class RightsidebarComponent implements OnInit {
     this.eventService.broadcast("changeLayout", "vertical");
     this.eventService.broadcast("changeLeftSidebarTheme", theme);
     this.eventService.broadcast("changeLeftSidebarType", "default");
-    console.log(theme);
+    // console.log(theme);
   }
 
   /**

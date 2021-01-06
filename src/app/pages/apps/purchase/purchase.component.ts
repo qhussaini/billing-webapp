@@ -69,66 +69,71 @@ export class PurchaseComponent implements OnInit {
   itemsPrice;
   itemShelf;
   itemId;
+  selectItem: boolean = false;
+
   ngOnInit() {}
-  rules = [
-    {
-      input: ".image-sa",
-      message: "ImageURL is required!",
-      action: "keyup, blur",
-      rule: "required",
-    },
-    {
-      input: ".name-sa",
-      message: "Peoduct Name is required!",
-      action: "keyup, blur",
-      rule: "required",
-    },
-    {
-      input: ".icode-sa",
-      message: "Peoduct Code is required!",
-      action: "keyup, blur",
-      rule: "required",
-    },
-    {
-      input: ".gname-sa",
-      message: "Peoduct Group is required!",
-      action: "keyup, blur",
-      rule: "required",
-    },
-    {
-      input: ".vender-sa",
-      message: "Peoduct Vender is required!",
-      action: "keyup, blur",
-      rule: "required",
-    },
-    {
-      input: ".sprice-sa",
-      message: "Sale Price is required!",
-      action: "keyup, blur",
-      rule: "required",
-    },
-    {
-      input: ".pprice-sa",
-      message: "Your Price is required!",
-      action: "keyup, blur",
-      rule: "required",
-    },
-    {
-      input: ".unit-sa",
-      message: "Unit is required!",
-      action: "keyup, blur",
-      rule: "required",
-    },
-    {
-      input: ".shelf-sa",
-      message: "Shelf is required!",
-      action: "keyup, blur",
-      rule: "required",
-    },
-  ];
+  // rules = [
+  //   {
+  //     input: ".image-sa",
+  //     message: "ImageURL is required!",
+  //     action: "keyup, blur",
+  //     rule: "required",
+  //   },
+  //   {
+  //     input: ".name-sa",
+  //     message: "Peoduct Name is required!",
+  //     action: "keyup, blur",
+  //     rule: "required",
+  //   },
+  //   {
+  //     input: ".icode-sa",
+  //     message: "Peoduct Code is required!",
+  //     action: "keyup, blur",
+  //     rule: "required",
+  //   },
+  //   {
+  //     input: ".gname-sa",
+  //     message: "Peoduct Group is required!",
+  //     action: "keyup, blur",
+  //     rule: "required",
+  //   },
+  //   {
+  //     input: ".vender-sa",
+  //     message: "Peoduct Vender is required!",
+  //     action: "keyup, blur",
+  //     rule: "required",
+  //   },
+  //   {
+  //     input: ".sprice-sa",
+  //     message: "Sale Price is required!",
+  //     action: "keyup, blur",
+  //     rule: "required",
+  //   },
+  //   {
+  //     input: ".pprice-sa",
+  //     message: "Your Price is required!",
+  //     action: "keyup, blur",
+  //     rule: "required",
+  //   },
+  //   {
+  //     input: ".unit-sa",
+  //     message: "Unit is required!",
+  //     action: "keyup, blur",
+  //     rule: "required",
+  //   },
+  //   {
+  //     input: ".shelf-sa",
+  //     message: "Shelf is required!",
+  //     action: "keyup, blur",
+  //     rule: "required",
+  //   },
+  // ];
 
   openItem(content) {
     this.dialog.open(content, { size: "lg" });
+  }
+  openbar(content) {
+    this.dialog.open(content);
   }
   holdProduct(item) {
     let hItem = this.orderService.products.indexOf(item);
@@ -145,7 +150,7 @@ export class PurchaseComponent implements OnInit {
       this.orderService.products[hItem].hold = false;
       this.showInfo("The product " + item.IName + " is unhold");
     }
-    console.log(this.orderService.products[hItem].hold);
+    // console.log(this.orderService.products[hItem].hold);
   }
   deleteItem(item) {
     this.products.splice(item.no - 1, 1);
@@ -238,7 +243,7 @@ export class PurchaseComponent implements OnInit {
       this.showError("Product Field/Fields are empty", "Error");
     }
     // } else if (pprice.value > sprice.value) {
-    //   console.log(pprice.value +" <PP|  |sp> "+ sprice.value)
+    //   // console.log(pprice.value +" <PP|  |sp> "+ sprice.value)
     //   this.showError("The Selling price is less than Purchase Price",'Error');
     // }
     else {
@@ -283,13 +288,14 @@ export class PurchaseComponent implements OnInit {
         holdIcon: "pan_tool",
         Available: true,
       });
-      console.log(gname.value);
+      // console.log(gname.value);
       image.value = "";
       icode.value = "";
       iname.value = "";
       gname.value = "Select Category *";
       vendor.value = "";
       pprice.value = "";
+      this.orderService.barcodeValue = undefined;
       unit.value = "";
       sprice.value = "";
       shelf.value = "";

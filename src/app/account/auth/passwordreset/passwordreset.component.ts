@@ -1,42 +1,46 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
-  selector: 'app-passwordreset',
-  templateUrl: './passwordreset.component.html',
-  styleUrls: ['./passwordreset.component.scss']
+  selector: "app-passwordreset",
+  templateUrl: "./passwordreset.component.html",
+  styleUrls: ["./passwordreset.component.scss"],
 })
 export class PasswordresetComponent implements OnInit, AfterViewInit {
-
   resetForm: FormGroup;
   submitted = false;
-  error = '';
-  success = '';
+  error = "";
+  success = "";
   loading = false;
 
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-
     this.resetForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ["", [Validators.required, Validators.email]],
     });
   }
 
   ngAfterViewInit() {
-    document.body.classList.add('authentication-bg');
-    document.body.classList.add('authentication-bg-pattern');
+    document.body.classList.add("authentication-bg");
+    document.body.classList.add("authentication-bg-pattern");
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.resetForm.controls; }
+  get f() {
+    return this.resetForm.controls;
+  }
 
   /**
    * On submit form
    */
   onSubmit() {
-    this.success = '';
+    this.success = "";
     this.submitted = true;
 
     // stop here if form is invalid
@@ -46,10 +50,11 @@ export class PasswordresetComponent implements OnInit, AfterViewInit {
 
     this.loading = true;
 
-    console.log(this.resetForm.value);
+    // // console.log(this.resetForm.value);
     setTimeout(() => {
       this.loading = false;
-      this.success = 'We have sent you an email containing a link to reset your password';
+      this.success =
+        "We have sent you an email containing a link to reset your password";
     }, 1000);
   }
 }

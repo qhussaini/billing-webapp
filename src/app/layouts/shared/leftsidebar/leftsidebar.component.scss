@@ -2,9 +2,13 @@
   height: calc(100vh - 50px);
 }
 
-.sa-border {
+.sa-border-light {
   border-top: 0px;
   border-right: solid 1px rgba(0, 0, 0, 0.185);
+}
+.sa-border-dark {
+  border-top: 0px;
+  border-right: solid 1px rgba(73, 72, 72, 0.541);
 }
 
 .sa-text-white :hover {

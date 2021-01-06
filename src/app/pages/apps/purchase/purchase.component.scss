@@ -1,13 +1,13 @@
 .sa-pointer {
   cursor: pointer;
 }
-// .sa-sel mat-checkbox {
-//   visibility: hidden;
-// }
+.sa-sel mat-checkbox {
+  visibility: hidden;
+}
 
-// .sa-sel:hover mat-checkbox {
-//   visibility: visible;
-// }
+.sa-sel:hover mat-checkbox {
+  visibility: visible;
+}
 .sa-not {
   background-color: rgba($color: #aa0b0b, $alpha: 1);
   color: white;
@@ -152,4 +152,17 @@
   margin-top: 8%;
   margin-bottom: -15%;
   color: #495057;
+}
+
+.scanner-btn {
+  width: 50px;
+  height: 30px;
+  background-image: url(../../../../assets/images/bar.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.scanner-btn img {
+  width: 80px;
+  height: 30px;
 }

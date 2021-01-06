@@ -8,6 +8,7 @@ import { TopBar } from "../topbar/topbar.model";
 })
 export class FooterComponent implements OnInit {
   constructor(public topBar: TopBar) {}
+  year: number = new Date().getFullYear();
 
   ngOnInit() {}
 }

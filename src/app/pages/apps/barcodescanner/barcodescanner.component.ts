@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit } from "@angular/core";
+import { Component, ViewChild, AfterViewInit, Input } from "@angular/core";
 import { BarcodeScannerLivestreamComponent } from "ngx-barcode-scanner";
 import { OrderService } from "../order/order.service";
 @Component({
@@ -8,7 +8,7 @@ import { OrderService } from "../order/order.service";
 })
 export class BarcodescannerComponent implements AfterViewInit {
   constructor(public orderService: OrderService) {}
-
+  @Input() type: string;
   @ViewChild(BarcodeScannerLivestreamComponent)
   barcodeScanner: BarcodeScannerLivestreamComponent;
 
@@ -20,17 +20,24 @@ export class BarcodescannerComponent implements AfterViewInit {
 
   onValueChanges(result) {
     this.barcodeValue = result.codeResult.code;
-    if (this.orderService.barcodeValue !== result.codeResult.code) {
+    if (
+      this.orderService.barcodeValue !== result.codeResult.code &&
+      this.type == "billing"
+    ) {
       this.orderService.barcodeValue = result.codeResult.code;
       this.orderService.scannerValue();
+    } else {
+      this.orderService.barcodeValue = result.codeResult.code;
+      this.orderService.scannerSound();
     }
-    setInterval(() => {
-      this.orderService.barcodeValue = 0;
-    }, 5500);
-    console.log(" :: barValue :: " + this.barcodeValue);
+    // setTimeout(() => {
+    //   this.orderService.barcodeValue = undefined;
+    //   this.barcodeValue = undefined;
+    // }, 5500);
+    // console.log(" :: barValue :: " + this.barcodeValue);
   }
 
   onStarted(event) {
-    console.log("value", event);
+    // console.log("value", event);
   }
 }

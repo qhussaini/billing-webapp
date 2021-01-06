@@ -140,7 +140,7 @@ export class OrderComponent implements AfterViewInit, OnInit, OnChanges {
           : this.orderService.customerData.slice()
       )
     );
-    console.log(this.customerBill);
+    // console.log(this.customerBill);
     if (topBar.screenWidth >= 988) {
       this.showClock = true;
     } else {
@@ -184,7 +184,7 @@ export class OrderComponent implements AfterViewInit, OnInit, OnChanges {
       }
     }
     let scrollid = id + this.move;
-    console.log(`scrolling to ${scrollid}`);
+    // console.log(`scrolling to ${scrollid}`);
     let el = document.getElementById(scrollid);
     el.scrollIntoView();
   }
@@ -213,7 +213,7 @@ export class OrderComponent implements AfterViewInit, OnInit, OnChanges {
   }
 
   keySelecter(event) {
-    console.log(event.keyCode);
+    // console.log(event.keyCode);
     if (
       event.ctrlKey ||
       event.altKey ||
@@ -354,7 +354,7 @@ export class OrderComponent implements AfterViewInit, OnInit, OnChanges {
   //   let bnum = this.orderService.receiptsData.length;
   //   this.billNum =
   //     bnum !== 0 ? this.orderService.receiptsData[bnum - 1].billno + 1 : 5001;
-  //   console.log(bnum);
+  //   // console.log(bnum);
   //   // }
   // }
   getValue(customer) {
@@ -426,6 +426,9 @@ export class OrderComponent implements AfterViewInit, OnInit, OnChanges {
       }
     );
   }
+  openScanner(content) {
+    this.dialog.open(content);
+  }
   gpayOpen(content) {
     this.dialog.open(content);
   }
@@ -445,7 +448,7 @@ export class OrderComponent implements AfterViewInit, OnInit, OnChanges {
     } else {
       this.showError("Add payment");
     }
-    console.log(amountPay);
+    // console.log(amountPay);
   }
   gPayment(content) {
     this.dialog.open(content);
@@ -500,7 +503,7 @@ export class OrderComponent implements AfterViewInit, OnInit, OnChanges {
         this.tableValue = `Dismissed ${this.getDismissReason(reason)}`;
       }
     );
-    console.log(this.tableValue);
+    // console.log(this.tableValue);
     this.deleteAt(item);
   }
   deleteAt(item) {
@@ -543,7 +546,7 @@ export class OrderComponent implements AfterViewInit, OnInit, OnChanges {
         }
       );
 
-    console.log(" pass : " + this.pass);
+    // console.log(" pass : " + this.pass);
   }
 
   columns = this.orderService.productDataColumns;
@@ -554,49 +557,6 @@ export class OrderComponent implements AfterViewInit, OnInit, OnChanges {
     { text: "Unit", datafield: "IUnit" },
     { text: "Sale Price", datafield: "sPrice" },
   ];
-
-  // scannerValue() {
-  //   let dup = false;
-  //   this.orderService.products.forEach((addProduct) => {
-  //     if (this.orderService.barcodeValue == addProduct.ICode) {
-  //       if (this.orderService.bill.length === 0) {
-  //         this.orderService.bill.push({
-  //           Iname: addProduct.IName,
-  //           Iprice: addProduct.sPrice,
-  //           Icode: addProduct.ICode,
-  //           Itype: addProduct.Category,
-  //           vendor: addProduct.vendor,
-  //           shelf: addProduct.shelf,
-  //           qty: 1,
-  //         });
-  //         addProduct.IUnit = addProduct.IUnit - 1;
-  //       } else {
-  //         this.orderService.bill.forEach((value) => {
-  //           if (value.Iname === addProduct.IName) {
-  //             value.qty++;
-  //             dup = true;
-  //             addProduct.IUnit = addProduct.IUnit - 1;
-  //             this.showToastr(addProduct.IName + " is added successfully");
-  //           }
-  //         });
-  //         if (!dup && this.orderService.bill.length !== 0) {
-  //           this.orderService.bill.push({
-  //             Iname: addProduct.IName,
-  //             Iprice: addProduct.sPrice,
-  //             Icode: addProduct.ICode,
-  //             Itype: addProduct.Category,
-  //             vendor: addProduct.vendor,
-  //             shelf: addProduct.shelf,
-  //             qty: 1,
-  //           });
-  //           addProduct.IUnit = addProduct.IUnit - 1;
-  //         }
-  //       }
-  //       this.showInfo("scanner Work");
-  //     }
-  //   });
-  //   console.log("scanner mothod is called");
-  // }
 
   addbill(option) {
     const prd = option.IName;
@@ -658,8 +618,8 @@ export class OrderComponent implements AfterViewInit, OnInit, OnChanges {
         this.orderService.products[qtyM].IUnit =
           this.orderService.products[qtyM].IUnit - 1;
         this.showToastr(prd + " is added successfully");
-        console.log("main adding mothed is called");
-        console.log("bill di" + this.orderService.bill.length);
+        // console.log("main adding mothed is called");
+        // console.log("bill di" + this.orderService.bill.length);
       }
     }
     for (let i = 0; i < this.orderService.products.length; i++) {
@@ -695,14 +655,14 @@ export class OrderComponent implements AfterViewInit, OnInit, OnChanges {
   }
   incrementItem(item) {
     // let qtyM = this.orderService.products.indexOf(item);
-    // console.log(this.orderService.products.indexOf(item.IName));
+    // // console.log(this.orderService.products.indexOf(item.IName));
     // this.orderService.products[qtyM].IUnit =
     //   this.orderService.products[qtyM].IUnit - 1;
     let qty = this.orderService.bill.indexOf(item);
     this.orderService.products.forEach((data) => {
       if (data.IName === item.Iname && data.IUnit !== 0) {
         data.IUnit = data.IUnit - 1;
-        console.log(data.IName + " is true");
+        // console.log(data.IName + " is true");
         this.orderService.bill[qty].qty = this.orderService.bill[qty].qty + 1;
       } else {
         if (data.IName === item.Iname && data.IUnit === 0) {
@@ -726,31 +686,31 @@ export class OrderComponent implements AfterViewInit, OnInit, OnChanges {
         this.topBar.alertCheck(true);
       }
     });
-    console.log(
-      "::increment::" +
-        qty +
-        ":: data ::" +
-        this.orderService.bill.indexOf(item)
-    );
+    // console.log(
+    //   "::increment::" +
+    //     qty +
+    //     ":: data ::" +
+    //     this.orderService.bill.indexOf(item)
+    // );
     this.orderService.totalAmount();
   }
   decrementItem(item) {
     // let qtyM = this.orderService.products.indexOf(item);
-    // console.log(this.orderService.products.indexOf(item.IName));
+    // // console.log(this.orderService.products.indexOf(item.IName));
     // this.orderService.products[qtyM].IUnit =
     //   this.orderService.products[qtyM].IUnit - 1;
     let qty = this.orderService.bill.indexOf(item);
-    console.log(
-      "::increment::" +
-        qty +
-        ":: data ::" +
-        this.orderService.bill.indexOf(item)
-    );
+    // console.log(
+    //   "::increment::" +
+    //     qty +
+    //     ":: data ::" +
+    //     this.orderService.bill.indexOf(item)
+    // );
     if (this.orderService.bill[qty].qty !== 1) {
       this.orderService.products.forEach((data) => {
         if (data.IName === item.Iname) {
           data.IUnit = data.IUnit + 1;
-          console.log(data.IName + " is true");
+          // console.log(data.IName + " is true");
           this.orderService.bill[qty].qty = this.orderService.bill[qty].qty - 1;
         }
       });
@@ -763,7 +723,7 @@ export class OrderComponent implements AfterViewInit, OnInit, OnChanges {
   }
 
   holdBill() {
-    console.log(this.orderService.holdBill == null);
+    // console.log(this.orderService.holdBill == null);
     if (this.orderService.holdBill == null) {
       if (this.orderService.bill.length != 0) {
         this.orderService.holdBill = this.orderService.bill;
@@ -839,7 +799,7 @@ export class OrderComponent implements AfterViewInit, OnInit, OnChanges {
   getCustomer(option) {
     this.customerBill = option.fname;
     this.customerDetial = option;
-    console.log(this.customerDetial);
+    // console.log(this.customerDetial);
     this.showCustomer = false;
     this.showCmt = "Search Product";
     this.orderService.customerDialog = false;
@@ -873,7 +833,7 @@ export class OrderComponent implements AfterViewInit, OnInit, OnChanges {
           this.orderService.netAmount =
             this.orderService.netAmount -
             (this.orderService.netAmount * 10) / 100;
-          console.log("coupon : " + this.orderService.netAmount);
+          // console.log("coupon : " + this.orderService.netAmount);
           this.couponRedeem = true;
           this.showToastr("10% off on bill");
         } else if (input.value == code.off20) {
@@ -882,7 +842,7 @@ export class OrderComponent implements AfterViewInit, OnInit, OnChanges {
           this.orderService.netAmount =
             this.orderService.netAmount -
             (this.orderService.netAmount * 20) / 100;
-          console.log("coupon : " + this.orderService.netAmount);
+          // console.log("coupon : " + this.orderService.netAmount);
           this.couponRedeem = true;
           this.showToastr("20% off on bill");
         } else if (input.value == code.off50) {
@@ -891,7 +851,7 @@ export class OrderComponent implements AfterViewInit, OnInit, OnChanges {
           this.orderService.netAmount =
             this.orderService.netAmount -
             (this.orderService.netAmount * 50) / 100;
-          console.log("coupon : " + this.orderService.netAmount);
+          // console.log("coupon : " + this.orderService.netAmount);
           this.couponRedeem = true;
           this.showToastr("50% off on bill");
         } else {
@@ -912,7 +872,7 @@ export class OrderComponent implements AfterViewInit, OnInit, OnChanges {
     } else {
       this.addReceipt();
     }
-    console.log("bill di" + this.orderService.bill.length);
+    // console.log("bill di" + this.orderService.bill.length);
   }
 
   addReceipt() {
@@ -948,7 +908,7 @@ export class OrderComponent implements AfterViewInit, OnInit, OnChanges {
       });
       this.couponRedeem = false;
       this.couponName = undefined;
-      console.log(month);
+      // console.log(month);
       this.upiTid = 0;
       this.orderService.totalPrice = 0;
       this.cashPay = 0;
@@ -964,7 +924,7 @@ export class OrderComponent implements AfterViewInit, OnInit, OnChanges {
     } else {
       this.showError("Please collect cash and make bill");
     }
-    console.log(this.orderService.receiptsData);
+    // console.log(this.orderService.receiptsData);
   }
 
   // totalAmount() {
@@ -978,7 +938,7 @@ export class OrderComponent implements AfterViewInit, OnInit, OnChanges {
   //   }
   //   this.orderService.totalPrice = totalPriceValue;
   //   this.orderService.netAmount = (this.orderService.totalPrice * 2) / 100 + this.orderService.totalPrice;
-  //   // console.log(this.orderService.totalPrice);
+  //   // // console.log(this.orderService.totalPrice);
   // }
   getMonth(today: Date) {
     if (today.getMonth() + 1 == 1) {

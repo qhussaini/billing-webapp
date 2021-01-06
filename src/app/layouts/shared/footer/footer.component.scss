@@ -1,5 +1,10 @@
-.sa-border {
+.sa-border-light {
   border-top: solid 1px rgba(0, 0, 0, 0.185);
+  border-left: 0px;
+  border-right: 0px;
+}
+.sa-border-dark {
+  border-top: solid 1px rgba(73, 72, 72, 0.541);
   border-left: 0px;
   border-right: 0px;
 }
